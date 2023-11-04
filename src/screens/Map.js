@@ -7,6 +7,7 @@ function Mapa({ navigation }) {
       <Button title="Użytkownik" onPress={() => navigation.navigate('Użytkownik')} />
       <Button title="Ciekawostki" onPress={() => navigation.navigate('Ciekawostki')} />
       <Button title="Ustawienia" onPress={() => navigation.navigate('Ustawienia')} />
+      <Button title="Ekran Ładowania" onPress={() => navigation.navigate('Ekran Ładowania')} />
     </View>
   );
 }

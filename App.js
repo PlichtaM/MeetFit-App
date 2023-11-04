@@ -10,6 +10,7 @@ import Settings from './src/screens/Settings';
 import MyEvents from './src/screens/MyEvents';
 import FunFacts from './src/screens/FunFacts';
 import Stats from './src/screens/Stats';
+import LoadingScreen from './src/screens/LoadingScreen';
 
 
 const Stack = createStackNavigator();
@@ -18,7 +19,7 @@ export default function App() {
   return (
     <AppProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Map">
+        <Stack.Navigator initialRouteName="Map" screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Mapa" component={Map} />
           <Stack.Screen name="Użytkownik" component={User} />
           <Stack.Screen name="Wydarzenia" component={Events} />
@@ -26,6 +27,7 @@ export default function App() {
           <Stack.Screen name="Ustawienia" component={Settings} />
           <Stack.Screen name="Ciekawostki" component={FunFacts} />
           <Stack.Screen name="Statystyki" component={Stats} />
+          <Stack.Screen name="Ekran Ładowania" component={LoadingScreen} options={{ title: '' }} />
         </Stack.Navigator>
       </NavigationContainer>
     </AppProvider>
