@@ -11,6 +11,7 @@ import MyEvents from './src/screens/MyEvents';
 import FunFacts from './src/screens/FunFacts';
 import Stats from './src/screens/Stats';
 import LoadingScreen from './src/screens/LoadingScreen';
+import RegisterScreen from './src/screens/RegisterScreen';
 
 
 const Stack = createStackNavigator();
@@ -28,6 +29,7 @@ export default function App() {
           <Stack.Screen name="Ciekawostki" component={FunFacts} />
           <Stack.Screen name="Statystyki" component={Stats} />
           <Stack.Screen name="Ekran Ładowania" component={LoadingScreen} options={{ title: '' }} />
+          <Stack.Screen name="Ekran Rejestracji" component={RegisterScreen} options={{ title: '' }} />
         </Stack.Navigator>
       </NavigationContainer>
     </AppProvider>
