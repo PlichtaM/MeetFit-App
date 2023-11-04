@@ -11,6 +11,7 @@ function Mapa({ navigation }) {
       <Button title="Ekran Rejestracji" onPress={() => navigation.navigate('Ekran Rejestracji')} />
       <Button title="Ekran Logowania" onPress={() => navigation.navigate('Ekran Logowania')} />
       <Button title="Ekran Przywracania" onPress={() => navigation.navigate('Ekran Przywracania')} />
+      <Button title="Ekran Zmiany Hasła" onPress={() => navigation.navigate('Ekran Zmiany Hasła')} />
     </View>
   );
 }
