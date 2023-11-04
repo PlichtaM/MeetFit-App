@@ -15,6 +15,8 @@ import RegisterScreen from './src/screens/RegisterScreen';
 import LoginScreen from './src/screens/LoginScreen';
 import ForgotPasswordScreen from './src/screens/ForgotPasswordScreen';
 import ChangePasswordScreen from './src/screens/ChangePasswordScreen';
+import CorrectChangedPasswordScreen from './src/screens/CorrectChangedPasswordScreen ';
+import VerifiedScreen from './src/screens/VerifiedScreen';
 
 const Stack = createStackNavigator();
 
@@ -35,6 +37,8 @@ export default function App() {
           <Stack.Screen name="Ekran Logowania" component={LoginScreen} options={{ title: '' }} />
           <Stack.Screen name="Ekran Przywracania" component={ForgotPasswordScreen} options={{ title: '' }} />
           <Stack.Screen name="Ekran Zmiany Hasła" component={ChangePasswordScreen} options={{ title: '' }} />
+          <Stack.Screen name="Ekran Pomyślnej Zmiany Hasła" component={CorrectChangedPasswordScreen} options={{ title: '' }} />
+          <Stack.Screen name="Ekran Zweryfikowanego Konta" component={VerifiedScreen} options={{ title: '' }} />
         </Stack.Navigator>
       </NavigationContainer>
     </AppProvider>
