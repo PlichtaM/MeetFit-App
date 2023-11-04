@@ -9,6 +9,7 @@ function Mapa({ navigation }) {
       <Button title="Ustawienia" onPress={() => navigation.navigate('Ustawienia')} />
       <Button title="Ekran Ładowania" onPress={() => navigation.navigate('Ekran Ładowania')} />
       <Button title="Ekran Rejestracji" onPress={() => navigation.navigate('Ekran Rejestracji')} />
+      <Button title="Ekran Logowania" onPress={() => navigation.navigate('Ekran Logowania')} />
     </View>
   );
 }
