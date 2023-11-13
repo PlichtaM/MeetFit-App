@@ -1,12 +1,15 @@
-<h2>PRzygotowanie</h2>
+<h2>Przygotowanie</h2>
 npm install
+
 npm install -g expo-cli
 
 
 
 <h2>Odpalenie</h2>
 npm start
+
 lub 
+
 npm run android
 
 
