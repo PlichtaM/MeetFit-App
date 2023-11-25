@@ -6,7 +6,7 @@ import Input from '../components/Input';
 import LoginButton from '../components/LoginButton';
 import { colors } from '../components/Colors';
 
-function LoginScreen() {
+function LoginScreen({ navigation }) {
   const [isChecked, setChecked] = useState(false);
 
   return (
@@ -34,8 +34,10 @@ function LoginScreen() {
           <Text style={styles.CheckboxLabel}>Zapamiętaj dane</Text>
         </View>
         <LoginButton onPress={() => console.log("Zaloguj się")} title="Zaloguj się" />
-        <LoginButton onPress={() => console.log("Zarejestruj się")} title="Zarejestruj się" />
+        <LoginButton onPress={() => navigation.navigate('Ekran Rejestracji')} title="Zarejestruj się" />
+        <TouchableOpacity onPress={() => navigation.navigate('Ekran Przywracania') }>
         <Text style={styles.ForgotLabel}>Zapomniałeś hasła? [Kliknij tutaj]</Text>
+        </TouchableOpacity>
       </View>
     </LinearGradient>
   );
