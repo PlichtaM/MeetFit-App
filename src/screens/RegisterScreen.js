@@ -1,13 +1,47 @@
 import React, { useState } from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Checkbox from 'expo-checkbox';
 import Input from '../components/Input';
 import LoginButton from '../components/LoginButton';
 import { colors } from '../components/Colors';
+//import api from '../../services/api';
 
 function RegisterScreen() {
   const [isChecked, setChecked] = useState(false);
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
+// Tutaj jest funkcja do obsługi rejestracji
+const handleRegister = () => {
+    if (password !== confirmPassword) {
+      Alert.alert('Błąd', 'Hasła nie są identyczne');
+      return;
+    }
+    if (!isChecked) {
+      Alert.alert('Błąd', 'Musisz zaakceptować regulamin');
+      return;
+    }
+
+  // Logika wysyłania żądania rejestracji
+     api.post('/api/user/register', {
+       userName,
+       email,
+       password,
+       confirmPassword
+     })
+     .then(response => {
+       console.log('Rejestracja udana:', response.data);
+       // Tutaj można dodać działania po pomyślnej rejestracji
+     })
+     .catch(error => {
+       console.error('Błąd podczas rejestracji:', error);
+       // Obsługa błędów
+     });
+   };
+
 
   return (
     <LinearGradient
@@ -23,10 +57,10 @@ function RegisterScreen() {
         <Text style={styles.registrationText}>REJESTRACJA</Text>
       </View>
       <View style={styles.inputContainer}>
-        <Input placeholder="Podaj nazwę użytkownika" />
-        <Input placeholder="Podaj adres email" />
-        <Input placeholder="Podaj hasło" secureTextEntry={true} />
-        <Input placeholder="Podaj ponownie hasło" secureTextEntry={true} />
+        <Input placeholder="Podaj nazwę użytkownika" onChangeText={setUsername} />
+        <Input placeholder="Podaj adres email" onChangeText={setEmail} />
+        <Input placeholder="Podaj hasło" secureTextEntry={true} onChangeText={setPassword} />
+        <Input placeholder="Potwierdź hasło" secureTextEntry={true} onChangeText={setConfirmPassword} />
         <View style={styles.CheckboxContainer}>
           <Checkbox
             value={isChecked}
@@ -35,7 +69,7 @@ function RegisterScreen() {
           />
           <Text style={styles.CheckboxLabel}>Akceptuję regulamin aplikacji</Text>
         </View>
-        <LoginButton onPress={() => console.log("Zarejestruj się")} title="Zarejestruj się" />
+        <LoginButton onPress={handleRegister} title="Zarejestruj się" />
       </View>
     </LinearGradient>
   );
