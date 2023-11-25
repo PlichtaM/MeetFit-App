@@ -5,7 +5,7 @@ import Checkbox from 'expo-checkbox';
 import Input from '../components/Input';
 import LoginButton from '../components/LoginButton';
 import { colors } from '../components/Colors';
-//import api from '../../services/api';
+import { registerUser } from '../services/api';
 
 function RegisterScreen() {
   const [isChecked, setChecked] = useState(false);
@@ -25,22 +25,21 @@ const handleRegister = () => {
       return;
     }
 
-  // Logika wysyłania żądania rejestracji
-     api.post('/api/user/register', {
-       userName,
-       email,
-       password,
-       confirmPassword
-     })
-     .then(response => {
-       console.log('Rejestracja udana:', response.data);
-       // Tutaj można dodać działania po pomyślnej rejestracji
-     })
-     .catch(error => {
-       console.error('Błąd podczas rejestracji:', error);
-       // Obsługa błędów
-     });
-   };
+  registerUser({
+        userName: username,
+        email,
+        password,
+        confirmPassword
+      })
+      .then(response => {
+        console.log('Rejestracja udana:', response.data);
+        // Działania po pomyślnej rejestracji
+      })
+      .catch(error => {
+        console.error('Błąd podczas rejestracji:', error);
+        // Obsługa błędów
+      });
+    };
 
 
   return (
