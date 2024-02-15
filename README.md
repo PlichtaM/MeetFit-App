@@ -1,17 +1,16 @@
-<h2>Przygotowanie</h2>
-npm install
+# MeetFit App
 
-npm install -g expo-cli
+## Przygotowanie
+```npm install```
 
+```npm install -g expo-cli```
 
-
-<h2>Odpalenie</h2>
-npm start
+## Odpalenie
+```npm start```
 
 lub 
 
-npm run android
+```npm run android```
 
 
-trzeba też mieć odpalony symulator androida z https://developer.android.com/studio
-
+trzeba też mieć odpalony [symulator androida](https://developer.android.com/studio)

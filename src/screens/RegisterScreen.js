@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, Image,  TouchableOpacity, Alert } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Checkbox from 'expo-checkbox';
 import Input from '../components/Input';
 import LoginButton from '../components/LoginButton';
 import { colors } from '../components/Colors';
-import { registerUser } from '../services/api';
+import { registerUser } from '../../services/api';
+import LoginStyles from "../styles/LoginStyles";
 
 function RegisterScreen() {
   const [isChecked, setChecked] = useState(false);
@@ -47,68 +48,31 @@ const handleRegister = () => {
       colors={[colors.primary, colors.secondary]}
       start={{ x: 0.5, y: 0 }}
       end={{ x: 0.5, y: 1 }}
-      style={styles.container}
+      style={LoginStyles.container}
     >
-      <View style={styles.registrationContainer}>        
-        <View style={styles.logoContainer}>
-          <Image source={require('../../assets/logo.png')} style={styles.logo} />
+      <View style={LoginStyles.LoginContainer}>        
+        <View style={LoginStyles.logoContainer}>
+          <Image source={require('../../assets/logo.png')} style={LoginStyles.logo} />
         </View>
-        <Text style={styles.registrationText}>REJESTRACJA</Text>
+        <Text style={LoginStyles.LoginText}>REJESTRACJA</Text>
       </View>
-      <View style={styles.inputContainer}>
+      <View style={LoginStyles.inputContainer}>
         <Input placeholder="Podaj nazwę użytkownika" onChangeText={setUsername} />
         <Input placeholder="Podaj adres email" onChangeText={setEmail} />
         <Input placeholder="Podaj hasło" secureTextEntry={true} onChangeText={setPassword} />
         <Input placeholder="Potwierdź hasło" secureTextEntry={true} onChangeText={setConfirmPassword} />
-        <View style={styles.CheckboxContainer}>
+        <View style={LoginStyles.CheckboxContainer}>
           <Checkbox
             value={isChecked}
             onValueChange={setChecked}
             tintColor={colors.text}
           />
-          <Text style={styles.CheckboxLabel}>Akceptuję regulamin aplikacji</Text>
+          <Text style={LoginStyles.CheckboxLabel}>Akceptuję regulamin aplikacji</Text>
         </View>
         <LoginButton onPress={handleRegister} title="Zarejestruj się" />
       </View>
     </LinearGradient>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  registrationContainer: {
-    marginBottom: 20,
-  },
-  registrationText: {
-    fontSize: 32,
-    color: colors.text,
-    textAlign: 'center',
-    marginTop: 24,
-  },
-  logoContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  logo: {
-    width: 67,
-    height: 97,
-    marginTop: 89,
-  },
-  inputContainer: {
-    flex: 1,
-    padding: 30,
-  },
-  CheckboxContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',    
-  },
-  CheckboxLabel: {
-    fontSize: 16,
-    color: colors.text,
-    marginLeft: 8,
-  },
-});
 
 export default RegisterScreen;
