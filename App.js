@@ -1,4 +1,5 @@
 import React from 'react';
+import { View } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { AppProvider } from './AppContext';
@@ -17,12 +18,13 @@ import ForgotPasswordScreen from './src/screens/ForgotPasswordScreen';
 import ChangePasswordScreen from './src/screens/ChangePasswordScreen';
 import CorrectChangedPasswordScreen from './src/screens/CorrectChangedPasswordScreen ';
 import VerifiedScreen from './src/screens/VerifiedScreen';
-
+import Footer from './src/components/Footer';
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
     <AppProvider>
+      <View style={{ flex: 1 }}>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Map" screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Mapa" component={Map} />
@@ -41,6 +43,8 @@ export default function App() {
           <Stack.Screen name="Ekran Zweryfikowanego Konta" component={VerifiedScreen} options={{ title: '' }} />
         </Stack.Navigator>
       </NavigationContainer>
+      <Footer />  
+      </View>
     </AppProvider>
   );
 }
