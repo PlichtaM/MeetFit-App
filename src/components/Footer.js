@@ -16,15 +16,15 @@ const Footer = () => {
   const getTabBarIcon = (routeName) => {
     let iconSource;
     if (routeName === 'MyEvents') {
-      iconSource = require('../../assets/favicon.png');
+      iconSource = require('../../assets/iconChat.png');
     } else if (routeName === 'Settings') {
-      iconSource = require('../../assets/favicon.png');
+      iconSource = require('../../assets/iconTrophy.png');
     } else if (routeName === 'FunFacts') {
       iconSource = require('../../assets/favicon.png');
     } else if (routeName === 'User') {
-      iconSource = require('../../assets/favicon.png');
+      iconSource = require('../../assets/IconCalendar.png');
     } else if (routeName === 'Events') {
-      iconSource = require('../../assets/favicon.png');
+      iconSource = require('../../assets/iconFunFacts.png');
     }
 
     return <Image source={iconSource} style={FooterStyles.Icon} />;
