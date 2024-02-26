@@ -1,6 +1,6 @@
 const FooterStyles = {
   container: {
-    height: 60,  
+    height: '100%',  
     width: '100%', 
   },
   Icon: {

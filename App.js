@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { AppProvider } from './AppContext';
 
+import Footer from './src/components/Footer';
 import Map from './src/screens/Map';
 import User from './src/screens/User';
 import Events from './src/screens/Events';
@@ -18,7 +19,7 @@ import ForgotPasswordScreen from './src/screens/ForgotPasswordScreen';
 import ChangePasswordScreen from './src/screens/ChangePasswordScreen';
 import CorrectChangedPasswordScreen from './src/screens/CorrectChangedPasswordScreen ';
 import VerifiedScreen from './src/screens/VerifiedScreen';
-import Footer from './src/components/Footer';
+
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -26,7 +27,8 @@ export default function App() {
     <AppProvider>
       <View style={{ flex: 1 }}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Map" screenOptions={{ headerShown: false }}>
+        <Stack.Navigator initialRouteName="Footer" screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="Footer" component={Footer} />
           <Stack.Screen name="Mapa" component={Map} />
           <Stack.Screen name="Użytkownik" component={User} />
           <Stack.Screen name="Wydarzenia" component={Events} />
@@ -43,7 +45,6 @@ export default function App() {
           <Stack.Screen name="Ekran Zweryfikowanego Konta" component={VerifiedScreen} options={{ title: '' }} />
         </Stack.Navigator>
       </NavigationContainer>
-      <Footer />  
       </View>
     </AppProvider>
   );
