@@ -1,7 +1,7 @@
 import React from "react";
 import { Image, View } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { NavigationContainer } from "@react-navigation/native";
+import { colors } from "./Colors";
 import FooterStyles from "../styles/FooterStyles";
 
 import MyEvents from "../screens/MyEvents";
@@ -15,19 +15,24 @@ const Tab = createBottomTabNavigator();
 const Footer = () => {
   const getTabBarIcon = (routeName) => {
     let iconSource;
+    let iconStyle = FooterStyles.Icon; 
+  
     if (routeName === "MyEvents") {
       iconSource = require("../../assets/iconChat.png");
     } else if (routeName === "Settings") {
       iconSource = require("../../assets/iconTrophy.png");
     } else if (routeName === "Mapa") {
-      iconSource = require("../../assets/favicon.png");
+      iconSource = require("../../assets/LogoIcon.png");
+      iconStyle = FooterStyles.MapIconStyle; 
     } else if (routeName === "User") {
       iconSource = require("../../assets/IconCalendar.png");
     } else if (routeName === "FunFacts") {
       iconSource = require("../../assets/iconFunFacts.png");
     }
-    return <Image source={iconSource} style={FooterStyles.Icon} />;
+  
+    return <Image source={iconSource} style={iconStyle} />;
   };
+  
 
   return (
     <View style={FooterStyles.container}>
@@ -37,11 +42,11 @@ const Footer = () => {
             tabBarIcon: ({}) => getTabBarIcon(route.name),
           })}
         >
-          <Tab.Screen name="MyEvents" component={MyEvents} />
-          <Tab.Screen name="Settings" component={Settings} />
-          <Tab.Screen name="Mapa" component={Mapa} />
-          <Tab.Screen name="User" component={User} />
-          <Tab.Screen name="FunFacts" component={FunFacts} />
+          <Tab.Screen name="MyEvents" component={MyEvents} options={{ title: '' }} />
+          <Tab.Screen name="Settings" component={Settings} options={{ title: '' }} />
+          <Tab.Screen name="Mapa" component={Mapa} options={{ title: '' }} />
+          <Tab.Screen name="User" component={User} options={{ title: '', headerStyle:{ backgroundColor:colors.primary }}} />
+          <Tab.Screen name="FunFacts" component={FunFacts} options={{ title: '' }} />
         </Tab.Navigator>
     </View>
   );

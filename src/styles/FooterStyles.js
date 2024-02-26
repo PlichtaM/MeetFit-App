@@ -4,9 +4,11 @@ const FooterStyles = {
     width: '100%', 
   },
   Icon: {
-    height:28,
-    width:28
   },
+  MapIconStyle:{
+    height:60,
+    width:60,
+  }
 };
 
 export default FooterStyles;

@@ -28,14 +28,14 @@ export default function App() {
       <View style={{ flex: 1 }}>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Footer" screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="Footer" component={Footer} />
-          <Stack.Screen name="Mapa" component={Map} />
-          <Stack.Screen name="Użytkownik" component={User} />
-          <Stack.Screen name="Wydarzenia" component={Events} />
-          <Stack.Screen name="Moje Wydarzenia" component={MyEvents} />
-          <Stack.Screen name="Ustawienia" component={Settings} />
-          <Stack.Screen name="Ciekawostki" component={FunFacts} />
-          <Stack.Screen name="Statystyki" component={Stats} />
+          <Stack.Screen name="Footer" component={Footer} options={{ title: '' }} />
+          <Stack.Screen name="Mapa" component={Map} options={{ title: '' }} />
+          <Stack.Screen name="Użytkownik" component={User} options={{ title: '' }} />
+          <Stack.Screen name="Wydarzenia" component={Events} options={{ title: '' }} />
+          <Stack.Screen name="Moje Wydarzenia" component={MyEvents} options={{ title: '' }} />
+          <Stack.Screen name="Ustawienia" component={Settings} options={{ title: '' }} />
+          <Stack.Screen name="Ciekawostki" component={FunFacts} options={{ title: '' }} />
+          <Stack.Screen name="Statystyki" component={Stats} options={{ title: '' }} />
           <Stack.Screen name="Ekran Ładowania" component={LoadingScreen} options={{ title: '' }} />
           <Stack.Screen name="Ekran Rejestracji" component={RegisterScreen} options={{ title: '' }} />
           <Stack.Screen name="Ekran Logowania" component={LoginScreen} options={{ title: '' }} />
