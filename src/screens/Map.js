@@ -1,22 +1,54 @@
-import React from 'react';
-import { View, Button } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { View, Button, StyleSheet, TouchableOpacity, Text, Alert } from 'react-native';
+import MapView, { Callout, Marker, PROVIDER_GOOGLE, Region } from 'react-native-maps';
 import { useNavigation } from '@react-navigation/native';
+import { markers } from '../map/markers';
+
+const INITIAL_REGION = {
+	latitude: 52.4,
+	longitude: 16.92,
+	latitudeDelta: 0.2,
+	longitudeDelta: 0.2
+};
 
 function Mapa() {
   const navigation = useNavigation();
+  const mapRef = useRef<MapView>(null);  
+  const onMarkerSelected = (marker: any) => {
+		Alert.alert(
+      'Szczegóły Wydarzenia',
+      `Wydarzenie: ${marker.name}\nDodatkowe informacje`, 
+    )
+	};
+
+	const calloutPressed = (ev: any) => {
+		console.log(ev);
+	};
+
   return (    
-    <View> 
-      <Button title="Użytkownik" onPress={() => navigation.navigate('Użytkownik')} />
-      <Button title="Ciekawostki" onPress={() => navigation.navigate('Ciekawostki')} />
-      <Button title="Ustawienia" onPress={() => navigation.navigate('Ustawienia')} />
-      <Button title="Ekran Ładowania" onPress={() => navigation.navigate('Ekran Ładowania')} />
-      <Button title="Ekran Rejestracji" onPress={() => navigation.navigate('Ekran Rejestracji')} />
-      <Button title="Ekran Logowania" onPress={() => navigation.navigate('Ekran Logowania')} />
-      <Button title="Ekran Przywracania" onPress={() => navigation.navigate('Ekran Przywracania')} />
-      <Button title="Ekran Zmiany Hasła" onPress={() => navigation.navigate('Ekran Zmiany Hasła')} />
-      <Button title="Ekran Pomyślnej Zmiany Hasła" onPress={() => navigation.navigate('Ekran Pomyślnej Zmiany Hasła')} />
-      <Button title="Ekran Zweryfikowanego Konta" onPress={() => navigation.navigate('Ekran Zweryfikowanego Konta')} />
-    </View>
+    <View style={{ flex: 1 }}>
+			<MapView
+				style={StyleSheet.absoluteFillObject}
+				initialRegion={INITIAL_REGION}
+				showsUserLocation
+				showsMyLocationButton
+			>
+        {markers.map((marker, index) => (
+					<Marker
+						key={index}
+						title={marker.name} 
+						coordinate={marker}
+						onPress={() => onMarkerSelected(marker)}
+					>
+						<Callout onPress={calloutPressed}>
+							<View style={{ padding: 10 }}>
+								<Text style={{ fontSize: 24 }}>{marker.name}</Text>
+							</View>
+						</Callout>
+					</Marker>
+				))}
+      </MapView>
+		</View>
   );
 }
 
