@@ -1,4 +1,5 @@
 import React from "react";
+import { colors } from "./Colors"; 
 import {
   View,
   Modal,
@@ -7,7 +8,7 @@ import {
   Text,
   Image,
 } from "react-native";
-import { colors } from "./Colors";
+
 
 interface PopupProps {
   isVisible: boolean;
@@ -118,7 +119,7 @@ const styles = StyleSheet.create({
   EventListList:{
     height:230,
     width:300,
-    backgroundColor: '#F1F1F1'
+    backgroundColor: colors.disabled
   },
   addEventButton:{
     marginTop: 15,
