@@ -1,7 +1,7 @@
 # MeetFit App
 
 ## Przygotowanie
-```npm install```
+```npm install``` - po każdym update
 
 ```npm install -g expo-cli```
 

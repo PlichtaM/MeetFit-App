@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, Image, TouchableOpacity, ScrollView  } from 'react-native';
-import FunFactsData from '../components/FunFacts.json'; // Import Ciekawostek
+import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
+import FunFactsData from '../tempAPI/FunFacts.json';
 import FunFactsStyles from '../styles/FunFactsStyles';
 
 const FunFacts = () => {
@@ -14,24 +14,24 @@ const FunFacts = () => {
   };
 
   return (
-    <ScrollView  style={FunFactsStyles.container}>
+    <ScrollView style={FunFactsStyles.container}>
       {FunFactsData.map((fact, index) => (
         <View key={index}>
           <View style={FunFactsStyles.factBox}>
             <View style={FunFactsStyles.titleContainer}>
               <Text style={FunFactsStyles.title}>{fact.title}</Text>
             </View>
-            <View style={FunFactsStyles.factContainer}>
+            <View style={{ ...FunFactsStyles.factContainer, height: expanded[index] ? 'auto' : 180 }}>
               <Image source={{ uri: fact.icon }} style={FunFactsStyles.icon} />
-              <Text style={FunFactsStyles.text}>
-                {expanded[index] ? fact.text : fact.text.substring(0, 50) + '...'}
-              </Text>
-              <TouchableOpacity onPress={() => handleReadMore(index)} style={FunFactsStyles.button}>
-                <Text style={FunFactsStyles.buttonText}>
-                  {expanded[index] ? 'Zwiń' : 'Czytaj więcej'}
+              <View style={FunFactsStyles.textContainer}>
+                <Text style={FunFactsStyles.text}>
+                  {expanded[index] ? fact.text : fact.text.substring(0, 100) + '...'}
                 </Text>
-              </TouchableOpacity>
+              </View>
             </View>
+            <TouchableOpacity onPress={() => handleReadMore(index)} style={FunFactsStyles.button}>
+              <Text style={FunFactsStyles.buttonText}>{expanded[index] ? 'Zwiń' : 'Czytaj więcej'}</Text>
+            </TouchableOpacity>
             {index < FunFactsData.length - 1 && <View style={FunFactsStyles.line} />}
           </View>
         </View>

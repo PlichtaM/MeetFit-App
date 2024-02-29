@@ -4,8 +4,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { colors } from "./Colors";
 import FooterStyles from "../styles/FooterStyles";
 
-import MyEvents from "../screens/MyEvents";
 import Settings from "../screens/Settings";
+import Ranking from "../screens/Ranking";
 import Mapa from "../screens/Map";
 import FunFacts from "../screens/FunFacts";
 import User from "../screens/User";
@@ -17,9 +17,9 @@ const Footer = () => {
     let iconSource;
     let iconStyle = FooterStyles.Icon; 
   
-    if (routeName === "MyEvents") {
+    if (routeName === "Settings") {
       iconSource = require("../../assets/iconChat.png");
-    } else if (routeName === "Settings") {
+    } else if (routeName === "Ranking") {
       iconSource = require("../../assets/iconTrophy.png");
     } else if (routeName === "Mapa") {
       iconSource = require("../../assets/LogoIcon.png");
@@ -42,8 +42,8 @@ const Footer = () => {
             tabBarIcon: ({}) => getTabBarIcon(route.name),
           })}
         >
-          <Tab.Screen name="MyEvents" component={MyEvents} options={{ title: '' }} />
           <Tab.Screen name="Settings" component={Settings} options={{ title: '' }} />
+          <Tab.Screen name="Ranking" component={Ranking} options={{ title: '' }} />
           <Tab.Screen name="Mapa" component={Mapa} options={{ title: '' }} />
           <Tab.Screen name="User" component={User} options={{ title: '', headerStyle:{ backgroundColor:colors.primary }}} />
           <Tab.Screen name="FunFacts" component={FunFacts} options={{ title: '' }} />

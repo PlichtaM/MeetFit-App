@@ -11,7 +11,7 @@ import Events from './src/screens/Events';
 import Settings from './src/screens/Settings';
 import MyEvents from './src/screens/MyEvents';
 import FunFacts from './src/screens/FunFacts';
-import Stats from './src/screens/Stats';
+import Ranking from './src/screens/Ranking';
 import LoadingScreen from './src/screens/LoadingScreen';
 import RegisterScreen from './src/screens/RegisterScreen';
 import LoginScreen from './src/screens/LoginScreen';
@@ -25,7 +25,7 @@ const Stack = createStackNavigator();
 export default function App() {
   return (
     <AppProvider>
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1 , backgroundColor:'white'}}>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Footer" screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Footer" component={Footer} options={{ title: '' }} />
@@ -35,7 +35,7 @@ export default function App() {
           <Stack.Screen name="Moje Wydarzenia" component={MyEvents} options={{ title: '' }} />
           <Stack.Screen name="Ustawienia" component={Settings} options={{ title: '' }} />
           <Stack.Screen name="Ciekawostki" component={FunFacts} options={{ title: '' }} />
-          <Stack.Screen name="Statystyki" component={Stats} options={{ title: '' }} />
+          <Stack.Screen name="Ranking" component={Ranking} options={{ title: '' }} />
           <Stack.Screen name="Ekran Ładowania" component={LoadingScreen} options={{ title: '' }} />
           <Stack.Screen name="Ekran Rejestracji" component={RegisterScreen} options={{ title: '' }} />
           <Stack.Screen name="Ekran Logowania" component={LoginScreen} options={{ title: '' }} />

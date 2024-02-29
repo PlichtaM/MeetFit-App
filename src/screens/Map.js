@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { View, Button, StyleSheet, Text, Alert } from 'react-native';
-import MapView, { Callout, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+import MapView, { Callout, Marker, PROVIDER_GOOGLE } from 'react-native-maps';//https://github.com/react-native-maps/react-native-maps?tab=readme-ov-file
 import { useNavigation } from '@react-navigation/native';
 import PopupComponent from '../components/MapEvent';
-import { markers } from '../map/markers';
+import { markers } from '../tempAPI/markers';
+import mapstyle from '../styles/mapstyle.json' //https://mapstyle.withgoogle.com/
+
 
 const INITIAL_REGION = {
   latitude: 52.4,
@@ -18,12 +20,8 @@ function Mapa() {
 
   const onMarkerSelected = (marker: any) => {
     setPopupVisible(true);
-    //Alert.alert('Szczegóły Wydarzenia', `Wydarzenie: ${marker.name}\nDodatkowe informacje`);
   };
 
-  const calloutPressed = () => {
-    // Handle callout press if needed
-  };
 
   const closePopup = () => {
     setPopupVisible(false);
@@ -37,7 +35,7 @@ function Mapa() {
         showsUserLocation
         showsMyLocationButton
         provider={PROVIDER_GOOGLE}
-        // customMapStyle={mapstyle} // Uncomment if needed
+         customMapStyle={mapstyle}
       >
         {markers.map((marker, index) => (
           <Marker
@@ -45,16 +43,10 @@ function Mapa() {
             title={marker.name}
             coordinate={marker}
             onPress={() => onMarkerSelected(marker)}
-          >
-            <Callout onPress={calloutPressed}>
-              <View style={{ padding: 10 }}>
-                <Text style={{ fontSize: 24 }}>{marker.name}</Text>
-              </View>
-            </Callout>
+          >            
           </Marker>
         ))}
       </MapView>
-
       <PopupComponent isVisible={popupVisible} onClose={closePopup} />
     </View>
   );

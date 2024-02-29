@@ -1,17 +1,41 @@
 import React from "react";
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import { View, Text, TouchableOpacity, Image ,ProgressBarAndroid, ProgressViewIOS } from "react-native";
+import { colors } from "../components/Colors";
 import UserStyles from "../styles/UserStyles";
+import user from "../tempAPI/user.json"
+import { Ionicons } from '@expo/vector-icons';
+import Icon from 'react-native-vector-icons/Ionicons';
+
+
 
 function User({navigation}) {
+  const userData = user[0];
+  const progress = (userData.liczba_kroków / userData.cel_kroków) * 100;
+  
   return (
     <View>
       <View style={UserStyles.container}>
         <View style={UserStyles.top}></View>
         <View style={UserStyles.UserIcon}></View>
         <View style={UserStyles.UserNameContainer}>
-          <Text style={UserStyles.UserName}>Adam Nowak</Text>
-          <Text>kroki</Text>
-          <Text style={UserStyles.StepsNumber}>2566/5000</Text>
+          <Text style={UserStyles.UserName}>{`${userData.imie} ${userData.Nazwisko}`}</Text>
+          <Icon name="footsteps" size={24} color={colors.primary} />
+           {/* Progress Bar */}
+           {Platform.OS === 'android' ? (
+            <ProgressBarAndroid
+              styleAttr="Horizontal"
+              indeterminate={false}
+              progress={progress / 100}
+              style={{ width: '100%', marginTop: 10 }}
+              color={colors.primary}
+            />
+          ) : (
+            <ProgressViewIOS
+              progress={progress / 100}
+              style={{ width: '100%', marginTop: 10 }}
+            />
+          )}
+          <Text style={UserStyles.StepsNumber}>{`${userData.liczba_kroków}/${userData.cel_kroków}`} </Text>
         </View>
         <View style={UserStyles.MenuContainer}>
           <TouchableOpacity onPress={() => navigation.navigate('Moje Wydarzenia')} style={UserStyles.UserButton}>

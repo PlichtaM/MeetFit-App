@@ -12,23 +12,16 @@ const FunFactsStyles = {
   factContainer: {
     marginBottom: 20,
     width:350,
-    height:180,
-    borderColor: '#ccc',
     borderRadius: 20,
+    justifyContent:'center',
+    flexDirection: 'row',
     alignItems:'center',
     backgroundColor: colors.disabled,
-  },
-  line: {
-    backgroundColor: '#d9d9d9',
-    height: 3,
-    width: '100%',
-    margin: 20,
-  },
+  },  
   titleContainer:{
     backgroundColor: colors.primary,
     width: '80%',
     height:40,
-    width:350,
     borderRadius:10,
     alignItems:'center',
     justifyContent: 'center',    
@@ -41,9 +34,14 @@ const FunFactsStyles = {
     color: 'white',
   },
   icon: {
-    width: 30,
-    height: 30,
+    width: 150,
+    height: 150,
     marginBottom: 10,
+    marginRight:10,  
+    borderRadius:20,
+  },
+  textContainer:{
+    width:150,
   },
   text: {
     fontSize: 14,
@@ -61,6 +59,12 @@ const FunFactsStyles = {
   buttonText: {
     color: '#fff',
     fontWeight: 'bold',
+  },
+  line: {
+    backgroundColor: '#d9d9d9',
+    height: 3,
+    width: '80%',
+    margin: 20,
   },
 };
 

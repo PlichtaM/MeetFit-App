@@ -5,7 +5,7 @@ function MyEvents() {
   return (
     <View>
       <Text>Ekran MyEvents</Text>
-      {/* Dodaj wyświetlanie rekordów tutaj */}
+      {/* Dodaj wyświetlanie rekordów tutaj */} 
     </View>
   );
 }
