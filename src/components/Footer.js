@@ -7,7 +7,7 @@ import FooterStyles from "../styles/FooterStyles";
 import Settings from "../screens/Settings";
 import Ranking from "../screens/Ranking";
 import Mapa from "../screens/Map";
-import FunFacts from "../screens/FunFacts";
+import Calendar from "../screens/Calendar";
 import User from "../screens/User";
 
 const Tab = createBottomTabNavigator();
@@ -24,9 +24,9 @@ const Footer = () => {
     } else if (routeName === "Mapa") {
       iconSource = require("../../assets/LogoIcon.png");
       iconStyle = FooterStyles.MapIconStyle; 
-    } else if (routeName === "User") {
+    } else if (routeName === "Calendar") {
       iconSource = require("../../assets/IconCalendar.png");
-    } else if (routeName === "FunFacts") {
+    } else if (routeName === "User") {
       iconSource = require("../../assets/iconFunFacts.png");
     }
   
@@ -40,13 +40,14 @@ const Footer = () => {
           initialRouteName="Mapa"
           screenOptions={({ route }) => ({
             tabBarIcon: ({}) => getTabBarIcon(route.name),
+            
           })}
         >
           <Tab.Screen name="Settings" component={Settings} options={{ title: '' }} />
           <Tab.Screen name="Ranking" component={Ranking} options={{ title: '' }} />
-          <Tab.Screen name="Mapa" component={Mapa} options={{ title: '' }} />
-          <Tab.Screen name="User" component={User} options={{ title: '', headerStyle:{ backgroundColor:colors.primary }}} />
-          <Tab.Screen name="FunFacts" component={FunFacts} options={{ title: '' }} />
+          <Tab.Screen name="Mapa" component={Mapa} options={{ title: '', headerShown: false  }} />
+          <Tab.Screen name="Calendar" component={Calendar} options={{ title: '', headerStyle:{ backgroundColor:colors.primary }}} />
+          <Tab.Screen name="User" component={User} options={{ title: '' }} />
         </Tab.Navigator>
     </View>
   );

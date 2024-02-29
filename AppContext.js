@@ -7,13 +7,9 @@ export const useAppContext = () => {
 };
 
 export const AppProvider = ({ children }) => {
-  const [jasnyMotyw, setJasnyMotyw] = useState(true);
-  const [rozmiarCzcionki, setRozmiarCzcionki] = useState(16);
-
-  const toggleMotyw = () => setJasnyMotyw(!jasnyMotyw);
 
   return (
-    <AppContext.Provider value={{ jasnyMotyw, toggleMotyw, rozmiarCzcionki, setRozmiarCzcionki }}>
+    <AppContext.Provider value={{ }}>
       {children}
     </AppContext.Provider>
   );

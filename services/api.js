@@ -3,7 +3,7 @@
 import axios from 'axios';
 
 // Ustaw bazowy URL API
-const API_BASE_URL = 'https://localhost:7244'; // Zastąp tym twoim lokalnym adresem IP i portem
+const API_BASE_URL = 'http://130.162.208.87:8094/'; 
 
 const api = axios.create({
   baseURL: API_BASE_URL,

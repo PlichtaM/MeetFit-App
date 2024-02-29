@@ -19,7 +19,8 @@ import ForgotPasswordScreen from './src/screens/ForgotPasswordScreen';
 import ChangePasswordScreen from './src/screens/ChangePasswordScreen';
 import CorrectChangedPasswordScreen from './src/screens/CorrectChangedPasswordScreen ';
 import VerifiedScreen from './src/screens/VerifiedScreen';
-import Calendar from './src/screens/calendar';
+import Calendar from './src/screens/Calendar';
+import Event from './src/screens/Event';
 
 import OtherScreens from './src/screens/OtherScreens';
 
@@ -28,13 +29,14 @@ const Stack = createStackNavigator();
 export default function App() {
   return (
     <AppProvider>
-      <View style={{ flex: 1 , backgroundColor:'white'}}>
+      <View style={{ flex: 1 }}>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Footer" screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Footer" component={Footer} options={{ title: '' }} />
           <Stack.Screen name="Mapa" component={Map} options={{ title: '' }} />
           <Stack.Screen name="Calendar" component={Calendar} options={{ title: '' }} />
           <Stack.Screen name="Użytkownik" component={User} options={{ title: '' }} />
+          <Stack.Screen name="Event" component={Event} options={{ title: '' }} />
           <Stack.Screen name="Wydarzenia" component={Events} options={{ title: '' }} />
           <Stack.Screen name="Moje Wydarzenia" component={MyEvents} options={{ title: '' }} />
           <Stack.Screen name="Ustawienia" component={Settings} options={{ title: '' }} />

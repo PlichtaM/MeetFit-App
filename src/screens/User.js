@@ -1,10 +1,11 @@
 import React from "react";
-import { View, Text, TouchableOpacity, Image ,ProgressBarAndroid, ProgressViewIOS } from "react-native";
+import { View, Text, TouchableOpacity, Image  } from "react-native";
 import { colors } from "../components/Colors";
 import UserStyles from "../styles/UserStyles";
 import user from "../tempAPI/user.json"
 import { Ionicons } from '@expo/vector-icons';
 import Icon from 'react-native-vector-icons/Ionicons';
+import * as Progress from 'react-native-progress'; //https://github.com/oblador/react-native-progress
 
 
 
@@ -13,28 +14,23 @@ function User({navigation}) {
   const progress = (userData.liczba_kroków / userData.cel_kroków) * 100;
   
   return (
-    <View>
+    <View >
       <View style={UserStyles.container}>
         <View style={UserStyles.top}></View>
         <Image style={UserStyles.UserIcon} source={{uri: userData.zdjecie_profilowe}}/>
         <View style={UserStyles.UserNameContainer}>
           <Text style={UserStyles.UserName}>{`${userData.imie} ${userData.Nazwisko}`}</Text>
           {/*<Icon name="footsteps" size={24} color={colors.primary} />*/}
-          <Image style={UserStyles.stepIcon} source={require("../../assets/iconFunFacts.png")}/> 
-           {Platform.OS === 'android' ? (
-            <ProgressBarAndroid
+          <Image style={UserStyles.stepIcon} source={require("../../assets/iconFunFacts.png")}/>            
+            <Progress.Bar
               styleAttr="Horizontal"
               indeterminate={false}
               progress={progress / 100}
-              style={{ width: '100%', marginTop: 10 }}
+              style={{ width: '100%', marginTop: 10, borderRadius: 0, }}
               color={colors.primary}
-            />
-          ) : (
-            <ProgressViewIOS
-              progress={progress / 100}
-              style={{ width: '100%', marginTop: 10 }}
-            />
-          )}
+              unfilledColor={colors.disabled}
+              borderWidth={0}
+            />          
           <Text style={UserStyles.StepsNumber}>{`${userData.liczba_kroków}/${userData.cel_kroków}`} </Text>
         </View>
         <View style={UserStyles.MenuContainer}>

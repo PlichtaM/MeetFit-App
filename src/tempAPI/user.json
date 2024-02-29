@@ -4,6 +4,128 @@
     "Nazwisko": "Kowalski",
     "liczba_kroków": 2566,
     "cel_kroków": 5000,
-    "zdjecie_profilowe": "https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fpluspng.com%2Fimg-png%2Fuser-png-icon-big-image-png-2240.png&f=1&nofb=1&ipt=ec1d6ef04bbad3f839c78ef975350bb3a1c56e1cd763346f79fec28355648c44&ipo=images"
+    "zdjecie_profilowe": "https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fpluspng.com%2Fimg-png%2Fuser-png-icon-big-image-png-2240.png&f=1&nofb=1&ipt=ec1d6ef04bbad3f839c78ef975350bb3a1c56e1cd763346f79fec28355648c44&ipo=images",
+    "Wydarzenia": [
+      {
+        "Nazwa": "Spotkanie",
+        "data": "2024-02-29",
+        "godzina": "15:00"
+      },
+      {
+        "Nazwa": "Spotkanie 2",
+        "data": "2024-02-29",
+        "godzina": "16:00"
+      },
+      {
+        "Nazwa": "Spotkanie 3",
+        "data": "2024-02-29",
+        "godzina": "17:00"
+      },
+      {
+        "Nazwa": "Konferencja",
+        "data": "2024-03-15",
+        "godzina": "10:30"
+      },
+      {
+        "Nazwa": "Nowe Wydarzenie 1",
+        "data": "2024-03-01",
+        "godzina": "14:00"
+      },
+      {
+        "Nazwa": "Nowe Wydarzenie 2",
+        "data": "2024-03-05",
+        "godzina": "16:45"
+      },
+      {
+        "Nazwa": "Nowe Wydarzenie 3",
+        "data": "2024-03-10",
+        "godzina": "12:30"
+      },
+      {
+        "Nazwa": "Nowe Wydarzenie 4",
+        "data": "2024-03-15",
+        "godzina": "18:00"
+      },
+      {
+        "Nazwa": "Nowe Wydarzenie 5",
+        "data": "2024-03-20",
+        "godzina": "11:15"
+      },
+      {
+        "Nazwa": "Nowe Wydarzenie 6",
+        "data": "2024-03-25",
+        "godzina": "13:45"
+      },
+      {
+        "Nazwa": "Nowe Wydarzenie 7",
+        "data": "2024-03-30",
+        "godzina": "17:30"
+      },
+      {
+        "Nazwa": "Nowe Wydarzenie 8",
+        "data": "2024-04-05",
+        "godzina": "09:00"
+      },
+      {
+        "Nazwa": "Nowe Wydarzenie 9",
+        "data": "2024-04-10",
+        "godzina": "14:30"
+      },
+      {
+        "Nazwa": "Nowe Wydarzenie 10",
+        "data": "2024-04-15",
+        "godzina": "16:00"
+      },
+      {
+        "Nazwa": "Nowe Wydarzenie 11",
+        "data": "2024-04-20",
+        "godzina": "10:45"
+      },
+      {
+        "Nazwa": "Nowe Wydarzenie 12",
+        "data": "2024-04-25",
+        "godzina": "12:15"
+      },
+      {
+        "Nazwa": "Nowe Wydarzenie 13",
+        "data": "2024-04-30",
+        "godzina": "15:30"
+      },
+      {
+        "Nazwa": "Nowe Wydarzenie 14",
+        "data": "2024-04-01",
+        "godzina": "08:45"
+      },
+      {
+        "Nazwa": "Nowe Wydarzenie 15",
+        "data": "2024-04-05",
+        "godzina": "14:00"
+      },
+      {
+        "Nazwa": "Nowe Wydarzenie 16",
+        "data": "2024-04-10",
+        "godzina": "16:45"
+      },
+      {
+        "Nazwa": "Nowe Wydarzenie 17",
+        "data": "2024-04-15",
+        "godzina": "13:30"
+      },
+      {
+        "Nazwa": "Nowe Wydarzenie 18",
+        "data": "2024-04-20",
+        "godzina": "19:00"
+      },
+      {
+        "Nazwa": "Nowe Wydarzenie 19",
+        "data": "2024-04-25",
+        "godzina": "10:15"
+      },
+      {
+        "Nazwa": "Nowe Wydarzenie 20",
+        "data": "2024-04-30",
+        "godzina": "18:30"
+      }
+    ]
   }
 ]

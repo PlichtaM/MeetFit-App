@@ -4,6 +4,7 @@ import { colors } from '../components/Colors';
 const UserStyles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor:'white'
   },
   top: {
     height: 200,

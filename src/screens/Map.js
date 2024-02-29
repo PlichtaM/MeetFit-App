@@ -42,7 +42,6 @@ function Mapa() {
         {markers.map((marker, index) => (
           <Marker
             key={index}
-            title={marker.name}
             coordinate={marker}
             onPress={() => onMarkerSelected(marker.name)}
           >            
