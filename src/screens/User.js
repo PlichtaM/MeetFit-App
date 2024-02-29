@@ -16,11 +16,11 @@ function User({navigation}) {
     <View>
       <View style={UserStyles.container}>
         <View style={UserStyles.top}></View>
-        <View style={UserStyles.UserIcon}></View>
+        <Image style={UserStyles.UserIcon} source={{uri: userData.zdjecie_profilowe}}/>
         <View style={UserStyles.UserNameContainer}>
           <Text style={UserStyles.UserName}>{`${userData.imie} ${userData.Nazwisko}`}</Text>
-          <Icon name="footsteps" size={24} color={colors.primary} />
-           {/* Progress Bar */}
+          {/*<Icon name="footsteps" size={24} color={colors.primary} />*/}
+          <Image style={UserStyles.stepIcon} source={require("../../assets/iconFunFacts.png")}/> 
            {Platform.OS === 'android' ? (
             <ProgressBarAndroid
               styleAttr="Horizontal"
@@ -42,21 +42,25 @@ function User({navigation}) {
             <Image style={UserStyles.ButtonImage} source={require("../../assets/iconChat.png")}/> 
             <Text style={UserStyles.buttonText}>Moje Wydarzenia</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('Moje Wydarzenia')} style={UserStyles.UserButton}>
+          <TouchableOpacity onPress={() => navigation.navigate('Mapa')} style={UserStyles.UserButton}>
             <Image style={UserStyles.ButtonImage} source={require("../../assets/iconMap.png")}/> 
-            <Text style={UserStyles.buttonText}>Moje Wydarzenia</Text>
+            <Text style={UserStyles.buttonText}>Mapa z punktami</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('Moje Wydarzenia')} style={UserStyles.UserButton}>
+          <TouchableOpacity onPress={() => navigation.navigate('Calendar')} style={UserStyles.UserButton}>
             <Image style={UserStyles.ButtonImage} source={require("../../assets/IconCalendar.png")}/> 
-            <Text style={UserStyles.buttonText}>Moje Wydarzenia</Text>
+            <Text style={UserStyles.buttonText}>Kalendarz</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('Moje Wydarzenia')} style={UserStyles.UserButton}>
+          <TouchableOpacity onPress={() => navigation.navigate('Ranking')} style={UserStyles.UserButton}>
             <Image style={UserStyles.ButtonImage} source={require("../../assets/iconTrophy.png")}/> 
-            <Text style={UserStyles.buttonText}>Moje Wydarzenia</Text>
+            <Text style={UserStyles.buttonText}>Ranking</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate('Ciekawostki')} style={UserStyles.UserButton}>
             <Image style={UserStyles.ButtonImage} source={require("../../assets/iconFunFacts.png")}/> 
             <Text style={UserStyles.buttonText}>Ciekawostki</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('OtherScreens')} style={UserStyles.UserButton}>
+            <Image style={UserStyles.ButtonImage} source={require("../../assets/LogoIcon.png")}/> 
+            <Text style={UserStyles.buttonText}>OtherScreens</Text>
           </TouchableOpacity>
         </View>
       </View>

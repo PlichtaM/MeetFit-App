@@ -12,8 +12,7 @@ const UserStyles = StyleSheet.create({
   UserIcon: {
     width: 200,
     height: 200,
-    backgroundColor: 'grey',
-    position: 'absolute',
+    position: 'absolute', 
     top: 100,
     left: '50%',
     marginLeft: -100,
@@ -27,6 +26,11 @@ const UserStyles = StyleSheet.create({
   UserName:{
     fontWeight: 'bold',
     fontSize: 24,
+  },
+  stepIcon:{
+    position: 'absolute',
+    top:35,
+    left: -50,
   },
   StepsNumber:{
     fontWeight: 'bold',

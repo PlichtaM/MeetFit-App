@@ -1,0 +1,31 @@
+[
+    {
+      "Nazwa": "Malta",
+      "Lokalizacja": "ul. Kwiatowa 123, Miastowo",
+      "GodzinyOtwarcia": {
+        "Poniedziałek": "08:00 - 18:00",
+        "Wtorek": "08:00 - 18:00",
+        "Środa": "08:00 - 18:00",
+        "Czwartek": "08:00 - 20:00",
+        "Piątek": "08:00 - 20:00",
+        "Sobota": "10:00 - 16:00",
+        "Niedziela": "Zamknięte"
+      },
+      "Photo": "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fsojka.biz%2Fwp-content%2Fuploads%2F2019%2F07%2FD85_6871.jpg&f=1&nofb=1&ipt=2da5f133b29efce8c3ba6599af51a08a2c738167d7cf3de42d47fb009140adee&ipo=images"
+    },
+    {
+      "Nazwa": "Rusałka",
+      "Lokalizacja": "pl. Sztuki 7, Nowe Miasto",
+      "GodzinyOtwarcia": {
+        "Poniedziałek": "10:00 - 17:00",
+        "Wtorek": "10:00 - 17:00",
+        "Środa": "10:00 - 17:00",
+        "Czwartek": "12:00 - 20:00",
+        "Piątek": "12:00 - 20:00",
+        "Sobota": "10:00 - 16:00",
+        "Niedziela": "Zamknięte"
+      },
+      "Photo": "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fsojka.biz%2Fwp-content%2Fuploads%2F2019%2F07%2FD85_6871.jpg&f=1&nofb=1&ipt=2da5f133b29efce8c3ba6599af51a08a2c738167d7cf3de42d47fb009140adee&ipo=images"
+    }
+  ]
+  

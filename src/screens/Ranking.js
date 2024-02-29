@@ -23,7 +23,7 @@ const Ranking = () => {
         break;
       default:
         backgroundColor = 'transparent';
-        textColor = 'black'; // Default text color
+        textColor = 'black';
     }
   
     return (
@@ -35,9 +35,7 @@ const Ranking = () => {
         <Image source={require("../../assets/iconFunFacts.png")} style={RankingStyles.footstepsIcon} />
       </View>
     );
-  };
-  
-  
+  };  
 
   const sortedUsers = [...users].sort((a, b) => b.liczba_kroków - a.liczba_kroków);
   const rankedUsers = sortedUsers.map((user, index) => ({ ...user, miejsce: index + 1 }));

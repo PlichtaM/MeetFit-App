@@ -28,6 +28,7 @@ const RankingStyles = {
             flex: 1,
             marginRight: 8,            
             fontSize:16,
+            fontWeight: 'bold',
           },
           steps: {
             fontSize:16,

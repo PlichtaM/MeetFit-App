@@ -17,11 +17,13 @@ const INITIAL_REGION = {
 function Mapa() {
   const navigation = useNavigation();
   const [popupVisible, setPopupVisible] = useState(false);
+  const [selectedMarkerName, setSelectedMarkerName] = useState(null);
 
-  const onMarkerSelected = (marker: any) => {
-    setPopupVisible(true);
+
+  const onMarkerSelected = (markerName) => {
+    setSelectedMarkerName(markerName);
+    setPopupVisible(true)
   };
-
 
   const closePopup = () => {
     setPopupVisible(false);
@@ -42,12 +44,12 @@ function Mapa() {
             key={index}
             title={marker.name}
             coordinate={marker}
-            onPress={() => onMarkerSelected(marker)}
+            onPress={() => onMarkerSelected(marker.name)}
           >            
           </Marker>
         ))}
       </MapView>
-      <PopupComponent isVisible={popupVisible} onClose={closePopup} />
+      <PopupComponent isVisible={popupVisible} onClose={closePopup} selectedMarkerName={selectedMarkerName} />
     </View>
   );
 }
