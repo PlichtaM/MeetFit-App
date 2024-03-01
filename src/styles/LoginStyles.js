@@ -22,10 +22,7 @@ const LoginStyles = {
         height: 97,
         marginTop: 89,
       },
-      inputContainer: {
-        flex: 1,
-        padding: 30,
-      },
+       
       CheckboxContainer: {
         flexDirection: 'row',
         alignItems: 'center',    

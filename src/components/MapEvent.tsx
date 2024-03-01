@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import styles from "../styles/MapPlaceStyles";
 import placeInfo  from "../tempAPI/place.json";
+import { useNavigation } from "@react-navigation/native";
 
 
 interface PopupProps {
@@ -18,6 +19,7 @@ interface PopupProps {
   selectedMarkerName: string;
 }
 const PopupComponent: React.FC<PopupProps> = ({ isVisible, onClose,selectedMarkerName }) => {
+  const navigation = useNavigation()
 
   const selectedPlace = placeInfo.find(place => place.Nazwa === selectedMarkerName);  
   const placePhotoUri = selectedPlace?.Photo || '';
@@ -53,7 +55,7 @@ const PopupComponent: React.FC<PopupProps> = ({ isVisible, onClose,selectedMarke
           <View style={styles.bottomBox}>
             <Text style={styles.EventListText}>Lista Wydarzeń</Text>
             <View style={styles.EventListList}></View>
-            <TouchableOpacity  style={styles.addEventButton}>
+            <TouchableOpacity  style={styles.addEventButton}  onPress={() => navigation.navigate('EventAdd')}>
                 <Text style={styles.addEventButtonText}>Utwórz nowe wydarzenie</Text>
             </TouchableOpacity>
           </View>

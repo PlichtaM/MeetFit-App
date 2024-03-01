@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { AppProvider } from './AppContext';
 
+
 import Footer from './src/components/Footer';
 import Map from './src/screens/Map';
 import User from './src/screens/User';
@@ -21,6 +22,7 @@ import CorrectChangedPasswordScreen from './src/screens/CorrectChangedPasswordSc
 import VerifiedScreen from './src/screens/VerifiedScreen';
 import Calendar from './src/screens/Calendar';
 import Event from './src/screens/Event';
+import EventAdd from './src/screens/EventAdd';
 import { colors } from './src/components/Colors';
 
 import OtherScreens from './src/screens/OtherScreens';
@@ -43,7 +45,7 @@ const headerOptions = {
 export default function App() {
   return (
     <AppProvider>
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1}}>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Footer" screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Footer" component={Footer} options={{ title: '' }} />
@@ -51,6 +53,7 @@ export default function App() {
           <Stack.Screen name="Calendar" component={Calendar} options={{ title: 'Kalendarz' }} />
           <Stack.Screen name="Użytkownik" component={User} options={{ title: '' }} />
           <Stack.Screen name="Event" component={Event} options={{ title: '' }} />
+          <Stack.Screen name="EventAdd" component={EventAdd} options={{ title: '' }} />
           <Stack.Screen name="Wydarzenia" component={Events} options={{ title: '' }} />
           <Stack.Screen name="Moje Wydarzenia" component={MyEvents} options={{ title: '' }} />
           <Stack.Screen name="Settings" component={Settings} options={{ title: '' }} />

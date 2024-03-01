@@ -10,8 +10,9 @@
   },
   "dependencies": {
     "@react-native-community/checkbox": "^0.5.16",
+    "@react-native-community/datetimepicker": "^7.6.2",
     "@react-native-community/progress-bar-android": "^1.0.5",
-    "@react-native-community/slider": "^4.4.3",
+    "@reasliderct-native-community/": "^4.4.3",
     "@react-native-community/viewpager": "^5.0.11",
     "@react-navigation/bottom-tabs": "^6.5.9",
     "@react-navigation/native": "^6.1.8",
