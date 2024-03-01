@@ -21,10 +21,24 @@ import CorrectChangedPasswordScreen from './src/screens/CorrectChangedPasswordSc
 import VerifiedScreen from './src/screens/VerifiedScreen';
 import Calendar from './src/screens/Calendar';
 import Event from './src/screens/Event';
+import { colors } from './src/components/Colors';
 
 import OtherScreens from './src/screens/OtherScreens';
 
 const Stack = createStackNavigator();
+
+const headerOptions = {
+  headerStyle: {
+    backgroundColor: colors.primary,
+  },
+  headerTitleStyle: {
+    fontWeight: "bold",
+    color: "white",
+    fontSize:30,
+  },
+  headerTitleAlign: 'center',
+  headerTintColor: "white",
+};
 
 export default function App() {
   return (
@@ -34,12 +48,12 @@ export default function App() {
         <Stack.Navigator initialRouteName="Footer" screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Footer" component={Footer} options={{ title: '' }} />
           <Stack.Screen name="Mapa" component={Map} options={{ title: '' }} />
-          <Stack.Screen name="Calendar" component={Calendar} options={{ title: '' }} />
+          <Stack.Screen name="Calendar" component={Calendar} options={{ title: 'Kalendarz' }} />
           <Stack.Screen name="Użytkownik" component={User} options={{ title: '' }} />
           <Stack.Screen name="Event" component={Event} options={{ title: '' }} />
           <Stack.Screen name="Wydarzenia" component={Events} options={{ title: '' }} />
           <Stack.Screen name="Moje Wydarzenia" component={MyEvents} options={{ title: '' }} />
-          <Stack.Screen name="Ustawienia" component={Settings} options={{ title: '' }} />
+          <Stack.Screen name="Settings" component={Settings} options={{ title: '' }} />
           <Stack.Screen name="Ciekawostki" component={FunFacts} options={{ title: '' }} />
           <Stack.Screen name="Ranking" component={Ranking} options={{ title: '' }} />
           <Stack.Screen name="Ekran Ładowania" component={LoadingScreen} options={{ title: '' }} />
