@@ -65,6 +65,11 @@ const EventAddStyles = {
     textAlign:'center',
     fontSize: 20,
   },
+  calendar:{    
+    borderRadius:15,
+    width: 350,
+  },
+  
 };
 
 export default EventAddStyles;

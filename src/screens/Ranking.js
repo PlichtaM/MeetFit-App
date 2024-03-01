@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text, Image, FlatList, RankingStylesheet } from 'react-native';
 import RankingStyles from "../styles/RankingStyles"
-
 import users from '../tempAPI/userlist.json';
 
 const Ranking = () => {

@@ -1,5 +1,5 @@
 import React from "react";
-import { colors } from "./Colors"; 
+import { colors } from "./Colors";
 import {
   View,
   Modal,
@@ -9,25 +9,31 @@ import {
   Image,
 } from "react-native";
 import styles from "../styles/MapPlaceStyles";
-import placeInfo  from "../tempAPI/place.json";
+import placeInfo from "../tempAPI/place.json";
 import { useNavigation } from "@react-navigation/native";
-
 
 interface PopupProps {
   isVisible: boolean;
   onClose: () => void;
   selectedMarkerName: string;
 }
-const PopupComponent: React.FC<PopupProps> = ({ isVisible, onClose,selectedMarkerName }) => {
-  const navigation = useNavigation()
+const PopupComponent: React.FC<PopupProps> = ({
+  isVisible,
+  onClose,
+  selectedMarkerName,
+}) => {
+  const navigation = useNavigation();
 
-  const selectedPlace = placeInfo.find(place => place.Nazwa === selectedMarkerName);  
-  const placePhotoUri = selectedPlace?.Photo || '';
+  const selectedPlace = placeInfo.find(
+    (place) => place.Nazwa === selectedMarkerName
+  );
+  const placePhotoUri = selectedPlace?.Photo || "";
   const placeInfoState = {
     address: selectedPlace?.Lokalizacja || "",
     openingHours: selectedPlace?.GodzinyOtwarcia || {},
   };
-  
+  const today = new Date().toLocaleDateString("pl-PL", { weekday: "long" });
+  const todayOpeningHours = placeInfoState.openingHours[today];
 
   return (
     <Modal transparent animationType="slide" visible={isVisible}>
@@ -42,21 +48,39 @@ const PopupComponent: React.FC<PopupProps> = ({ isVisible, onClose,selectedMarke
                 style={styles.closeButtonIcon}
               />
             </TouchableOpacity>
-            <Image style={styles.PlacePicture}  source={{uri: placePhotoUri }}/>
+            <Image
+              style={styles.PlacePicture}
+              source={{ uri: placePhotoUri }}
+            />
             <Text style={styles.AdressTextBold}>Lokalizacja</Text>
             <Text style={styles.AdressText}>{placeInfoState.address}</Text>
             <Text style={styles.AdressTextBold}>Godziny otwarcia</Text>
-              {Object.entries(placeInfoState.openingHours).map(([day, hours]) => (
-                <Text key={day} style={styles.AdressText}>
-                      {`${day}: ${hours}`}
-                        </Text>
-                        ))}
+            {Object.entries(placeInfoState.openingHours).map(([day, hours]) => {
+              const todayDay = new Intl.DateTimeFormat("pl-PL", {
+                weekday: "long",
+              })
+                .format(new Date())
+                .toLowerCase();
+              const formattedDay = day.toLowerCase();
+              return (
+                todayDay === formattedDay && (
+                  <Text key={day} style={styles.AdressText}>
+                    {`${day}: ${hours}`}
+                  </Text>
+                )
+              );
+            })}
           </View>
           <View style={styles.bottomBox}>
             <Text style={styles.EventListText}>Lista Wydarzeń</Text>
             <View style={styles.EventListList}></View>
-            <TouchableOpacity  style={styles.addEventButton}  onPress={() => navigation.navigate('EventAdd')}>
-                <Text style={styles.addEventButtonText}>Utwórz nowe wydarzenie</Text>
+            <TouchableOpacity
+              style={styles.addEventButton}
+              onPress={() => navigation.navigate("EventAdd")}
+            >
+              <Text style={styles.addEventButtonText}>
+                Utwórz nowe wydarzenie
+              </Text>
             </TouchableOpacity>
           </View>
         </View>

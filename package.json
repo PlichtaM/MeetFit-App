@@ -10,9 +10,8 @@
   },
   "dependencies": {
     "@react-native-community/checkbox": "^0.5.16",
-    "@react-native-community/datetimepicker": "^7.6.2",
     "@react-native-community/progress-bar-android": "^1.0.5",
-    "@reasliderct-native-community/": "^4.4.3",
+    "@react-native-community/slider": "^4.5.0",
     "@react-native-community/viewpager": "^5.0.11",
     "@react-navigation/bottom-tabs": "^6.5.9",
     "@react-navigation/native": "^6.1.8",
@@ -26,6 +25,7 @@
     "expo-status-bar": "~1.6.0",
     "react": "18.2.0",
     "react-native": "0.72.4",
+    "react-native-calendars": "^1.1304.0",
     "react-native-gesture-handler": "^2.13.1",
     "react-native-linear-gradient": "^2.8.3",
     "react-native-maps": "1.7.1",
