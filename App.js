@@ -24,6 +24,7 @@ import Calendar from './src/screens/Calendar';
 import Event from './src/screens/Event';
 import EventAdd from './src/screens/EventAdd';
 import { colors } from './src/components/Colors';
+import EventEdit from './src/screens/EventEdit';
 
 import OtherScreens from './src/screens/OtherScreens';
 
@@ -54,6 +55,7 @@ export default function App() {
           <Stack.Screen name="Użytkownik" component={User} options={{ title: '' }} />
           <Stack.Screen name="Event" component={Event} options={{ title: '' }} />
           <Stack.Screen name="EventAdd" component={EventAdd} options={{ title: '' }} />
+          <Stack.Screen name="EventEdit" component={EventEdit} options={{ title: '' }} />
           <Stack.Screen name="Wydarzenia" component={Events} options={{ title: '' }} />
           <Stack.Screen name="Moje Wydarzenia" component={MyEvents} options={{ title: '' }} />
           <Stack.Screen name="Settings" component={Settings} options={{ title: '' }} />

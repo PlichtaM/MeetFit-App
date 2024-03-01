@@ -50,9 +50,9 @@ const Event = () => {
         </View>
         <TouchableOpacity
           style={styles.createEventButton}
-          onPress={() => navigation.navigate("Footer")}>
+          onPress={() => navigation.navigate("EventEdit")}>
           <Text style={styles.createEventButtonText}>
-            Utwórz nowe wydarzenie
+            Edytuj wydarzenie
           </Text>
         </TouchableOpacity>
       </View>

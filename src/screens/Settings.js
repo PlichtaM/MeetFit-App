@@ -1,21 +1,60 @@
-import React from 'react';
-import { View, Button } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import React, { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
+import { View, Text, TextInput, TouchableOpacity, Switch } from "react-native";
+import { Checkbox } from "expo-checkbox";
+import style from "../styles/SettingsStyles";
+import { colors } from "../components/Colors";
 
 function Settings() {
   const navigation = useNavigation();
-  return (    
-    <View> 
-      <Button title="Użytkownik" onPress={() => navigation.navigate('Użytkownik')} />
-      <Button title="Ciekawostki" onPress={() => navigation.navigate('Ciekawostki')} />
-      <Button title="Ustawienia" onPress={() => navigation.navigate('Ustawienia')} />
-      <Button title="Ekran Ładowania" onPress={() => navigation.navigate('Ekran Ładowania')} />
-      <Button title="Ekran Rejestracji" onPress={() => navigation.navigate('Ekran Rejestracji')} />
-      <Button title="Ekran Logowania" onPress={() => navigation.navigate('Ekran Logowania')} />
-      <Button title="Ekran Przywracania" onPress={() => navigation.navigate('Ekran Przywracania')} />
-      <Button title="Ekran Zmiany Hasła" onPress={() => navigation.navigate('Ekran Zmiany Hasła')} />
-      <Button title="Ekran Pomyślnej Zmiany Hasła" onPress={() => navigation.navigate('Ekran Pomyślnej Zmiany Hasła')} />
-      <Button title="Ekran Zweryfikowanego Konta" onPress={() => navigation.navigate('Ekran Zweryfikowanego Konta')} />
+  const [selectedOption, setSelectedOption] = useState("");
+
+  const handleCheckboxChange = (option) => {
+    setSelectedOption(option === selectedOption ? "" : option);
+  };
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+  return (
+    <View style={style.container}>
+
+      <Text style={style.text}>Motyw apliakcji:</Text>
+      <View style={style.Checkboxes}>
+        <Checkbox
+          value={selectedOption === "Ciemny"}
+          onValueChange={() => handleCheckboxChange("Ciemny")}
+        />
+        <Text style={{ fontSize: 16, marginHorizontal: 10 }}>Ciemny</Text>
+        <Checkbox
+          value={selectedOption === "Jasny"}
+          onValueChange={() => handleCheckboxChange("Jasny")}
+        />
+        <Text style={{ fontSize: 16, marginHorizontal: 10 }}>Jasny</Text>
+      </View>
+     
+      <View style={style.switchContainer}>
+        <Text style={style.text}>Powiadomienia:</Text>
+        <Switch
+          trackColor={{ true: colors.primary, false: "#767577" }}
+          thumbColor={isEnabled ? '#8A23AD' : '#f4f3f4'}
+          ios_backgroundColor="#3e3e3e"
+          onValueChange={toggleSwitch}
+          value={isEnabled}
+        />
+      </View>
+      <View style={style.switchContainer}>
+        <Text style={style.text}>Dźwięk:</Text>
+        <Switch
+          trackColor={{ true: colors.primary, false: "#767577" }}
+          thumbColor={isEnabled ? '#8A23AD' : '#f4f3f4'}
+          ios_backgroundColor="#3e3e3e"
+          onValueChange={toggleSwitch}
+          value={isEnabled}
+        />
+      </View>
+
+      <TouchableOpacity style={style.addEventButton}>
+          <Text style={style.addEventButtonText}>Zapisz Ustawienia</Text>
+        </TouchableOpacity>
     </View>
   );
 }

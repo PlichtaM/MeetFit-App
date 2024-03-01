@@ -33,11 +33,12 @@ LocaleConfig.locales['pl'] = {
 LocaleConfig.defaultLocale = 'pl';
 
 
-function EventAdd() {  
+function EventEdit() {  
   const navigation = useNavigation();
   const [limitMiejsc, setLimitMiejsc] = useState(5);
   const [selected, setSelected] = useState("");
   const [selectedOption, setSelectedOption] = useState("");
+
 
   const handleCheckboxChange = (option) => {
     setSelectedOption(option === selectedOption ? "" : option);
@@ -106,11 +107,14 @@ function EventAdd() {
           <Text style={{ fontSize: 16, marginHorizontal: 10 }}>Publiczne</Text>
         </View>
         <TouchableOpacity style={style.addEventButton}>
-          <Text style={style.addEventButtonText} onPress={() => navigation.navigate("Event")}>Utwórz wydarzenie</Text>
+          <Text style={style.addEventButtonText} onPress={() => navigation.navigate("Event")}>Aktualizuj wydarzenie</Text>
+        </TouchableOpacity>
+         <TouchableOpacity style={style.cancelEventButton}>
+          <Text style={style.addEventButtonText} onPress={() => navigation.navigate("Footer")}>Anuluj wydarzenie</Text>
         </TouchableOpacity>
       </View>
     </View>
   );
 }
 
-export default EventAdd;
+export default EventEdit;

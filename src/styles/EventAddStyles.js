@@ -69,7 +69,14 @@ const EventAddStyles = {
     borderRadius:15,
     width: 350,
   },
-  
+  cancelEventButton:{
+    marginTop: 15,
+    backgroundColor: '#980107',
+    width:'90%',
+    height:35,
+    borderRadius:10,
+    justifyContent:'center',
+  },
 };
 
 export default EventAddStyles;
