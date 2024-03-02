@@ -25,7 +25,44 @@
         "Sobota": "10:00 - 16:00",
         "Niedziela": "Zamknięte"
       },
-      "Photo": "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fs.inyourpocket.com%2Fgallery%2F120987.jpg&f=1&nofb=1&ipt=c3bdc82ecef9016d38a1e325417cee58454cbc52f1d87b5afc7747f46d71d919&ipo=images"
+      "Photo": "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fs.inyourpocket.com%2Fgallery%2F120987.jpg&f=1&nofb=1&ipt=c3bdc82ecef9016d38a1e325417cee58454cbc52f1d87b5afc7747f46d71d919&ipo=images",
+      "Wydarzenia": [
+        {
+          "Nazwa": "Spotkanie",
+          "data": "2024-02-29",
+          "godzina": "15:00",
+          "zapisani_uzytkownicy": ["JanKowalski", "AnnaNowak", "MarekJablonowski"],
+          "limit_osob": 10
+        },
+        {
+          "Nazwa": "Spotkanie 2",
+          "data": "2024-02-29",
+          "godzina": "16:00",
+          "zapisani_uzytkownicy": ["JanKowalski", "AnnaNowak", "MarekJablonowski","JanKowalski", "AnnaNowak", "MarekJablonowski","JanKowalski", "AnnaNowak", "MarekJablonowski","JanKowalski"],
+          "limit_osob": 10
+        },
+        {
+          "Nazwa": "Spotkanie 3",
+          "data": "2024-02-29",
+          "godzina": "17:00",
+          "zapisani_uzytkownicy": ["JanKowalski", "AnnaNowak", "MarekJablonowski"],
+          "limit_osob": 10
+        },
+        {
+          "Nazwa": "Konferencja",
+          "data": "2024-03-15",
+          "godzina": "10:30",
+          "zapisani_uzytkownicy":[ "AnnaNowak", "MarekJablonowski","JanKowalski", "AnnaNowak", "MarekJablonowski","JanKowalski", "AnnaNowak", "MarekJablonowski","JanKowalski"],
+          "limit_osob": 10
+        },
+        {
+          "Nazwa": "Nowe Wydarzenie 1",
+          "data": "2024-03-01",
+          "godzina": "14:00",
+          "zapisani_uzytkownicy": ["JanKowalski", "AnnaNowak", "MarekJablonowski"],
+          "limit_osob": 10
+        }
+      ]
     }
   ]
   

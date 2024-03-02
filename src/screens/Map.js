@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Button, StyleSheet, Text, Alert } from 'react-native';
 import MapView, { Callout, Marker, PROVIDER_GOOGLE } from 'react-native-maps';//https://github.com/react-native-maps/react-native-maps?tab=readme-ov-file
 import { useNavigation } from '@react-navigation/native';
-import PopupComponent from '../components/MapEvent';
+import Place from '../components/Place';
 import { markers } from '../tempAPI/markers';
 import mapstyle from '../styles/mapstyle.json' //https://mapstyle.withgoogle.com/
 
@@ -48,7 +48,7 @@ function Mapa() {
           </Marker>
         ))}
       </MapView>
-      <PopupComponent isVisible={popupVisible} onClose={closePopup} selectedMarkerName={selectedMarkerName} />
+      <Place isVisible={popupVisible} onClose={closePopup} selectedMarkerName={selectedMarkerName} />
     </View>
   );
 }

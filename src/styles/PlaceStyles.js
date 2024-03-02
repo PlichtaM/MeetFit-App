@@ -49,6 +49,7 @@ const MapPlace = {
     width: 285,
     height: 150,
     marginBottom: 10,
+    borderRadius:10,
   },
   AdressText: {
     color: "white",
@@ -67,11 +68,42 @@ const MapPlace = {
     fontSize: 24,
     textAlign: "center"
   },
-  EventListList:{
+
+
+
+  ListBox:{
     height:230,
     width:300,
-    backgroundColor: colors.disabled
+    backgroundColor: colors.disabled,
+    borderRadius:10,
   },
+  EventListList:{
+    flex: 1,
+    padding: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between', 
+    gap:5,
+  },
+  EventListItemText:{
+    fontSize: 14,},
+  line:{
+    alignSelf:'center',
+    height:3,
+    width:'90%',
+    backgroundColor:'#D9D9D9',
+    margin:5,
+  },
+  progressBarContainer: {
+    height: 10,
+    width: '100%',
+    backgroundColor: '#ccc',
+    borderRadius: 5,
+    overflow: 'hidden',
+  },
+
+
+
   addEventButton:{
     marginTop: 15,
     backgroundColor: colors.secondary,

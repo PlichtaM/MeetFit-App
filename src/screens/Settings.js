@@ -8,12 +8,18 @@ import { colors } from "../components/Colors";
 function Settings() {
   const navigation = useNavigation();
   const [selectedOption, setSelectedOption] = useState("");
-
+  const [notificationsEnabled, setNotificationsEnabled] = useState(false);
+  const [soundEnabled, setSoundEnabled] = useState(false);
   const handleCheckboxChange = (option) => {
     setSelectedOption(option === selectedOption ? "" : option);
   };
-  const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+  const toggleNotificationsSwitch = () => {
+    setNotificationsEnabled((previousState) => !previousState);
+  };
+
+  const toggleSoundSwitch = () => {
+    setSoundEnabled((previousState) => !previousState);
+  };
   return (
     <View style={style.container}>
 
@@ -35,20 +41,20 @@ function Settings() {
         <Text style={style.text}>Powiadomienia:</Text>
         <Switch
           trackColor={{ true: colors.primary, false: "#767577" }}
-          thumbColor={isEnabled ? '#8A23AD' : '#f4f3f4'}
+          thumbColor={notificationsEnabled ? '#8A23AD' : '#f4f3f4'}
           ios_backgroundColor="#3e3e3e"
-          onValueChange={toggleSwitch}
-          value={isEnabled}
+          onValueChange={toggleNotificationsSwitch}
+          value={notificationsEnabled}
         />
       </View>
       <View style={style.switchContainer}>
         <Text style={style.text}>Dźwięk:</Text>
         <Switch
           trackColor={{ true: colors.primary, false: "#767577" }}
-          thumbColor={isEnabled ? '#8A23AD' : '#f4f3f4'}
+          thumbColor={soundEnabled ? '#8A23AD' : '#f4f3f4'}
           ios_backgroundColor="#3e3e3e"
-          onValueChange={toggleSwitch}
-          value={isEnabled}
+          onValueChange={toggleSoundSwitch}
+          value={soundEnabled}
         />
       </View>
 
