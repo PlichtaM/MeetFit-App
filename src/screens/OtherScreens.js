@@ -5,10 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 function OtherScreens() {
   const navigation = useNavigation();
   return (    
-    <View> 
-      <Button title="Użytkownik" onPress={() => navigation.navigate('Użytkownik')} />
-      <Button title="Ciekawostki" onPress={() => navigation.navigate('Ciekawostki')} />
-      <Button title="Ustawienia" onPress={() => navigation.navigate('Ustawienia')} />
+    <View style={{margin:50}}> 
       <Button title="Ekran Ładowania" onPress={() => navigation.navigate('Ekran Ładowania')} />
       <Button title="Ekran Rejestracji" onPress={() => navigation.navigate('Ekran Rejestracji')} />
       <Button title="Ekran Logowania" onPress={() => navigation.navigate('Ekran Logowania')} />

@@ -26,21 +26,24 @@ const handleRegister = () => {
       return;
     }
 
-  registerUser({
-        userName: username,
-        email,
-        password,
-        confirmPassword
-      })
-      .then(response => {
-        console.log('Rejestracja udana:', response.data);
-        // Działania po pomyślnej rejestracji
-      })
-      .catch(error => {
-        console.error('Błąd podczas rejestracji:', error);
-        // Obsługa błędów
-      });
+    const userData = {
+      userName: username,
+      email: email,
+      password: password,
+      confirmPassword: confirmPassword
     };
+    registerUser(userData)
+    .then(response => {
+      console.log('Rejestracja udana:', response.data);
+      // Działania po pomyślnej rejestracji
+    })
+    .catch(error => {
+      console.log('Status odpowiedzi:', error.response.status);
+      console.log('Nagłówki odpowiedzi:', error.response.headers);
+      console.log('haslo: ', username);
+    });
+};
+    
 
 
   return (

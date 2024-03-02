@@ -26,6 +26,7 @@ import EventAdd from './src/screens/EventAdd';
 import { colors } from './src/components/Colors';
 import EventEdit from './src/screens/EventEdit';
 
+import Place from './src/components/Place';
 import OtherScreens from './src/screens/OtherScreens';
 
 const Stack = createStackNavigator();
@@ -53,6 +54,7 @@ export default function App() {
           <Stack.Screen name="Mapa" component={Map} options={{ title: '' }} />
           <Stack.Screen name="Calendar" component={Calendar} options={{ title: 'Kalendarz' }} />
           <Stack.Screen name="Użytkownik" component={User} options={{ title: '' }} />
+          <Stack.Screen name="Place" component={Place} options={{ title: '' }} />
           <Stack.Screen name="Event" component={Event} options={{ title: '' }} />
           <Stack.Screen name="EventAdd" component={EventAdd} options={{ title: '' }} />
           <Stack.Screen name="EventEdit" component={EventEdit} options={{ title: '' }} />

@@ -106,7 +106,7 @@ function EventAdd() {
           <Text style={{ fontSize: 16, marginHorizontal: 10 }}>Publiczne</Text>
         </View>
         <TouchableOpacity style={style.addEventButton}>
-          <Text style={style.addEventButtonText} onPress={() => navigation.navigate("Event")}>Utwórz wydarzenie</Text>
+          <Text style={style.addEventButtonText} onPress={() => navigation.navigate('Event')}>Utwórz wydarzenie</Text>
         </TouchableOpacity>
       </View>
     </View>
