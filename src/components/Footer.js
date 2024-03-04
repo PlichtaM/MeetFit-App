@@ -2,6 +2,8 @@ import React from "react";
 import { Image, View, Text,Pressable } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { colors } from "./Colors";
+import { getCurrentColors, getColorScheme, setColorScheme } from "../components/Colors";
+import { ThemeProvider } from "./ThemeContext";
 import FooterStyles from "../styles/FooterStyles";
 
 import Settings from "../screens/Settings";
@@ -53,6 +55,7 @@ const Footer = () => {
   };
 
   return (
+    <ThemeProvider>
     <View style={FooterStyles.container}>
       <Tab.Navigator
         initialRouteName="Mapa"
@@ -87,6 +90,7 @@ const Footer = () => {
         />
       </Tab.Navigator>
     </View>
+    </ThemeProvider>
   );
 };
 

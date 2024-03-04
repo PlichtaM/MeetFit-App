@@ -1,20 +1,19 @@
-import React, { useState, useEffect, useReducer } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { View, Text, TextInput, TouchableOpacity, Switch } from "react-native";
 import { Checkbox } from "expo-checkbox";
 import style from "../styles/SettingsStyles";
-import { getCurrentColors, getColorScheme, setColorScheme } from "../components/Colors";
-
+import { colors, getColorScheme, setColorScheme } from "../components/Colors";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function Settings() {
   const navigation = useNavigation();
-  const [, forceUpdate] = useReducer((x) => x + 1, 0); // Create a forceUpdate function
   const [selectedOption, setSelectedOption] = useState(getColorScheme().type);
   const [notificationsEnabled, setNotificationsEnabled] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(false);
 
   useEffect(() => {
+    // Pobierz ustawienia z AsyncStorage przy pierwszym renderowaniu komponentu
     async function loadSettings() {
       try {
         const storedSettings = await AsyncStorage.getItem("appSettings");
@@ -34,7 +33,6 @@ function Settings() {
 
   const handleCheckboxChange = (option) => {
     setSelectedOption(option);
-    forceUpdate(); // Trigger a re-render to update the theme immediately
   };
 
   const toggleNotificationsSwitch = () => {
@@ -46,23 +44,14 @@ function Settings() {
   };
 
   const saveSettings = async () => {
+    // Zapisz ustawienia do AsyncStorage
     try {
       const settingsToSave = {
         theme: selectedOption,
         notifications: notificationsEnabled,
         sound: soundEnabled,
       };
-      console.log("Saving settings:", settingsToSave);
-
-      await setColorScheme(selectedOption);
-
-      // Save other settings to AsyncStorage
       await AsyncStorage.setItem("appSettings", JSON.stringify(settingsToSave));
-
-      // Add a console.log to check if the color scheme is updated
-      console.log("Color scheme updated to:", selectedOption);
-
-      forceUpdate(); // Trigger a re-render to update the theme immediately
     } catch (error) {
       console.error("Error saving settings:", error);
     }
@@ -87,7 +76,7 @@ function Settings() {
       <View style={style.switchContainer}>
         <Text style={style.text}>Powiadomienia:</Text>
         <Switch
-          trackColor={{ true: getCurrentColors().primary, false: "#767577" }}
+          trackColor={{ true: colors.primary, false: "#767577" }}
           thumbColor={notificationsEnabled ? "#8A23AD" : "#f4f3f4"}
           ios_backgroundColor="#3e3e3e"
           onValueChange={toggleNotificationsSwitch}
@@ -97,7 +86,7 @@ function Settings() {
       <View style={style.switchContainer}>
         <Text style={style.text}>Dźwięk:</Text>
         <Switch
-          trackColor={{ true: getCurrentColors().primary, false: "#767577" }}
+          trackColor={{ true: colors.primary, false: "#767577" }}
           thumbColor={soundEnabled ? "#8A23AD" : "#f4f3f4"}
           ios_backgroundColor="#3e3e3e"
           onValueChange={toggleSoundSwitch}

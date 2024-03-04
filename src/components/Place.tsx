@@ -121,7 +121,7 @@ const Place = ({ isVisible, onClose, selectedMarkerName }) => {
                   }}
                 />
               ) : (
-                <Text>No events available</Text>
+                <Text>Brak wydarzeń</Text>
               )}
             </View>
 

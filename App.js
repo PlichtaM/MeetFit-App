@@ -31,19 +31,6 @@ import OtherScreens from './src/screens/OtherScreens';
 
 const Stack = createStackNavigator();
 
-const headerOptions = {
-  headerStyle: {
-    backgroundColor: colors.primary,
-  },
-  headerTitleStyle: {
-    fontWeight: "bold",
-    color: "white",
-    fontSize:30,
-  },
-  headerTitleAlign: 'center',
-  headerTintColor: "white",
-};
-
 export default function App() {
   return (
     <AppProvider>

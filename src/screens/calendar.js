@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Appearance } from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import styles from '../styles/CalendarStyles';
 import user from "../tempAPI/user.json";

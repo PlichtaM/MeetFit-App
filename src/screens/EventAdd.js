@@ -3,7 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import Slider from "@react-native-community/slider";
 import { Calendar, LocaleConfig } from "react-native-calendars"; //https://github.com/wix/react-native-calendars
-//import DateTimePicker from '@react-native-community/datetimepicker'
+//import DateTimePicker from '@react-native-community/datetimepicker'  //https://github.com/react-native-datetimepicker/datetimepicker
 //import { RadioButton } from 'react-native-paper';
 import { Checkbox } from "expo-checkbox";
 import style from "../styles/EventAddStyles";
