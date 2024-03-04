@@ -29,7 +29,7 @@ const MapPlace = {
   },
   closeButton: {
     position: "absolute",
-    top: -20,
+    top: -25,
     right: -20,
     padding: 10,
   },

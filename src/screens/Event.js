@@ -5,6 +5,7 @@ import placeInfo from "../tempAPI/place.json";
 import event from "../tempAPI/event.json";
 import { colors } from "../components/Colors";
 
+import { Entypo , MaterialCommunityIcons  } from '@expo/vector-icons';
 import styles from "../styles/EventStyles";
 
 const Event = () => {
@@ -42,8 +43,7 @@ const Event = () => {
         style={styles.closeButton}
         onPress={() => navigation.popToTop()}
       >
-        <Image
-          source={require("../../assets/closeButton.png")}
+        <MaterialCommunityIcons name="close-circle" size={30} color={colors.secondary} 
           style={styles.closeButtonIcon}
         />
       </TouchableOpacity>

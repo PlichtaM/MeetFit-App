@@ -2,6 +2,8 @@ import React from 'react';
 import { View, Text, Image, FlatList, RankingStylesheet } from 'react-native';
 import RankingStyles from "../styles/RankingStyles"
 import users from '../tempAPI/userlist.json';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { colors } from '../components/Colors';
 
 const Ranking = () => {
   const renderUserItem = ({ item }) => {
@@ -31,7 +33,7 @@ const Ranking = () => {
         <Image source={{ uri: item.zdjecie_profilowe }} style={RankingStyles.avatar} />
         <Text style={{ ...RankingStyles.userName, color: textColor }}>{`${item.imie} ${item.Nazwisko}`}</Text>
         <Text style={{ ...RankingStyles.steps, color: textColor }}>{`${item.liczba_kroków}`}</Text>
-        <Image source={require("../../assets/iconFunFacts.png")} style={RankingStyles.footstepsIcon} />
+        <MaterialCommunityIcons name="foot-print" size={24} color={colors.secondary} style={RankingStyles.footstepsIcon} />
       </View>
     );
   };  

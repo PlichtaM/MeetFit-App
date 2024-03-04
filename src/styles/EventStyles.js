@@ -25,10 +25,6 @@ const EventStyles = {
   closeButton: {
     padding: 10,
   },
-  closeButtonIcon: {
-    height: 30,
-    width: 30,
-  },
   eventImage: {
     width: "100%",
     height: 200,

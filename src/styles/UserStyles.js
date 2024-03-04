@@ -61,7 +61,11 @@ const UserStyles = StyleSheet.create({
     marginRight: 15,
     height:26,
     width:26,
-  }
+  },
+  ButtonIcon:{
+    size:26,
+    color:colors.secondary,
+  },
 });
 
 export default UserStyles;

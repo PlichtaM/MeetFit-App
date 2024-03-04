@@ -11,6 +11,7 @@ import {
 import styles from "../styles/PlaceStyles";
 import placeInfo from "../tempAPI/place.json";
 import { useNavigation } from "@react-navigation/native";
+import { MaterialCommunityIcons, Entypo  } from '@expo/vector-icons';
 
 const Place = ({ isVisible, onClose, selectedMarkerName }) => {
   const navigation = useNavigation();
@@ -33,10 +34,7 @@ const Place = ({ isVisible, onClose, selectedMarkerName }) => {
           <View style={styles.topBox}>
             <Text style={styles.placeText}>{selectedMarkerName}</Text>
             <TouchableOpacity onPress={onClose} style={styles.closeButton}>
-              <Image
-                source={require("../../assets/closeButton.png")}
-                style={styles.closeButtonIcon}
-              />
+            <MaterialCommunityIcons name="close-circle-outline" size={50} color="white" style={styles.closeButtonIcon} />
             </TouchableOpacity>
             <Image
               style={styles.PlacePicture}
@@ -90,10 +88,7 @@ const Place = ({ isVisible, onClose, selectedMarkerName }) => {
                     return (
                       <View>
                         <View style={styles.EventListList}>
-                          <Image
-                            style={{ height: 25, marginRight: 5 }}
-                            source={require("../../assets/addIcon.png")}
-                          />
+                          <Entypo name="circle-with-plus" size={24} color={colors.secondary} />
                           <Text
                             style={{
                               ...styles.ListLimit,

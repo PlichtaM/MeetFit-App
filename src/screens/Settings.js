@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useReducer } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { View, Text, TextInput, TouchableOpacity, Switch } from "react-native";
+import { View, Text, TouchableOpacity, Switch } from "react-native";
 import { Checkbox } from "expo-checkbox";
 import style from "../styles/SettingsStyles";
 import { getCurrentColors, getColorScheme, setColorScheme } from "../components/Colors";

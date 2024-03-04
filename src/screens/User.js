@@ -3,8 +3,8 @@ import { View, Text, TouchableOpacity, Image, Pressable  } from "react-native";
 import { colors } from "../components/Colors";
 import UserStyles from "../styles/UserStyles";
 import user from "../tempAPI/user.json"
-import { Ionicons } from '@expo/vector-icons';
-import Icon from 'react-native-vector-icons/Ionicons';
+//import Icon from 'react-native-vector-icons/Ionicons';
+import { Entypo, MaterialCommunityIcons, MaterialIcons  } from '@expo/vector-icons';
 import * as Progress from 'react-native-progress'; //https://github.com/oblador/react-native-progress
 
 
@@ -22,7 +22,9 @@ function User({ navigation }) {
       title:  'MeetFit',
       headerRight: () => (
         <Pressable onPress={() => navigation.navigate('Settings')}>
-          <Image style={{height: 25, marginRight: 15}} source={require("../../assets/settingsIcon.png")}/>
+          <MaterialIcons name="settings" size={28}  color="white" style={{height: 25, marginRight: 15}} />
+          
+          {/*<Image style={{height: 25, marginRight: 15}} source={require("../../assets/settingsIcon.png")}/>  */}
         </Pressable>
       ),
       headerTitleAlign: 'center',
@@ -41,7 +43,8 @@ function User({ navigation }) {
         <View style={UserStyles.UserNameContainer}>
           <Text style={UserStyles.UserName}>{`${userData.imie} ${userData.Nazwisko}`}</Text>
           {/*<Icon name="footsteps" size={24} color={colors.primary} />*/}
-          <Image style={UserStyles.stepIcon} source={require("../../assets/iconFunFacts.png")}/>            
+          <MaterialCommunityIcons name="foot-print" size={30} color={colors.primary}  style={UserStyles.stepIcon} />
+          {/*<Image style={UserStyles.stepIcon} source={require("../../assets/iconFunFacts.png")}/>  */}          
             <Progress.Bar
               styleAttr="Horizontal"
               indeterminate={false}
@@ -55,27 +58,27 @@ function User({ navigation }) {
         </View>
         <View style={UserStyles.MenuContainer}>
           <TouchableOpacity onPress={() => navigation.navigate('Events')} style={UserStyles.UserButton}>
-            <Image style={UserStyles.ButtonImage} source={require("../../assets/iconChat.png")}/> 
+          <Entypo name="chat" size={26} color={colors.primary} style={UserStyles.ButtonImage} /> 
             <Text style={UserStyles.buttonText}>Moje Wydarzenia</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate('Map')} style={UserStyles.UserButton}>
-            <Image style={UserStyles.ButtonImage} source={require("../../assets/iconMap.png")}/> 
+          <MaterialCommunityIcons name="map" size={26} color={colors.primary}  style={UserStyles.ButtonImage} />
             <Text style={UserStyles.buttonText}>Mapa z punktami</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate('Calendar')} style={UserStyles.UserButton}>
-            <Image style={UserStyles.ButtonImage} source={require("../../assets/IconCalendar.png")}/> 
+          <MaterialCommunityIcons name="calendar-multiselect" size={26} color={colors.primary}  style={UserStyles.ButtonImage} />
             <Text style={UserStyles.buttonText}>Kalendarz</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate('Ranking')} style={UserStyles.UserButton}>
-            <Image style={UserStyles.ButtonImage} source={require("../../assets/iconTrophy.png")}/> 
+          <MaterialCommunityIcons name="trophy" size={26} color={colors.primary}  style={UserStyles.ButtonImage} />
             <Text style={UserStyles.buttonText}>Ranking</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate('FunFacts')} style={UserStyles.UserButton}>
-            <Image style={UserStyles.ButtonImage} source={require("../../assets/iconFunFacts.png")}/> 
+          <MaterialCommunityIcons name="head-question" size={26} color={colors.primary}  style={UserStyles.ButtonImage} />
             <Text style={UserStyles.buttonText}>Ciekawostki</Text>
-          </TouchableOpacity>
+          </TouchableOpacity>          
           <TouchableOpacity onPress={() => navigation.navigate('OtherScreens')} style={UserStyles.UserButton}>
-            <Image style={UserStyles.ButtonImage} source={require("../../assets/LogoIcon.png")}/> 
+          <MaterialCommunityIcons name="account-alert" size={26} color={colors.primary}  style={UserStyles.ButtonImage} />
             <Text style={UserStyles.buttonText}>OtherScreens</Text>
           </TouchableOpacity>
         </View>

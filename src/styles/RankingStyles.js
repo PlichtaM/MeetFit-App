@@ -10,7 +10,7 @@ const RankingStyles = {
             marginVertical: 4,
             backgroundColor: 'transparent',
             borderRadius:10,
-            width:360,
+            width:"360",
             padding:10,
           },
           rank: {

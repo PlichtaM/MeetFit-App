@@ -16,15 +16,6 @@ const CalendarStyles = {
     fontSize:20,
     fontWeight:'bold',
   },
-  arrow: {
-    height:30,
-    width:30,
-  },
-  arrowReverse: {
-    transform: [{ rotate: '180deg' }],
-    height: 40,
-    width: 40,
-  },
   eventButton: {
     backgroundColor: colors.disabled,
     width:360,
