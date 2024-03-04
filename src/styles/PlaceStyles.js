@@ -101,7 +101,10 @@ const MapPlace = {
     borderRadius: 5,
     overflow: 'hidden',
   },
-
+  noEvents:{    
+    textAlign: 'center',
+    marginTop:20,
+  },
 
 
   addEventButton:{

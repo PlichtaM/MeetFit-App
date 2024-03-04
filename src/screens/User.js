@@ -54,11 +54,11 @@ function User({ navigation }) {
           <Text style={UserStyles.StepsNumber}>{`${userData.liczba_kroków}/${userData.cel_kroków}`} </Text>
         </View>
         <View style={UserStyles.MenuContainer}>
-          <TouchableOpacity onPress={() => navigation.navigate('Moje Wydarzenia')} style={UserStyles.UserButton}>
+          <TouchableOpacity onPress={() => navigation.navigate('Events')} style={UserStyles.UserButton}>
             <Image style={UserStyles.ButtonImage} source={require("../../assets/iconChat.png")}/> 
             <Text style={UserStyles.buttonText}>Moje Wydarzenia</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('Mapa')} style={UserStyles.UserButton}>
+          <TouchableOpacity onPress={() => navigation.navigate('Map')} style={UserStyles.UserButton}>
             <Image style={UserStyles.ButtonImage} source={require("../../assets/iconMap.png")}/> 
             <Text style={UserStyles.buttonText}>Mapa z punktami</Text>
           </TouchableOpacity>
@@ -70,7 +70,7 @@ function User({ navigation }) {
             <Image style={UserStyles.ButtonImage} source={require("../../assets/iconTrophy.png")}/> 
             <Text style={UserStyles.buttonText}>Ranking</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('Ciekawostki')} style={UserStyles.UserButton}>
+          <TouchableOpacity onPress={() => navigation.navigate('FunFacts')} style={UserStyles.UserButton}>
             <Image style={UserStyles.ButtonImage} source={require("../../assets/iconFunFacts.png")}/> 
             <Text style={UserStyles.buttonText}>Ciekawostki</Text>
           </TouchableOpacity>

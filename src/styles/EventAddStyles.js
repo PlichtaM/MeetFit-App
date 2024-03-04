@@ -6,7 +6,7 @@ const EventAddStyles = {
     height:'100%',
   },
   container: {
-    marginTop:60,
+    marginTop:10,
     marginLeft: 20,
   },
   text: {

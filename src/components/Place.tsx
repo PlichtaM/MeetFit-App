@@ -121,13 +121,13 @@ const Place = ({ isVisible, onClose, selectedMarkerName }) => {
                   }}
                 />
               ) : (
-                <Text>Brak wydarzeń</Text>
+                <Text style={styles.noEvents}>Brak wydarzeń</Text>
               )}
             </View>
 
             <TouchableOpacity
               style={styles.addEventButton}
-              onPress={() => navigation.navigate("EventAdd")}
+              onPress={() => { navigation.navigate("EventAdd"); onClose(); }}
             >
               <Text style={styles.addEventButtonText}>
                 Utwórz nowe wydarzenie

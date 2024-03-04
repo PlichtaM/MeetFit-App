@@ -1,9 +1,11 @@
 import React, { useState, Appearance } from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import styles from '../styles/CalendarStyles';
 import user from "../tempAPI/user.json";
 
 function Calendar() {
+  const navigation = useNavigation();
   const events = user[0].Wydarzenia || [];
 
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -44,6 +46,7 @@ function Calendar() {
           <TouchableOpacity
             key={index}
             style={[styles.eventButton, index % 2 === 0 ? styles.evenEvent : null]}
+            onPress={() => navigation.navigate("Event")}
           >
             <Text style={[styles.eventText, index % 2 === 0 ? styles.evenText : null]}>
               {new Date(event.data).toLocaleDateString('en-GB')} -<Text style={{fontWeight:'bold'}}> {event.Nazwa}</Text> - {event.godzina}

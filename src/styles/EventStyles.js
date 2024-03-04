@@ -28,7 +28,6 @@ const EventStyles = {
   closeButtonIcon: {
     height: 30,
     width: 30,
-    tintColor: "white",
   },
   eventImage: {
     width: "100%",

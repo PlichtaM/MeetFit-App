@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, ScrollView } from "react-native";
 import Slider from "@react-native-community/slider";
 import { Calendar, LocaleConfig } from "react-native-calendars"; //https://github.com/wix/react-native-calendars
 //import DateTimePicker from '@react-native-community/datetimepicker'  //https://github.com/react-native-datetimepicker/datetimepicker
@@ -43,7 +43,7 @@ function EventAdd() {
     setSelectedOption(option === selectedOption ? "" : option);
   };
   return (
-    <View style={style.background}>
+    <ScrollView style={style.background}>
       <View style={style.container}>
         <Text style={style.text}>Podaj nazwę wydarzenia:</Text>
         <View style={style.inputContainer}>
@@ -109,7 +109,7 @@ function EventAdd() {
           <Text style={style.addEventButtonText} onPress={() => navigation.navigate('Event')}>Utwórz wydarzenie</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 

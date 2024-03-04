@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Image, Pressable  } from "react-native";
 import placeInfo from "../tempAPI/place.json";
 import event from "../tempAPI/event.json";
+import { colors } from "../components/Colors";
 
 import styles from "../styles/EventStyles";
 
 const Event = () => {
+  
+
   const {
     Nazwa,
     data,
@@ -21,21 +24,37 @@ const Event = () => {
   const selectedPlace = placeInfo.find((place) => place.Nazwa === miejsce);
   const placePhotoUri = selectedPlace?.Photo || "";
 
+  useLayoutEffect(() => { 
+    navigation.setOptions({
+      title: Nazwa,      
+      headerTitleAlign: 'center',
+      headerTintColor: "white",
+      headerStyle: {
+        backgroundColor: colors.primary,
+      },
+      headerTitleStyle: {
+        fontWeight: "bold",
+        color: "white",
+        fontSize:25,
+      },
+      headerRight: () => (
+        <TouchableOpacity
+        style={styles.closeButton}
+        onPress={() => navigation.popToTop()}
+      >
+        <Image
+          source={require("../../assets/closeButton.png")}
+          style={styles.closeButtonIcon}
+        />
+      </TouchableOpacity>
+      ),
+      headerLeft:() =>(null),
+    });
+  }, [navigation]);
+
   return (
     <View style={styles.screen}>
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <Text style={styles.heading}>{Nazwa}</Text>
-          <TouchableOpacity
-            style={styles.closeButton}
-            onPress={() => navigation.navigate("Footer")}
-          >
-            <Image
-              source={require("../../assets/closeButton.png")}
-              style={styles.closeButtonIcon}
-            />
-          </TouchableOpacity>
-        </View>
+      <View style={styles.container}>       
         <Image style={styles.eventImage} source={{ uri: placePhotoUri }} />
         <View style={styles.infoContainer}>
           <Text style={styles.infoText}>Data: {data}</Text>

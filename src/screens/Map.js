@@ -12,7 +12,7 @@ const INITIAL_REGION = {
   longitudeDelta: 0.2,
 };
 
-function Mapa(navigation) {
+function Map(navigation) {
   const [popupVisible, setPopupVisible] = useState(false);
   const [selectedMarkerName, setSelectedMarkerName] = useState(null);
 
@@ -50,4 +50,4 @@ function Mapa(navigation) {
   );
 }
 
-export default Mapa;
+export default Map;
