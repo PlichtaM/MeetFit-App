@@ -43,7 +43,7 @@ function User({ navigation }) {
         <View style={UserStyles.UserNameContainer}>
           <Text style={UserStyles.UserName}>{`${userData.imie} ${userData.Nazwisko}`}</Text>
           {/*<Icon name="footsteps" size={24} color={colors.primary} />*/}
-          <MaterialCommunityIcons name="foot-print" size={30} color={colors.primary}  style={UserStyles.stepIcon} />
+          <MaterialCommunityIcons name="foot-print" size={30} color={colors.secondary}  style={UserStyles.stepIcon} />
           {/*<Image style={UserStyles.stepIcon} source={require("../../assets/iconFunFacts.png")}/>  */}          
             <Progress.Bar
               styleAttr="Horizontal"
@@ -57,28 +57,28 @@ function User({ navigation }) {
           <Text style={UserStyles.StepsNumber}>{`${userData.liczba_kroków}/${userData.cel_kroków}`} </Text>
         </View>
         <View style={UserStyles.MenuContainer}>
-          <TouchableOpacity onPress={() => navigation.navigate('Events')} style={UserStyles.UserButton}>
-          <Entypo name="chat" size={26} color={colors.primary} style={UserStyles.ButtonImage} /> 
+          <TouchableOpacity onPress={() => navigation.navigate('Calendar')} style={UserStyles.UserButton}>
+          <Entypo name="chat" size={26} color={colors.secondary} style={UserStyles.ButtonImage} /> 
             <Text style={UserStyles.buttonText}>Moje Wydarzenia</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate('Map')} style={UserStyles.UserButton}>
-          <MaterialCommunityIcons name="map" size={26} color={colors.primary}  style={UserStyles.ButtonImage} />
+          <MaterialCommunityIcons name="map" size={26} color={colors.secondary}  style={UserStyles.ButtonImage} />
             <Text style={UserStyles.buttonText}>Mapa z punktami</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate('Calendar')} style={UserStyles.UserButton}>
-          <MaterialCommunityIcons name="calendar-multiselect" size={26} color={colors.primary}  style={UserStyles.ButtonImage} />
+          <MaterialCommunityIcons name="calendar-multiselect" size={26} color={colors.secondary}  style={UserStyles.ButtonImage} />
             <Text style={UserStyles.buttonText}>Kalendarz</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate('Ranking')} style={UserStyles.UserButton}>
-          <MaterialCommunityIcons name="trophy" size={26} color={colors.primary}  style={UserStyles.ButtonImage} />
+          <MaterialCommunityIcons name="trophy" size={26} color={colors.secondary}  style={UserStyles.ButtonImage} />
             <Text style={UserStyles.buttonText}>Ranking</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate('FunFacts')} style={UserStyles.UserButton}>
-          <MaterialCommunityIcons name="head-question" size={26} color={colors.primary}  style={UserStyles.ButtonImage} />
+          <MaterialCommunityIcons name="head-question" size={26} color={colors.secondary}  style={UserStyles.ButtonImage} />
             <Text style={UserStyles.buttonText}>Ciekawostki</Text>
           </TouchableOpacity>          
           <TouchableOpacity onPress={() => navigation.navigate('OtherScreens')} style={UserStyles.UserButton}>
-          <MaterialCommunityIcons name="account-alert" size={26} color={colors.primary}  style={UserStyles.ButtonImage} />
+          <MaterialCommunityIcons name="account-alert" size={26} color={colors.secondary}  style={UserStyles.ButtonImage} />
             <Text style={UserStyles.buttonText}>OtherScreens</Text>
           </TouchableOpacity>
         </View>

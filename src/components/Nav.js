@@ -9,10 +9,8 @@ import { Entypo, MaterialCommunityIcons, MaterialIcons, FontAwesome  } from '@ex
 import FooterStyles from "../styles/FooterStyles";
 import { colors } from "../components/Colors";
 
-import MyEvents from "../screens/MyEvents";
 import Map from "../screens/Map";
 import User from "../screens/User";
-import Events from "../screens/Events";
 import Settings from "../screens/Settings";
 import FunFacts from "../screens/FunFacts";
 import Ranking from "../screens/Ranking";
@@ -23,6 +21,17 @@ import EventEdit from "../screens/EventEdit";
 import Place from "../components/Place";
 
 import OtherScreens from "../screens/OtherScreens";
+
+
+import LoadingScreen from '../screens/LoadingScreen';
+import RegisterScreen from '../screens/RegisterScreen';
+import LoginScreen from '../screens/LoginScreen';
+import ForgotPasswordScreen from '../screens/ForgotPasswordScreen';
+import ChangePasswordScreen from '../screens/ChangePasswordScreen';
+import CorrectChangedPasswordScreen from '../screens/CorrectChangedPasswordScreen ';
+import VerifiedScreen from '../screens/VerifiedScreen';
+
+
 
 const Tab = createBottomTabNavigator();
 export default function Nav() {
@@ -64,6 +73,10 @@ export default function Nav() {
     );
   }
 
+
+  
+  
+
   const UserStack = createStackNavigator();
   function UserStackScreen() {
     return (
@@ -73,13 +86,21 @@ export default function Nav() {
           component={User}
           options={{ ...headerOptions }}
         />
-        <UserStack.Screen name="Events" component={Events} />
         <UserStack.Screen name="Map" component={Map} />
         <UserStack.Screen name="Calendar" component={Calendar} />
         <UserStack.Screen name="Ranking" component={Ranking} />
         <UserStack.Screen name="FunFacts" component={FunFacts} />
         <UserStack.Screen name="OtherScreens" component={OtherScreens} />
         <UserStack.Screen name="Settings" component={Settings} />
+
+        
+         <UserStack.Screen name='Loading' component={LoadingScreen}/>
+         <UserStack.Screen name='RegisterScreen' component={RegisterScreen}/>
+         <UserStack.Screen name='LoginScreen' component={LoginScreen}/>
+         <UserStack.Screen name='ForgotPasswordScreen' component={ForgotPasswordScreen}/>
+         <UserStack.Screen name='ChangePasswordScreen' component={ChangePasswordScreen}/>
+         <UserStack.Screen name='CorrectChangedPasswordScreen' component={CorrectChangedPasswordScreen}/>
+         <UserStack.Screen name='VerifiedScreen' component={VerifiedScreen}/>
       </UserStack.Navigator>
     );
   }
