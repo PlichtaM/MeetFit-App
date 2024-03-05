@@ -36,14 +36,13 @@ function User({ navigation }) {
   const progress = (userData.liczba_kroków / userData.cel_kroków) * 100;
   
   return (
-    <View >
       <View style={UserStyles.container}>
         <View style={UserStyles.top}></View>
         <Image style={UserStyles.UserIcon} source={{uri: userData.zdjecie_profilowe}}/>
         <View style={UserStyles.UserNameContainer}>
           <Text style={UserStyles.UserName}>{`${userData.imie} ${userData.Nazwisko}`}</Text>
           {/*<Icon name="footsteps" size={24} color={colors.primary} />*/}
-          <MaterialCommunityIcons name="foot-print" size={30} color={colors.secondary}  style={UserStyles.stepIcon} />
+          <MaterialCommunityIcons name="foot-print" size={30} color={colors.primary}  style={UserStyles.stepIcon} />
           {/*<Image style={UserStyles.stepIcon} source={require("../../assets/iconFunFacts.png")}/>  */}          
             <Progress.Bar
               styleAttr="Horizontal"
@@ -83,7 +82,6 @@ function User({ navigation }) {
           </TouchableOpacity>
         </View>
       </View>
-    </View>
   );
 }
 

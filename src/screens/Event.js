@@ -8,8 +8,7 @@ import { colors } from "../components/Colors";
 import { Entypo , MaterialCommunityIcons  } from '@expo/vector-icons';
 import styles from "../styles/EventStyles";
 
-const Event = () => {
-  
+const Event = () => {  
 
   const {
     Nazwa,

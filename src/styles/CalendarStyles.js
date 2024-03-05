@@ -4,7 +4,7 @@ const CalendarStyles = {
   container:{
     flex:1,
     alignItems:'center',
-    backgroundColor: '#ffff'
+    backgroundColor: colors.Background
   },
   dateContainer: {
     marginTop: 25,
@@ -15,6 +15,7 @@ const CalendarStyles = {
   dates:{
     fontSize:20,
     fontWeight:'bold',
+    color: colors.text
   },
   eventButton: {
     backgroundColor: colors.disabled,
@@ -25,14 +26,14 @@ const CalendarStyles = {
   },
   eventText: {
     fontSize: 16,
-    color: 'black',
+    color: colors.text
   },
   evenEvent: { //co drugi kolor
     backgroundColor: colors.secondary, 
   },
   evenText: {//co drugi kolor tekstu
     fontSize: 16,
-    color: 'white',
+    color: colors.text2
   },
  
 }

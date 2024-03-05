@@ -1,3 +1,4 @@
+import { colors } from "../components/Colors";
 const FooterStyles = {
   container: {
     height: '100%',  

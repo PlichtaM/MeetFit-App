@@ -3,6 +3,7 @@ const RankingStyles = {
       container: {
             flex: 1,
             padding: 16,
+            backgroundColor: colors.Background
           },
           userItem: {
             flexDirection: 'row',

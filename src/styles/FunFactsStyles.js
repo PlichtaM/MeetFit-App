@@ -2,8 +2,8 @@ import { colors } from '../components/Colors';
 const FunFactsStyles = {
   container: {
     flex: 1,
-    backgroundColor:'white',
-    paddingTop: 100,
+    backgroundColor: colors.Background,
+    paddingTop: 10,
   },
   factBox:{
     alignItems:'center',

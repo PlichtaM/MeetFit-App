@@ -3,8 +3,9 @@ import { colors } from '../components/Colors';
 
 const UserStyles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor:'white'
+    backgroundColor: colors.Background,
+    width:'100%',
+    height: '100%',
   },
   top: {
     height: 200,
@@ -26,7 +27,8 @@ const UserStyles = StyleSheet.create({
   },
   UserName:{
     fontWeight: 'bold',
-    fontSize: 24,
+    fontSize: 24,    
+    color: colors.text
   },
   stepIcon:{
     position: 'absolute',
@@ -35,7 +37,8 @@ const UserStyles = StyleSheet.create({
   },
   StepsNumber:{
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: 16,    
+    color: colors.text
   },
   MenuContainer:{
     position: 'absolute',
@@ -50,12 +53,12 @@ const UserStyles = StyleSheet.create({
   },
   UserButton:{
     backgroundColor:'transparent',
-    color: 'black',
     display:'flex',
     flexDirection:"row"
   },
   buttonText:{
     fontSize:20,
+    color: colors.text
   },
   ButtonImage:{
     marginRight: 15,

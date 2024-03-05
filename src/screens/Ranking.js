@@ -12,19 +12,19 @@ const Ranking = () => {
     switch (item.miejsce) {
       case 1:
         backgroundColor = '#FFA438';
-        textColor = 'white';
+        textColor = colors.text2;
         break;
       case 2:
         backgroundColor = '#C3C3C3';
-        textColor = 'white';
+        textColor = colors.text2;
         break;
       case 3:
         backgroundColor = '#BE5B00';
-        textColor = 'white';
+        textColor = colors.text2;
         break;
       default:
         backgroundColor = 'transparent';
-        textColor = 'black';
+        textColor = colors.text ;
     }
   
     return (

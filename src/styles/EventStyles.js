@@ -1,9 +1,9 @@
 import { colors } from "../components/Colors";
 const EventStyles = {
-  screen:{
-    height:'100%',
-    width: '100%',
-    backgroundColor: 'whtie',
+  screen:{   
+    backgroundColor: colors.Background,
+    width:'100%',
+    height: '100%',
   },
   container: {
     flex: 1,
@@ -37,7 +37,8 @@ const EventStyles = {
   },
   infoText: {
     fontSize: 16,
-    marginBottom: 10,
+    marginBottom: 10,    
+    color: colors.text,
   },
   createEventButton: {
     backgroundColor: colors.secondary,

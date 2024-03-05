@@ -98,12 +98,12 @@ function EventAdd() {
             value={selectedOption === "Prywatne"}
             onValueChange={() => handleCheckboxChange("Prywatne")}
           />
-          <Text style={{ fontSize: 16, marginHorizontal: 10 }}>Prywatne</Text>
+          <Text style={{ fontSize: 16, marginHorizontal: 10, color: colors.text }}>Prywatne</Text>
           <Checkbox
             value={selectedOption === "Publiczne"}
             onValueChange={() => handleCheckboxChange("Publiczne")}
           />
-          <Text style={{ fontSize: 16, marginHorizontal: 10 }}>Publiczne</Text>
+          <Text style={{ fontSize: 16, marginHorizontal: 10, color: colors.text }}>Publiczne</Text>
         </View>
         <TouchableOpacity style={style.addEventButton}>
           <Text style={style.addEventButtonText} onPress={() => navigation.navigate('Event')}>Utwórz wydarzenie</Text>

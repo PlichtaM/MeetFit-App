@@ -3,7 +3,11 @@ import { useNavigation } from "@react-navigation/native";
 import { View, Text, TouchableOpacity, Switch } from "react-native";
 import { Checkbox } from "expo-checkbox";
 import style from "../styles/SettingsStyles";
-import { getCurrentColors, getColorScheme, setColorScheme } from "../components/Colors";
+import {
+  getCurrentColors,
+  getColorScheme,
+  setColorScheme,
+} from "../components/Colors";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -69,45 +73,63 @@ function Settings() {
   };
 
   return (
-    <View style={style.container}>
-      <Text style={style.text}>Motyw aplikacji:</Text>
-      <View style={style.Checkboxes}>
-        <Checkbox
-          value={selectedOption === "dark"}
-          onValueChange={() => handleCheckboxChange("dark")}
-        />
-        <Text style={{ fontSize: 16, marginHorizontal: 10 }}>Ciemny</Text>
-        <Checkbox
-          value={selectedOption === "light"}
-          onValueChange={() => handleCheckboxChange("light")}
-        />
-        <Text style={{ fontSize: 16, marginHorizontal: 10 }}>Jasny</Text>
-      </View>
+    <View style={style.screen}>
+      <View style={style.container}>
+        <Text style={style.text}>Motyw aplikacji:</Text>
+        <View style={style.Checkboxes}>
+          <Checkbox
+            value={selectedOption === "dark"}
+            onValueChange={() => handleCheckboxChange("dark")}
+          />
+          <Text
+            style={{
+              fontSize: 16,
+              marginHorizontal: 10,
+              color: getCurrentColors().text,
+            }}
+          >
+            Ciemny
+          </Text>
+          <Checkbox
+            value={selectedOption === "light"}
+            onValueChange={() => handleCheckboxChange("light")}
+          />
+          <Text
+            style={{
+              fontSize: 16,
+              marginHorizontal: 10,
+              color: getCurrentColors().text,
+            }}
+          >
+            Jasny
+          </Text>
+        </View>
 
-      <View style={style.switchContainer}>
-        <Text style={style.text}>Powiadomienia:</Text>
-        <Switch
-          trackColor={{ true: getCurrentColors().primary, false: "#767577" }}
-          thumbColor={notificationsEnabled ? "#8A23AD" : "#f4f3f4"}
-          ios_backgroundColor="#3e3e3e"
-          onValueChange={toggleNotificationsSwitch}
-          value={notificationsEnabled}
-        />
-      </View>
-      <View style={style.switchContainer}>
-        <Text style={style.text}>Dźwięk:</Text>
-        <Switch
-          trackColor={{ true: getCurrentColors().primary, false: "#767577" }}
-          thumbColor={soundEnabled ? "#8A23AD" : "#f4f3f4"}
-          ios_backgroundColor="#3e3e3e"
-          onValueChange={toggleSoundSwitch}
-          value={soundEnabled}
-        />
-      </View>
+        <View style={style.switchContainer}>
+          <Text style={style.text}>Powiadomienia:</Text>
+          <Switch
+            trackColor={{ true: getCurrentColors().primary, false: "#767577" }}
+            thumbColor={notificationsEnabled ? "#8A23AD" : "#f4f3f4"}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={toggleNotificationsSwitch}
+            value={notificationsEnabled}
+          />
+        </View>
+        <View style={style.switchContainer}>
+          <Text style={style.text}>Dźwięk:</Text>
+          <Switch
+            trackColor={{ true: getCurrentColors().primary, false: "#767577" }}
+            thumbColor={soundEnabled ? getCurrentColors().primary2 : "#f4f3f4"}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={toggleSoundSwitch}
+            value={soundEnabled}
+          />
+        </View>
 
-      <TouchableOpacity style={style.addEventButton} onPress={saveSettings}>
-        <Text style={style.addEventButtonText}>Zapisz Ustawienia</Text>
-      </TouchableOpacity>
+        <TouchableOpacity style={style.addEventButton} onPress={saveSettings}>
+          <Text style={style.addEventButtonText}>Zapisz Ustawienia</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }

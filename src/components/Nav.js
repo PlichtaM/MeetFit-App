@@ -187,17 +187,19 @@ export default function Nav() {
 
   return (
     <AppProvider>
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, }}>
       <NavigationContainer theme={MyTheme}>
         <Tab.Navigator
          initialRouteName="MapStackScreen"
          screenOptions={({ route }) => ({
            tabBarIcon: ({ focused, color, size }) => {
              return getTabBarIcon(route.name, focused);
-           },
+            },
+            backgroundColor: colors.Background,
            tabBarActiveTintColor: colors.primary,
            tabBarInactiveTintColor: colors.secondary,
            tabBarLabel: () => null, // Usunięcie napisu pod ikoną
+           tabBarStyle: { backgroundColor: colors.Background}
          })}
         >
           <Tab.Screen

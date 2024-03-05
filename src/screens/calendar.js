@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import styles from '../styles/CalendarStyles';
 import user from "../tempAPI/user.json";
 import { Entypo } from '@expo/vector-icons';
+import { colors } from '../components/Colors';
 
 function Calendar() {
   const navigation = useNavigation();
@@ -31,7 +32,7 @@ function Calendar() {
     <View style={styles.container}>
       <View style={styles.dateContainer}>
         <TouchableOpacity onPress={goToPreviousWeek}>
-        <Entypo name="chevron-left" size={60} color="black" />
+        <Entypo name="chevron-left" size={60} color={colors.secondary} />
         </TouchableOpacity>
         <View>
           <Text style={styles.dates}>
@@ -39,7 +40,7 @@ function Calendar() {
           </Text>
         </View>
         <TouchableOpacity onPress={goToNextWeek}>
-        <Entypo name="chevron-right" size={60} color="black" />
+        <Entypo name="chevron-right" size={60} color={colors.secondary} />
         </TouchableOpacity>
       </View>
       <View>

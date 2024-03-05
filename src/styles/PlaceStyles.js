@@ -23,8 +23,7 @@ const MapPlace = {
   },
   bottomBox: {
     flex: 1,
-    backgroundColor: "white",
-    
+    backgroundColor: colors.Background,    
     alignItems: "center",
   },
   closeButton: {
@@ -66,7 +65,8 @@ const MapPlace = {
     marginBottom:10,
     fontWeight: "bold",
     fontSize: 24,
-    textAlign: "center"
+    textAlign: "center",
+    color: colors.text,
   },
 
 

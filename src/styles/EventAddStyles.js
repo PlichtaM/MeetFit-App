@@ -1,9 +1,9 @@
 import { colors } from "../components/Colors";
 const EventAddStyles = {
-  background: {
-    backgroundColor: 'white',
+  background: {    
+    backgroundColor: colors.Background,
     width:'100%',
-    height:'100%',
+    height: '100%',
   },
   container: {
     marginTop:10,
@@ -12,6 +12,7 @@ const EventAddStyles = {
   text: {
     marginVertical:10,
     fontSize:20,
+    color: colors.text
   },
   inputContainer: {
     padding: 10,
