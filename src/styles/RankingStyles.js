@@ -1,4 +1,6 @@
-import { colors } from '../components/Colors'; 
+import { getColorScheme  } from "../components/Colors";
+const colors = getColorScheme()
+
 const RankingStyles = {
       container: {
             flex: 1,
@@ -11,7 +13,7 @@ const RankingStyles = {
             marginVertical: 4,
             backgroundColor: 'transparent',
             borderRadius:10,
-            width:"360",
+            width:360,
             padding:10,
           },
           rank: {

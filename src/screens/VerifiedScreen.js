@@ -1,7 +1,8 @@
 import React from "react";
 import { View, Text, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { colors } from '../components/Colors';
+import { getColorScheme  } from "../components/Colors";
+const colors = getColorScheme()
 import LoginButton from '../components/LoginButton';
 import LoginStyles from "../styles/LoginStyles";
 

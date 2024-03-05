@@ -10,17 +10,20 @@ const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
   const [currentTheme, setCurrentTheme] = useState('');
+  const [refresh, setRefresh] = useState(0); // Dodaj nowy stan refresh
 
   const changeTheme = async (newTheme) => {
     setCurrentTheme(newTheme);
     await AsyncStorage.setItem(THEME_STORAGE_KEY, newTheme);
     setColorScheme(newTheme);
+    setRefresh((prevRefresh) => prevRefresh + 1); // Zwiększ wartość refresh
   };
 
   useEffect(() => {
     const loadThemeFromStorage = async () => {
       try {
         const storedTheme = await AsyncStorage.getItem(THEME_STORAGE_KEY);
+        console.log("Stored Theme:", storedTheme);
         if (storedTheme) {
           setCurrentTheme(storedTheme);
           setColorScheme(storedTheme);
@@ -41,7 +44,7 @@ export const ThemeProvider = ({ children }) => {
   }, [currentTheme]);
 
   return (
-    <ThemeContext.Provider value={{ currentTheme, changeTheme }}>
+    <ThemeContext.Provider value={{ currentTheme, changeTheme, refreshApp: setRefresh }}>
       {children}
     </ThemeContext.Provider>
   );

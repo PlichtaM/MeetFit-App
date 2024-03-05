@@ -3,7 +3,8 @@ import { View, Text, Image, FlatList, RankingStylesheet } from 'react-native';
 import RankingStyles from "../styles/RankingStyles"
 import users from '../tempAPI/userlist.json';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { colors } from '../components/Colors';
+import { getColorScheme  } from "../components/Colors";
+const colors = getColorScheme()
 
 const Ranking = () => {
   const renderUserItem = ({ item }) => {

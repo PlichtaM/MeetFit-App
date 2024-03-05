@@ -1,13 +1,13 @@
 import React from "react";
-import { Image, View, Pressable } from "react-native";
+import { Image, View, Pressable , useColorScheme} from "react-native";
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { AppProvider } from "../../AppContext";
-import { Entypo, MaterialCommunityIcons, MaterialIcons, FontAwesome  } from '@expo/vector-icons';
 
+import { MaterialCommunityIcons, MaterialIcons, FontAwesome  } from '@expo/vector-icons';
 import FooterStyles from "../styles/FooterStyles";
-import { colors } from "../components/Colors";
+import { getColorScheme ,light, dark  } from "../components/Colors";
+const colors = getColorScheme()
 
 import Map from "../screens/Map";
 import User from "../screens/User";
@@ -21,8 +21,6 @@ import EventEdit from "../screens/EventEdit";
 import Place from "../components/Place";
 
 import OtherScreens from "../screens/OtherScreens";
-
-
 import LoadingScreen from '../screens/LoadingScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import LoginScreen from '../screens/LoginScreen';
@@ -33,7 +31,8 @@ import VerifiedScreen from '../screens/VerifiedScreen';
 
 
 
-const Tab = createBottomTabNavigator();
+
+
 export default function Nav() {
   const headerOptions = {
     headerStyle: {
@@ -128,7 +127,7 @@ export default function Nav() {
         <MaterialIcons
           name="chat"
           size={26}
-          color={focused ? colors.primary : colors.secondary}
+          color={focused ? colors.secondary : colors.primary}
           style={iconStyle}
         />
       );
@@ -137,7 +136,7 @@ export default function Nav() {
         <MaterialCommunityIcons
           name="trophy"
           size={26}
-          color={focused ? colors.primary : colors.secondary}
+          color={focused ? colors.secondary : colors.primary}
           style={iconStyle}
         />
       );
@@ -149,7 +148,7 @@ export default function Nav() {
         <MaterialCommunityIcons
           name="calendar-multiselect"
           size={26}
-          color={focused ? colors.primary : colors.secondary}
+          color={focused ? colors.secondary : colors.primary}
           style={iconStyle}
         />
       );
@@ -158,7 +157,7 @@ export default function Nav() {
         <FontAwesome
           name="user"
           size={26}
-          color={focused ? colors.primary : colors.secondary}
+          color={focused ? colors.secondary : colors.primary}
           style={iconStyle}
         />
       );
@@ -184,11 +183,11 @@ export default function Nav() {
       buttonBorder: "#000",
     },
   };
-
+  const Tab = createBottomTabNavigator();
+  const theme = useColorScheme();
   return (
-    <AppProvider>
     <View style={{ flex: 1, }}>
-      <NavigationContainer theme={MyTheme}>
+      <NavigationContainer theme={theme === 'dark' ? dark : light}>
         <Tab.Navigator
          initialRouteName="MapStackScreen"
          screenOptions={({ route }) => ({
@@ -226,6 +225,5 @@ export default function Nav() {
         </Tab.Navigator>
       </NavigationContainer>
     </View>
-    </AppProvider>
   );
 }

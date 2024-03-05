@@ -4,8 +4,9 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Checkbox from 'expo-checkbox';
 import Input from '../components/Input';
 import LoginButton from '../components/LoginButton';
-import { colors } from '../components/Colors';
 import LoginStyles from "../styles/LoginStyles";
+import { getColorScheme  } from "../components/Colors";
+const colors = getColorScheme()
 
 function LoginScreen({ navigation }) {
   const [isChecked, setChecked] = useState(false);

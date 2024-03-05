@@ -1,4 +1,5 @@
-import { colors } from "../components/Colors";
+import { getColorScheme  } from "../components/Colors";
+const colors = getColorScheme()
 const MapPlace = {
   modalContainer: {
     flex: 1,

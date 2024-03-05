@@ -3,9 +3,9 @@ import { View, Text, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Input from '../components/Input';
 import LoginButton from '../components/LoginButton';
-import { colors } from '../components/Colors';
 import LoginStyles from "../styles/LoginStyles";
-
+import { getColorScheme  } from "../components/Colors";
+const colors = getColorScheme()
 function ForgotPasswordScreen() {
   return (
     <LinearGradient

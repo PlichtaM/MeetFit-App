@@ -1,18 +1,20 @@
 import React, { useState, useEffect, useReducer } from "react";
-import { useNavigation } from "@react-navigation/native";
 import { View, Text, TouchableOpacity, Switch } from "react-native";
 import { Checkbox } from "expo-checkbox";
 import style from "../styles/SettingsStyles";
 import {
-  getCurrentColors,
   getColorScheme,
   setColorScheme,
 } from "../components/Colors";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+import { useTheme  } from "../components/ThemeContext";
+
+
 function Settings() {
-  const navigation = useNavigation();
+  const { refreshApp } = useTheme();
+
   const [, forceUpdate] = useReducer((x) => x + 1, 0); // Create a forceUpdate function
   const [selectedOption, setSelectedOption] = useState(getColorScheme().type);
   const [notificationsEnabled, setNotificationsEnabled] = useState(false);
@@ -62,7 +64,7 @@ function Settings() {
 
       // Save other settings to AsyncStorage
       await AsyncStorage.setItem("appSettings", JSON.stringify(settingsToSave));
-
+      refreshApp((prev) => prev + 1);
       // Add a console.log to check if the color scheme is updated
       console.log("Color scheme updated to:", selectedOption);
 
@@ -85,7 +87,7 @@ function Settings() {
             style={{
               fontSize: 16,
               marginHorizontal: 10,
-              color: getCurrentColors().text,
+              color: getColorScheme().text,
             }}
           >
             Ciemny
@@ -98,7 +100,7 @@ function Settings() {
             style={{
               fontSize: 16,
               marginHorizontal: 10,
-              color: getCurrentColors().text,
+              color: getColorScheme().text,
             }}
           >
             Jasny
@@ -108,7 +110,7 @@ function Settings() {
         <View style={style.switchContainer}>
           <Text style={style.text}>Powiadomienia:</Text>
           <Switch
-            trackColor={{ true: getCurrentColors().primary, false: "#767577" }}
+            trackColor={{ true: getColorScheme().primary, false: "#767577" }}
             thumbColor={notificationsEnabled ? "#8A23AD" : "#f4f3f4"}
             ios_backgroundColor="#3e3e3e"
             onValueChange={toggleNotificationsSwitch}
@@ -118,8 +120,8 @@ function Settings() {
         <View style={style.switchContainer}>
           <Text style={style.text}>Dźwięk:</Text>
           <Switch
-            trackColor={{ true: getCurrentColors().primary, false: "#767577" }}
-            thumbColor={soundEnabled ? getCurrentColors().primary2 : "#f4f3f4"}
+            trackColor={{ true: getColorScheme().primary, false: "#767577" }}
+            thumbColor={soundEnabled ? getColorScheme().primary2 : "#f4f3f4"}
             ios_backgroundColor="#3e3e3e"
             onValueChange={toggleSoundSwitch}
             value={soundEnabled}

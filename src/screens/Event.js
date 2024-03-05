@@ -3,7 +3,8 @@ import { useNavigation } from "@react-navigation/native";
 import { View, Text, StyleSheet, TouchableOpacity, Image, Pressable  } from "react-native";
 import placeInfo from "../tempAPI/place.json";
 import event from "../tempAPI/event.json";
-import { colors } from "../components/Colors";
+import { getColorScheme  } from "../components/Colors";
+const colors = getColorScheme()
 
 import { Entypo , MaterialCommunityIcons  } from '@expo/vector-icons';
 import styles from "../styles/EventStyles";

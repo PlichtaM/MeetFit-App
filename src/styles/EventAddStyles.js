@@ -1,4 +1,6 @@
-import { colors } from "../components/Colors";
+import { getColorScheme  } from "../components/Colors";
+const colors = getColorScheme()
+
 const EventAddStyles = {
   background: {    
     backgroundColor: colors.Background,

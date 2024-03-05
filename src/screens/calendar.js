@@ -4,7 +4,8 @@ import { useNavigation } from '@react-navigation/native';
 import styles from '../styles/CalendarStyles';
 import user from "../tempAPI/user.json";
 import { Entypo } from '@expo/vector-icons';
-import { colors } from '../components/Colors';
+import { getColorScheme  } from "../components/Colors";
+const colors = getColorScheme()
 
 function Calendar() {
   const navigation = useNavigation();

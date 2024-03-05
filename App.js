@@ -1,15 +1,15 @@
 import React from 'react';
 import { View } from 'react-native'
-import { AppProvider } from './AppContext';
+import { ThemeProvider, useTheme } from './src/components/ThemeContext';
 
 import Nav from './src/components/Nav';
 
 export default function App() {
   return (
-    <AppProvider >
+    <ThemeProvider >
       <View style={{ flex: 1}}>
        <Nav/>
       </View>
-    </AppProvider>
+    </ThemeProvider>
   );
 }

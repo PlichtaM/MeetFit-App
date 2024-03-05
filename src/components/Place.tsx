@@ -1,5 +1,6 @@
 import React from "react";
-import { colors } from "./Colors";
+import { getColorScheme  } from "../components/Colors";
+const colors = getColorScheme()
 import {
   View,
   Modal,

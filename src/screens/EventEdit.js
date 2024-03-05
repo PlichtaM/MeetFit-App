@@ -7,7 +7,8 @@ import { Calendar, LocaleConfig } from "react-native-calendars"; //https://githu
 //import { RadioButton } from 'react-native-paper';
 import { Checkbox } from "expo-checkbox";
 import style from "../styles/EventAddStyles";
-import { colors } from "../components/Colors";
+import { getColorScheme  } from "../components/Colors";
+const colors = getColorScheme()
 
 LocaleConfig.locales['pl'] = {
   monthNames: [
