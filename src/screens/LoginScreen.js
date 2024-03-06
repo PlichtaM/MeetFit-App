@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import { View, Text, Image, TouchableOpacity } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
+import { View, Text, Image, TouchableOpacity, TextInput } from 'react-native';
 import Checkbox from 'expo-checkbox';
-import Input from '../components/Input';
 import LoginButton from '../components/LoginButton';
 import LoginStyles from "../styles/LoginStyles";
 import { getColorScheme  } from "../components/Colors";
@@ -12,21 +10,20 @@ function LoginScreen({ navigation }) {
   const [isChecked, setChecked] = useState(false);
 
   return (
-    <LinearGradient
-      colors={[colors.primary, colors.secondary]}
-      start={{ x: 0.5, y: 0 }}
-      end={{ x: 0.5, y: 1 }}
-      style={LoginStyles.container}
-    >
+    <View style={LoginStyles.container}>
       <View style={LoginStyles.LoginContainer}>        
         <View style={LoginStyles.logoContainer}>
           <Image source={require('../../assets/logo.png')} style={LoginStyles.logo} />
         </View>
         <Text style={LoginStyles.LoginText}>LOGOWANIE</Text>
       </View>
+      <View style={LoginStyles.bottomBox}>       
       <View style={LoginStyles.inputContainer}>       
-        <Input placeholder="Podaj adres email" />
-        <Input placeholder="Podaj hasło" secureTextEntry={true} />
+        <TextInput placeholder="Podaj adres email" style={LoginStyles.textInput} />
+        </View>
+        <View style={LoginStyles.inputContainer}>
+        <TextInput placeholder="Podaj hasło" secureTextEntry={true} style={LoginStyles.textInput} />
+        </View>
         <View style={LoginStyles.CheckboxContainer}>
           <Checkbox
             value={isChecked}
@@ -41,7 +38,7 @@ function LoginScreen({ navigation }) {
         <Text style={LoginStyles.ForgotLabel}>Zapomniałeś hasła? [Kliknij tutaj]</Text>
         </TouchableOpacity>
       </View>
-    </LinearGradient>
+    </View>
   );
 }
 

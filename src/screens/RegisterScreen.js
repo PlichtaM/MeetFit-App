@@ -1,29 +1,27 @@
 import React, { useState } from "react";
-import { View, Text, Image,  TouchableOpacity, Alert } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
-import Checkbox from 'expo-checkbox';
-import Input from '../components/Input';
-import LoginButton from '../components/LoginButton';
-import { getColorScheme  } from "../components/Colors";
-const colors = getColorScheme()
-import { registerUser } from '../../services/api';
+import { View, Text, Image,  Alert, TextInput } from "react-native";
+import Checkbox from "expo-checkbox";
+import LoginButton from "../components/LoginButton";
+import { getColorScheme } from "../components/Colors";
+const colors = getColorScheme();
+import { registerUser } from "../../services/api";
 import LoginStyles from "../styles/LoginStyles";
 
 function RegisterScreen() {
   const [isChecked, setChecked] = useState(false);
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
-// Tutaj jest funkcja do obsługi rejestracji
-const handleRegister = () => {
+  // Tutaj jest funkcja do obsługi rejestracji
+  const handleRegister = () => {
     if (password !== confirmPassword) {
-      Alert.alert('Błąd', 'Hasła nie są identyczne');
+      Alert.alert("Błąd", "Hasła nie są identyczne");
       return;
     }
     if (!isChecked) {
-      Alert.alert('Błąd', 'Musisz zaakceptować regulamin');
+      Alert.alert("Błąd", "Musisz zaakceptować regulamin");
       return;
     }
 
@@ -31,51 +29,72 @@ const handleRegister = () => {
       userName: username,
       email: email,
       password: password,
-      confirmPassword: confirmPassword
+      confirmPassword: confirmPassword,
     };
     registerUser(userData)
-    .then(response => {
-      console.log('Rejestracja udana:', response.data);
-      // Działania po pomyślnej rejestracji
-    })
-    .catch(error => {
-      console.log('Status odpowiedzi:', error.response.status);
-      console.log('Nagłówki odpowiedzi:', error.response.headers);
-      console.log('haslo: ', username);
-    });
-};
-    
-
+      .then((response) => {
+        console.log("Rejestracja udana:", response.data);
+        // Działania po pomyślnej rejestracji
+      })
+      .catch((error) => {
+        console.log("Status odpowiedzi:", error.response.status);
+        console.log("Nagłówki odpowiedzi:", error.response.headers);
+        console.log("haslo: ", username);
+      });
+  };
 
   return (
-    <LinearGradient
-      colors={[colors.primary, colors.secondary]}
-      start={{ x: 0.5, y: 0 }}
-      end={{ x: 0.5, y: 1 }}
-      style={LoginStyles.container}
-    >
-      <View style={LoginStyles.LoginContainer}>        
+    <View style={LoginStyles.container}>
+      <View style={LoginStyles.LoginContainer}>
         <View style={LoginStyles.logoContainer}>
-          <Image source={require('../../assets/logo.png')} style={LoginStyles.logo} />
+          <Image
+            source={require("../../assets/logo.png")}
+            style={LoginStyles.logo}
+          />
         </View>
         <Text style={LoginStyles.LoginText}>REJESTRACJA</Text>
       </View>
-      <View style={LoginStyles.inputContainer}>
-        <Input placeholder="Podaj nazwę użytkownika" onChangeText={setUsername} />
-        <Input placeholder="Podaj adres email" onChangeText={setEmail} />
-        <Input placeholder="Podaj hasło" secureTextEntry={true} onChangeText={setPassword} />
-        <Input placeholder="Potwierdź hasło" secureTextEntry={true} onChangeText={setConfirmPassword} />
+
+      <View style={LoginStyles.bottomBox}>
+        <View style={LoginStyles.inputContainer}>
+          <TextInput
+            placeholder="Podaj nazwę użytkownika"
+            onChangeText={setUsername}
+            style={LoginStyles.textInput}
+          />
+        </View>
+        <View style={LoginStyles.inputContainer}>
+          <TextInput placeholder="Podaj adres email" onChangeText={setEmail} style={LoginStyles.textInput} />
+        </View>
+        <View style={LoginStyles.inputContainer} >
+          <TextInput
+            placeholder="Podaj hasło"
+            secureTextEntry={true}
+            onChangeText={setPassword}
+            style={LoginStyles.textInput}
+          />
+        </View>
+        <View style={LoginStyles.inputContainer}>
+          <TextInput
+            placeholder="Potwierdź hasło"
+            secureTextEntry={true}
+            onChangeText={setConfirmPassword}
+            style={LoginStyles.textInput}
+          />
+        </View>
         <View style={LoginStyles.CheckboxContainer}>
           <Checkbox
             value={isChecked}
             onValueChange={setChecked}
             tintColor={colors.text}
           />
-          <Text style={LoginStyles.CheckboxLabel}>Akceptuję regulamin aplikacji</Text>
+          <Text style={LoginStyles.CheckboxLabel}>
+            Akceptuję regulamin aplikacji
+          </Text>
         </View>
         <LoginButton onPress={handleRegister} title="Zarejestruj się" />
       </View>
-    </LinearGradient>
+    </View>
   );
 }
 

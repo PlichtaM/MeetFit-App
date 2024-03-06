@@ -6,12 +6,7 @@ const colors = getColorScheme()
 
 function LoadingScreen() {
   return (
-    <LinearGradient
-      colors={[colors.primary, colors.secondary]}
-      start={{ x: 0.5, y: 0 }}
-      end={{ x: 0.5, y: 1 }}
-      style={styles.container}
-    >
+    <View style={styles.container}>
       <View style={styles.content}>
         <Image source={require('../../assets/logo.png')} style={styles.logo} />
         <Text style={styles.text}>MeetFit</Text>
@@ -19,7 +14,7 @@ function LoadingScreen() {
       <View style={styles.loader}>
         <ActivityIndicator size="large" color={colors.text} />
       </View>
-    </LinearGradient>
+    </View>
   );
 }
 
@@ -27,6 +22,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
+    backgroundColor: colors.Background
   },
   content: {
     flex: 1,
@@ -36,6 +32,7 @@ const styles = StyleSheet.create({
   logo: {
     width: 113, 
     height: 165,
+    tintColor:colors.primary,
   },
   text: {
     fontSize: 64,

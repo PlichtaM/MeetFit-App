@@ -21,7 +21,7 @@ import EventEdit from "../screens/EventEdit";
 import Place from "../components/Place";
 
 import OtherScreens from "../screens/OtherScreens";
-import LoadingScreen from '../screens/LoadingScreen';
+import LoadingScreen from '../screens/Loading';
 import RegisterScreen from '../screens/RegisterScreen';
 import LoginScreen from '../screens/LoginScreen';
 import ForgotPasswordScreen from '../screens/ForgotPasswordScreen';
@@ -85,14 +85,14 @@ export default function Nav() {
           component={User}
           options={{ ...headerOptions }}
         />
-        <UserStack.Screen name="Map" component={Map} />
-        <UserStack.Screen name="Calendar" component={Calendar} />
-        <UserStack.Screen name="Ranking" component={Ranking} />
-        <UserStack.Screen name="FunFacts" component={FunFacts} />
-        <UserStack.Screen name="OtherScreens" component={OtherScreens} />
-        <UserStack.Screen name="Settings" component={Settings} />
+        <UserStack.Screen name="Map" component={Map}  options={{ title: "Mapa", ...headerOptions }}/>
+        <UserStack.Screen name="Calendar" component={Calendar}  options={{ title: "Kalendarz", ...headerOptions }} />
+        <UserStack.Screen name="Ranking" component={Ranking}  options={{ title: "Ranking", ...headerOptions }} />
+        <UserStack.Screen name="FunFacts" component={FunFacts}  options={{ title: "Ciekawostki", ...headerOptions }}/>
+        <UserStack.Screen name="Settings" component={Settings}  options={{ title: "Ustawienia", ...headerOptions }}/>
 
         
+        <UserStack.Screen name="OtherScreens" component={OtherScreens}  options={{ title: "Ekrany Logowania", ...headerOptions }}/>
          <UserStack.Screen name='Loading' component={LoadingScreen}/>
          <UserStack.Screen name='RegisterScreen' component={RegisterScreen}/>
          <UserStack.Screen name='LoginScreen' component={LoginScreen}/>

@@ -11,17 +11,16 @@ const LoginButton = ({ onPress, title }) => (
 
 const styles = StyleSheet.create({
   LoginButton: {
-    backgroundColor: colors.buttonBackground,
-    borderColor: colors.buttonBorder,
-    borderWidth: 2,
-    borderRadius: 8,
+    backgroundColor: colors.secondary,
+    borderRadius: 85,
     padding: 12,
     marginTop:21,
     alignItems: 'center',
+    width: '90%'
   },
   LoginButtonText: {
     fontSize: 20,
-    color: colors.text,
+    color: 'white',
   },
 });
 

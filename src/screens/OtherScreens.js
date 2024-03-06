@@ -6,7 +6,7 @@ function OtherScreens() {
 const navigation = useNavigation()
  
     return (
-      <View style={{ margin: 50 }}>
+      <View style={{ margin: 50,flex:1, justifyContent: 'space-evenly' }}>
         <Button title="Ekran Ładowania" onPress={() => navigation.navigate('Loading')} />
         <Button title="Ekran Rejestracji" onPress={() => navigation.navigate('RegisterScreen')} />
         <Button title="Ekran Logowania" onPress={() => navigation.navigate('LoginScreen')} />

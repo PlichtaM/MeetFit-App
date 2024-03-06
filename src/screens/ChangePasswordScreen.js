@@ -1,32 +1,27 @@
 import React from "react";
-import { View, Text, Image } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
-import Input from '../components/Input';
+import { View, Text, Image, TextInput } from 'react-native';
 import LoginButton from '../components/LoginButton';
 import LoginStyles from "../styles/LoginStyles";
-import { getColorScheme  } from "../components/Colors";
-const colors = getColorScheme()
 
 function ChangePasswordScreen() {
   return (
-    <LinearGradient
-      colors={[colors.primary, colors.secondary]}
-      start={{ x: 0.5, y: 0 }}
-      end={{ x: 0.5, y: 1 }}
-      style={LoginStyles.container}
-    >
+    <View style={LoginStyles.container}>
       <View style={LoginStyles.LoginContainer}>        
         <View style={LoginStyles.logoContainer}>
           <Image source={require('../../assets/logo.png')} style={LoginStyles.logo} />
         </View>
         <Text style={LoginStyles.LoginText}>ZMIANA HASŁA</Text>
       </View>
-      <View style={LoginStyles.inputContainer}>       
-        <Input placeholder="Podaj nowe hasło" />
-        <Input placeholder="Podaj ponownie hasło" />
+      <View style={LoginStyles.bottomBox}>       
+      <View style={LoginStyles.inputContainer}>
+        <TextInput placeholder="Podaj nowe hasło" style={LoginStyles.textInput} />
+        </View>
+        <View style={LoginStyles.inputContainer}>
+        <TextInput placeholder="Podaj ponownie hasło" style={LoginStyles.textInput} />
+        </View>
         <LoginButton onPress={() => console.log("Zmień hasło")} title="Zmień hasło" />
       </View>
-    </LinearGradient>
+    </View>
   );
 }
 
