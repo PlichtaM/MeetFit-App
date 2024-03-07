@@ -6,7 +6,7 @@ import Nav from './src/components/Nav';
 
 export default function App() {
   return (
-    <ThemeProvider >
+    <ThemeProvider>
       <View style={{ flex: 1}}>
        <Nav/>
       </View>

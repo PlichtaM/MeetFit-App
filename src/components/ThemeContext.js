@@ -1,24 +1,45 @@
-// ThemeContext.js
-
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { getColorScheme, setColorScheme } from './Colors';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const THEME_STORAGE_KEY = 'appCurrentTheme';
 
 const ThemeContext = createContext();
 
-export const ThemeProvider = ({ children }) => {
-  const [currentTheme, setCurrentTheme] = useState('');
-  const [refresh, setRefresh] = useState(0); // Dodaj nowy stan refresh
+// Definicje jasnego i ciemnego motywu
+const lightTheme = {
+  primary: "#B243D8",
+    primary2: "#8A23AD",
+    secondary: "#466EFC",
+    disabled: "#f1f1f1",
+    text: "#000",
+    text2: "#fff",
+    buttonBackground: "#fff",
+    buttonBorder: "#000",
+    background:"#fff"
+};
 
+const darkTheme = {
+  primary: "#466EFC",
+    primary2: "#4D6EF6",
+    secondary: "#B243D8",
+    disabled: "#f1f1f1",
+    text: "#fff",
+    buttonBackground: "#000",
+    buttonBorder: "#fff",
+    background:"#363636"
+};
+
+export const ThemeProvider = ({ children }) => {
+  const [currentTheme, setCurrentTheme] = useState('light'); // Domyślnie ustawiamy jasny motyw
+
+  // Funkcja zmieniająca motyw
   const changeTheme = async (newTheme) => {
     setCurrentTheme(newTheme);
     await AsyncStorage.setItem(THEME_STORAGE_KEY, newTheme);
-    setColorScheme(newTheme);
-    setRefresh((prevRefresh) => prevRefresh + 1); // Zwiększ wartość refresh
+    // Funkcja setColorScheme może być nadal używana, jeśli ma wpływ poza React (np. na natywne komponenty)
   };
 
+  // Ładowanie motywu z AsyncStorage przy starcie
   useEffect(() => {
     const loadThemeFromStorage = async () => {
       try {
@@ -26,10 +47,6 @@ export const ThemeProvider = ({ children }) => {
         console.log("Stored Theme:", storedTheme);
         if (storedTheme) {
           setCurrentTheme(storedTheme);
-          setColorScheme(storedTheme);
-        } else {
-          // If no theme is stored, use the default theme
-          setCurrentTheme(getColorScheme());
         }
       } catch (error) {
         console.error('Error loading theme from storage:', error);
@@ -37,14 +54,13 @@ export const ThemeProvider = ({ children }) => {
     };
 
     loadThemeFromStorage();
-  }, []); // Empty dependency array ensures useEffect runs only once
+  }, []);
 
-  useEffect(() => {
-    // Add any additional logic you may need when the theme changes globally
-  }, [currentTheme]);
+  // Przygotowanie stylów na podstawie aktualnego motywu
+  const themeStyles = currentTheme === 'light' ? lightTheme : darkTheme;
 
   return (
-    <ThemeContext.Provider value={{ currentTheme, changeTheme, refreshApp: setRefresh }}>
+    <ThemeContext.Provider value={{ currentTheme, changeTheme, themeStyles }}>
       {children}
     </ThemeContext.Provider>
   );

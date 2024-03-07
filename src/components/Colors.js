@@ -66,7 +66,7 @@ const light= {
   buttonBorder: "#000",
   Background:"#fff"
 }
-const  dark= {
+const dark= {
   primary: "#466EFC",
   primary2: "#4D6EF6",
   secondary: "#B243D8",

@@ -2,21 +2,14 @@ import React, { useState, useEffect, useReducer } from "react";
 import { View, Text, TouchableOpacity, Switch } from "react-native";
 import { Checkbox } from "expo-checkbox";
 import style from "../styles/SettingsStyles";
-import {
-  getColorScheme,
-  setColorScheme,
-} from "../components/Colors";
-
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
-import { useTheme  } from "../components/ThemeContext";
-
+import { useTheme } from "../components/ThemeContext"; // Upewnij się, że ścieżka do ThemeContext jest poprawna
 
 function Settings() {
-  const { refreshApp } = useTheme();
+  const { themeStyles, changeTheme, currentTheme } = useTheme();
 
-  const [, forceUpdate] = useReducer((x) => x + 1, 0); // Create a forceUpdate function
-  const [selectedOption, setSelectedOption] = useState(getColorScheme().type);
+  const [, forceUpdate] = useReducer(x => x + 1, 0);
+  const [selectedOption, setSelectedOption] = useState(currentTheme);
   const [notificationsEnabled, setNotificationsEnabled] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(false);
 
@@ -38,17 +31,18 @@ function Settings() {
     loadSettings();
   }, []);
 
-  const handleCheckboxChange = (option) => {
+  const handleCheckboxChange = option => {
     setSelectedOption(option);
-    forceUpdate(); // Trigger a re-render to update the theme immediately
+    changeTheme(option); // Zmieniamy motyw za pomocą funkcji changeTheme
+    forceUpdate();
   };
 
   const toggleNotificationsSwitch = () => {
-    setNotificationsEnabled((previousState) => !previousState);
+    setNotificationsEnabled(previousState => !previousState);
   };
 
   const toggleSoundSwitch = () => {
-    setSoundEnabled((previousState) => !previousState);
+    setSoundEnabled(previousState => !previousState);
   };
 
   const saveSettings = async () => {
@@ -60,15 +54,9 @@ function Settings() {
       };
       console.log("Saving settings:", settingsToSave);
 
-      await setColorScheme(selectedOption);
-
-      // Save other settings to AsyncStorage
+      // Zapisujemy ustawienia w AsyncStorage
       await AsyncStorage.setItem("appSettings", JSON.stringify(settingsToSave));
-      refreshApp((prev) => prev + 1);
-      // Add a console.log to check if the color scheme is updated
-      console.log("Color scheme updated to:", selectedOption);
-
-      forceUpdate(); // Trigger a re-render to update the theme immediately
+      console.log("Settings saved.");
     } catch (error) {
       console.error("Error saving settings:", error);
     }
@@ -87,7 +75,7 @@ function Settings() {
             style={{
               fontSize: 16,
               marginHorizontal: 10,
-              color: getColorScheme().text,
+              color: themeStyles.text,
             }}
           >
             Ciemny
@@ -100,7 +88,7 @@ function Settings() {
             style={{
               fontSize: 16,
               marginHorizontal: 10,
-              color: getColorScheme().text,
+              color: themeStyles.text,
             }}
           >
             Jasny
@@ -110,19 +98,18 @@ function Settings() {
         <View style={style.switchContainer}>
           <Text style={style.text}>Powiadomienia:</Text>
           <Switch
-            trackColor={{ true: getColorScheme().primary, false: "#767577" }}
-            thumbColor={notificationsEnabled ? "#8A23AD" : "#f4f3f4"}
-            ios_backgroundColor="#3e3e3e"
+            trackColor={{ false: "#767577", true: themeStyles.primary }}
+            thumbColor={notificationsEnabled ? "#f5dd4b" : "#f4f3f4"}
             onValueChange={toggleNotificationsSwitch}
             value={notificationsEnabled}
           />
         </View>
+
         <View style={style.switchContainer}>
           <Text style={style.text}>Dźwięk:</Text>
           <Switch
-            trackColor={{ true: getColorScheme().primary, false: "#767577" }}
-            thumbColor={soundEnabled ? getColorScheme().primary2 : "#f4f3f4"}
-            ios_backgroundColor="#3e3e3e"
+            trackColor={{ false: "#767577", true: themeStyles.primary }}
+            thumbColor={soundEnabled ? "#f5dd4b" : "#f4f3f4"}
             onValueChange={toggleSoundSwitch}
             value={soundEnabled}
           />

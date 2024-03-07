@@ -9,7 +9,7 @@ import { Entypo, MaterialCommunityIcons, MaterialIcons  } from '@expo/vector-ico
 import * as Progress from 'react-native-progress'; //https://github.com/oblador/react-native-progress
 
 function User({ navigation }) {
-  useLayoutEffect(() => { 
+  useLayoutEffect(() => {
     navigation.setOptions({
       title:  'MeetFit',
       headerRight: () => (
