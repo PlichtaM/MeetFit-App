@@ -23,7 +23,7 @@ const deleteMapPoint = (id) => api.delete(`/mapPoint/${id}`);
 
 // Funkcje dla User
 const registerUser = (data) => api.post('/user/Register', data);
-const loginUser = (data) => api.post('/user/login', data);
+const loginUser = (data) => api.post('/user/Login', data);
 const forgotPassword = (data) => api.post('/user/forgotPassword', data);
 const resetPassword = (data) => api.post('/user/resetPassword', data);
 
