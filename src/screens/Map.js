@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { View, Button, StyleSheet, Text, Alert } from 'react-native';
+import { View, Button, StyleSheet } from 'react-native';
 import MapView, { Callout, Marker, PROVIDER_GOOGLE } from 'react-native-maps';//https://github.com/react-native-maps/react-native-maps?tab=readme-ov-file
 import Place from '../components/Place';
 import { markers } from '../tempAPI/markers';
 import mapstyle from '../styles/mapstyle.json' //https://mapstyle.withgoogle.com/
-
+import {getMapPoint} from '../../services/api';
 const INITIAL_REGION = {
   latitude: 52.4,
   longitude: 16.92,
