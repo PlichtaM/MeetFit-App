@@ -11,7 +11,8 @@ export const colorSchemes = {
     text2: "#fff",
     buttonBackground: "#fff",
     buttonBorder: "#000",
-    Background:"#fff"
+    Background:"#fff",
+    cancel: "#980107",
   },
   dark: {
     primary: "#466EFC",
@@ -21,7 +22,8 @@ export const colorSchemes = {
     text: "#fff",
     buttonBackground: "#000",
     buttonBorder: "#fff",
-    Background:"#363636"
+    Background:"#363636",
+    cancel: "#980107",
   },
 };
 

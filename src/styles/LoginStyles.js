@@ -57,5 +57,9 @@ const LoginStyles = {
     marginTop: 12,
     alignSelf: "center",
   },
+  errorMessage:{
+    color: colors.cancel,
+    marginBottom:10,
+  },
 };
 export default LoginStyles;
