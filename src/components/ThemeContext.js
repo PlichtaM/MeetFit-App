@@ -1,44 +1,44 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Appearance } from 'react-native';
+
+// Importuj schematy kolorów z pliku Colors.js
+import { colorSchemes } from './Colors';
 
 const ThemeContext = createContext();
 
-const lightTheme = {
-  primary: "#B243D8",
-  primary2: "#8A23AD",
-  secondary: "#466EFC",
-  disabled: "#f1f1f1",
-  text: "#000",
-  text2: "#fff",
-  buttonBackground: "#fff",
-  buttonBorder: "#000",
-  background:"#fff"
-};
-
-const darkTheme = {
-  primary: "#466EFC",
-  primary2: "#4D6EF6",
-  secondary: "#B243D8",
-  disabled: "#f1f1f1",
-  text: "#fff",
-  buttonBackground: "#000",
-  buttonBorder: "#fff",
-  background:"#363636"
-};
-
 export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState('light'); // Domyślny motyw
+  // Ustaw początkowy motyw na podstawie systemowego motywu lub motywu zapisanego w AsyncStorage
+  const [theme, setTheme] = useState(Appearance.getColorScheme() || 'light');
 
-  const toggleTheme = () => {
-    setTheme((curr) => (curr === 'light' ? 'dark' : 'light'));
+  useEffect(() => {
+    // Załaduj zapisany motyw podczas inicjalizacji
+    const loadStoredTheme = async () => {
+      const storedTheme = await AsyncStorage.getItem('theme');
+      if (storedTheme) {
+        setTheme(storedTheme);
+      }
+    };
+
+    loadStoredTheme();
+  }, []);
+
+  // Funkcja do zmiany motywu
+  const toggleTheme = async () => {
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
+    await AsyncStorage.setItem('theme', newTheme); // Zapisz nowy motyw w AsyncStorage
   };
 
-  const themeStyles = theme === 'light' ? lightTheme : darkTheme;
+  // Pobierz aktualny schemat kolorów na podstawie wybranego motywu
+  const themeStyles = colorSchemes[theme];
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme, themeStyles }}>
+    <ThemeContext.Provider value={{ theme, setTheme, toggleTheme, themeStyles }}>
       {children}
     </ThemeContext.Provider>
   );
 };
 
+// Hook do używania kontekstu motywu
 export const useTheme = () => useContext(ThemeContext);

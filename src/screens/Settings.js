@@ -1,12 +1,12 @@
-import React, { useEffect, useReducer, useState } from "react";
-import { View, Text, TouchableOpacity, Switch } from "react-native";
-import style from "../styles/SettingsStyles";
+import React, { useEffect, useState } from "react";
+import { View, Text, TouchableOpacity } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useTheme } from '../components/ThemeContext';
+import getSettingsStyles from "../styles/SettingsStyles";
 
 function Settings() {
-  const { theme, toggleTheme, themeStyles } = useTheme();
-  const [, forceUpdate] = useReducer(x => x + 1, 0);
+  const { theme, setTheme, themeStyles } = useTheme();
+  const [selectedTheme, setSelectedTheme] = useState(theme);
   const [notificationsEnabled, setNotificationsEnabled] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(false);
 
@@ -16,6 +16,7 @@ function Settings() {
         const storedSettings = await AsyncStorage.getItem("appSettings");
         if (storedSettings) {
           const parsedSettings = JSON.parse(storedSettings);
+          setSelectedTheme(parsedSettings.theme || theme);
           setNotificationsEnabled(parsedSettings.notifications);
           setSoundEnabled(parsedSettings.sound);
         }
@@ -23,64 +24,57 @@ function Settings() {
         console.error("Error loading settings:", error);
       }
     }
-
     loadSettings();
-  }, []);
-
-  const toggleNotificationsSwitch = () => {
-    setNotificationsEnabled(previousState => !previousState);
-  };
-
-  const toggleSoundSwitch = () => {
-    setSoundEnabled(previousState => !previousState);
-  };
+  }, [theme]);
 
   const saveSettings = async () => {
     try {
       const settingsToSave = {
-        theme,
+        theme: selectedTheme,
         notifications: notificationsEnabled,
         sound: soundEnabled,
       };
       await AsyncStorage.setItem("appSettings", JSON.stringify(settingsToSave));
+      setTheme(selectedTheme);
+      alert('Ustawienia zostały zapisane.');
     } catch (error) {
       console.error("Error saving settings:", error);
     }
   };
 
+  const styles = getSettingsStyles(themeStyles);
+
   return (
-    <View style={[style.screen, { backgroundColor: themeStyles.background }]}>
-          <View style={style.container}>
-            <Text style={[style.text, { color: themeStyles.text }]}>Motyw aplikacji:</Text>
-            <Switch
-              trackColor={{ false: "#767577", true: themeStyles.secondary }}
-              thumbColor={theme === 'dark' ? themeStyles.text2 : themeStyles.text}
-              onValueChange={toggleTheme}
-              value={theme === 'dark'}
-            />
-            <View style={style.switchContainer}>
-              <Text style={[style.text, { color: themeStyles.text }]}>Powiadomienia:</Text>
-              <Switch
-                trackColor={{ false: "#767577", true: themeStyles.secondary }}
-                thumbColor={notificationsEnabled ? themeStyles.primary : themeStyles.disabled}
-                onValueChange={toggleNotificationsSwitch}
-                value={notificationsEnabled}
-              />
-            </View>
-            <View style={style.switchContainer}>
-              <Text style={[style.text, { color: themeStyles.text }]}>Dźwięk:</Text>
-              <Switch
-                trackColor={{ false: "#767577", true: themeStyles.secondary }}
-                thumbColor={soundEnabled ? themeStyles.primary : themeStyles.disabled}
-                onValueChange={toggleSoundSwitch}
-                value={soundEnabled}
-              />
-            </View>
-            <TouchableOpacity style={[style.addEventButton, { borderColor: themeStyles.buttonBorder, backgroundColor: themeStyles.buttonBackground }]}>
-              <Text style={[style.addEventButtonText, { color: themeStyles.text }]}>Zapisz Ustawienia</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+    <View style={styles.screen}>
+      <View style={styles.container}>
+        <Text style={styles.text}>Wybierz motyw:</Text>
+        <TouchableOpacity
+          style={styles.themeButton}
+          onPress={() => setSelectedTheme('light')}>
+          <Text style={styles.themeButtonText}>Jasny</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.themeButton}
+          onPress={() => setSelectedTheme('dark')}>
+          <Text style={styles.themeButtonText}>Ciemny</Text>
+        </TouchableOpacity>
+        <Text style={styles.text}>Powiadomienia:</Text>
+        <TouchableOpacity
+          style={styles.themeButton}
+          onPress={() => setNotificationsEnabled(!notificationsEnabled)}>
+          <Text style={styles.themeButtonText}>{notificationsEnabled ? 'Włączone' : 'Wyłączone'}</Text>
+        </TouchableOpacity>
+        <Text style={styles.text}>Dźwięk:</Text>
+        <TouchableOpacity
+          style={styles.themeButton}
+          onPress={() => setSoundEnabled(!soundEnabled)}>
+          <Text style={styles.themeButtonText}>{soundEnabled ? 'Włączony' : 'Wyłączony'}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.addEventButton} onPress={saveSettings}>
+          <Text style={styles.addEventButtonText}>Zapisz Ustawienia</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 }
 
