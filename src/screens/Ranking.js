@@ -6,19 +6,19 @@ import users from '../tempAPI/userlist.json';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const Ranking = () => {
-  const { themeStyles } = useTheme();
+  const { theme, themeStyles } = useTheme();
   const styles = getRankingStyles(themeStyles);
 
   // Posortuj użytkowników według liczby kroków w kolejności malejącej
   // Następnie przypisz miejsca w rankingu
-  const rankedUsers = [...users] // Kopia żeby nam się tablica nie zmieniła :)
+  const rankedUsers = [...users] // Kopia, żeby nie modyfikować oryginalnej tablicy
     .sort((a, b) => b.liczba_kroków - a.liczba_kroków)
     .map((user, index) => ({
       ...user,
       miejsce: index + 1
     }));
 
-  const renderUserItem = ({ item }) => {
+  const renderUserItem = ({ item, index }) => {
     let backgroundColor, textColor;
 
     switch (item.miejsce) {
@@ -40,13 +40,21 @@ const Ranking = () => {
     }
 
     return (
-      <View style={[styles.userItem, { backgroundColor }]}>
-        <Text style={[styles.rank, { color: textColor }]}>{item.miejsce}</Text>
-        <Image source={{ uri: item.zdjecie_profilowe }} style={styles.avatar} />
-        <Text style={[styles.userName, { color: textColor }]}>{`${item.imie} ${item.Nazwisko}`}</Text>
-        <Text style={[styles.steps, { color: textColor }]}>{`${item.liczba_kroków}`}</Text>
-        <MaterialCommunityIcons name="foot-print" size={24} color={textColor} />
-      </View>
+      <>
+        {index >= 4 && theme === 'dark' && (
+          <View style={{ width: 359, height: 3, backgroundColor: 'white', alignSelf: 'center' }} />
+        )}
+        {index >= 4 && theme === 'light' && (
+          <View style={{ width: 359, height: 3, backgroundColor: '#D9D9D9', alignSelf: 'center' }} />
+        )}
+        <View style={[styles.userItem, { backgroundColor }]}>
+          <Text style={[styles.rank, { color: textColor }]}>{item.miejsce}</Text>
+          <Image source={{ uri: item.zdjecie_profilowe }} style={styles.avatar} />
+          <Text style={[styles.userName, { color: textColor }]}>{`${item.imie} ${item.Nazwisko}`}</Text>
+          <Text style={[styles.steps, { color: textColor }]}>{`${item.liczba_kroków}`}</Text>
+          <MaterialCommunityIcons name="foot-print" size={24} color={textColor} />
+        </View>
+      </>
     );
   };
 
@@ -54,7 +62,7 @@ const Ranking = () => {
     <View style={styles.container}>
       <FlatList
         data={rankedUsers}
-        keyExtractor={(item, index) => index.toString()} // Zmieniono na używanie indeksu jako klucza, jeśli id nie jest dostępne
+        keyExtractor={(item, index) => index.toString()}
         renderItem={renderUserItem}
       />
     </View>
