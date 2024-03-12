@@ -1,5 +1,5 @@
-import React, { useState, Appearance } from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import getCalendarStyles from '../styles/CalendarStyles';
 import user from "../tempAPI/user.json";
@@ -11,7 +11,6 @@ function Calendar() {
   const { themeStyles } = useTheme();
   const dynamicStyles = getCalendarStyles(themeStyles);
   const events = user[0].Wydarzenia || [];
-
   const [currentDate, setCurrentDate] = useState(new Date());
 
   const goToPreviousWeek = () => {
@@ -25,9 +24,7 @@ function Calendar() {
   const startDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - 3);
   const endDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 3, 23, 59, 59);
 
-  const filteredEvents = events.filter(
-    event => new Date(event.data) >= startDate && new Date(event.data) <= endDate
-  );
+  const filteredEvents = events.filter(event => new Date(event.data) >= startDate && new Date(event.data) <= endDate);
   const sortedEvents = filteredEvents.sort((a, b) => new Date(a.data) - new Date(b.data));
 
   return (

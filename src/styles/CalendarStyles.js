@@ -24,14 +24,14 @@ const getCalendarStyles = (themeStyles) => ({
   },
   eventText: {
     fontSize: 16,
-    color: themeStyles.text,
+    color: themeStyles.text2,
   },
   evenEvent: {
     backgroundColor: themeStyles.secondary,
   },
   evenText: {
     fontSize: 16,
-    color: themeStyles.text2,
+    color: themeStyles.text,
   },
 });
 
