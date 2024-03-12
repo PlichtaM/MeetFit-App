@@ -5,8 +5,7 @@ import { useTheme } from '../components/ThemeContext';
 import getSettingsStyles from "../styles/SettingsStyles";
 
 function Settings() {
-  const { theme, setTheme, themeStyles } = useTheme();
-  const [selectedTheme, setSelectedTheme] = useState(theme);
+  const { theme, toggleTheme, themeStyles } = useTheme(); // Używamy toggleTheme zamiast setTheme
   const [notificationsEnabled, setNotificationsEnabled] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(false);
 
@@ -16,7 +15,6 @@ function Settings() {
         const storedSettings = await AsyncStorage.getItem("appSettings");
         if (storedSettings) {
           const parsedSettings = JSON.parse(storedSettings);
-          setSelectedTheme(parsedSettings.theme || theme);
           setNotificationsEnabled(parsedSettings.notifications);
           setSoundEnabled(parsedSettings.sound);
         }
@@ -25,17 +23,15 @@ function Settings() {
       }
     }
     loadSettings();
-  }, [theme]);
+  }, []);
 
   const saveSettings = async () => {
     try {
       const settingsToSave = {
-        theme: selectedTheme,
         notifications: notificationsEnabled,
         sound: soundEnabled,
       };
       await AsyncStorage.setItem("appSettings", JSON.stringify(settingsToSave));
-      setTheme(selectedTheme);
       alert('Ustawienia zostały zapisane.');
     } catch (error) {
       console.error("Error saving settings:", error);
@@ -50,13 +46,8 @@ function Settings() {
         <Text style={styles.text}>Wybierz motyw:</Text>
         <TouchableOpacity
           style={styles.themeButton}
-          onPress={() => setSelectedTheme('light')}>
-          <Text style={styles.themeButtonText}>Jasny</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.themeButton}
-          onPress={() => setSelectedTheme('dark')}>
-          <Text style={styles.themeButtonText}>Ciemny</Text>
+          onPress={toggleTheme}>
+          <Text style={styles.themeButtonText}>{theme === 'light' ? 'Ciemny' : 'Jasny'}</Text>
         </TouchableOpacity>
         <Text style={styles.text}>Powiadomienia:</Text>
         <TouchableOpacity

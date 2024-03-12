@@ -20,6 +20,7 @@ export const colorSchemes = {
     secondary: "#B243D8",
     disabled: "#f1f1f1",
     text: "#fff",
+    text2: "#000",
     buttonBackground: "#000",
     buttonBorder: "#fff",
     Background:"#363636",

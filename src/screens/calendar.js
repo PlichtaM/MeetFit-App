@@ -1,14 +1,15 @@
 import React, { useState, Appearance } from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import styles from '../styles/CalendarStyles';
+import getCalendarStyles from '../styles/CalendarStyles';
 import user from "../tempAPI/user.json";
 import { Entypo } from '@expo/vector-icons';
-import { getColorScheme  } from "../components/Colors";
-const colors = getColorScheme()
+import { useTheme } from '../components/ThemeContext';
 
 function Calendar() {
   const navigation = useNavigation();
+  const { themeStyles } = useTheme();
+  const dynamicStyles = getCalendarStyles(themeStyles);
   const events = user[0].Wydarzenia || [];
 
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -30,28 +31,28 @@ function Calendar() {
   const sortedEvents = filteredEvents.sort((a, b) => new Date(a.data) - new Date(b.data));
 
   return (
-    <View style={styles.container}>
-      <View style={styles.dateContainer}>
-        <TouchableOpacity onPress={goToPreviousWeek}>
-        <Entypo name="chevron-left" size={60} color={colors.secondary} />
-        </TouchableOpacity>
+    <View style={[dynamicStyles.container, {backgroundColor: themeStyles.Background}]}>
+          <View style={dynamicStyles.dateContainer}>
+            <TouchableOpacity onPress={goToPreviousWeek}>
+              <Entypo name="chevron-left" size={60} color={themeStyles.secondary} />
+            </TouchableOpacity>
         <View>
-          <Text style={styles.dates}>
+          <Text style={dynamicStyles.dates}>
             {startDate.toLocaleDateString('en-GB')} - {endDate.toLocaleDateString('en-GB')}
           </Text>
         </View>
         <TouchableOpacity onPress={goToNextWeek}>
-        <Entypo name="chevron-right" size={60} color={colors.secondary} />
+        <Entypo name="chevron-right" size={60} color={themeStyles.secondary} />
         </TouchableOpacity>
       </View>
       <View>
         {sortedEvents.map((event, index) => (
           <TouchableOpacity
             key={index}
-            style={[styles.eventButton, index % 2 === 0 ? styles.evenEvent : null]}
+            style={[dynamicStyles.eventButton, index % 2 === 0 ? dynamicStyles.evenEvent : null]}
             onPress={() => navigation.navigate("Event")}
           >
-            <Text style={[styles.eventText, index % 2 === 0 ? styles.evenText : null]}>
+            <Text style={[dynamicStyles.eventText, index % 2 === 0 ? dynamicStyles.evenText : null]}>
               {new Date(event.data).toLocaleDateString('en-GB')} -<Text style={{fontWeight:'bold'}}> {event.Nazwa}</Text> - {event.godzina}
             </Text>
           </TouchableOpacity>
