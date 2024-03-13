@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { View, Button, StyleSheet } from 'react-native';
-import MapView, { Callout, Marker, PROVIDER_GOOGLE } from 'react-native-maps';//https://github.com/react-native-maps/react-native-maps?tab=readme-ov-file
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet } from 'react-native';
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import Place from '../components/Place';
-import { markers } from '../tempAPI/markers';
-import mapstyle from '../styles/mapstyle.json' //https://mapstyle.withgoogle.com/
-import {getMapPoint} from '../../services/api';
+import { getMapPoint } from '../../services/api';
+import mapstyle from '../styles/mapstyle.json';
+
 const INITIAL_REGION = {
   latitude: 52.4,
   longitude: 16.92,
@@ -12,14 +12,28 @@ const INITIAL_REGION = {
   longitudeDelta: 0.2,
 };
 
-function Map(navigation) {
+function Map() {
+  const [markers, setMarkers] = useState([]);
   const [popupVisible, setPopupVisible] = useState(false);
-  const [selectedMarkerName, setSelectedMarkerName] = useState(null);
+  const [selectedMarkerId, setSelectedMarkerId] = useState(null);
 
+  useEffect(() => {
+    // Fetch map points from the API
+    const fetchMapPoints = async () => {
+      try {
+        const response = await getMapPoint();
+        setMarkers(response.data);
+      } catch (error) {
+        console.error('Error fetching map points:', error);
+      }
+    };
 
-  const onMarkerSelected = (markerName) => {
-    setSelectedMarkerName(markerName);
-    setPopupVisible(true)
+    fetchMapPoints();
+  }, []);
+
+  const onMarkerSelected = (markerId) => {
+    setSelectedMarkerId(markerId);
+    setPopupVisible(true);
   };
 
   const closePopup = () => {
@@ -34,18 +48,20 @@ function Map(navigation) {
         showsUserLocation
         showsMyLocationButton
         provider={PROVIDER_GOOGLE}
-         customMapStyle={mapstyle}
+        customMapStyle={mapstyle}
       >
-        {markers.map((marker, index) => (
+        {markers.map((marker) => (
           <Marker
-            key={index}
-            coordinate={marker}
-            onPress={() => onMarkerSelected(marker.name)}
-          >            
-          </Marker>
+            key={marker.id}
+            coordinate={{
+              latitude: marker.latitude,
+              longitude: marker.longitude,
+            }}
+            onPress={() => onMarkerSelected(marker.id)}
+          />
         ))}
       </MapView>
-      <Place isVisible={popupVisible} onClose={closePopup} selectedMarkerName={selectedMarkerName} />
+      <Place isVisible={popupVisible} onClose={closePopup} selectedMarkerId={selectedMarkerId} />
     </View>
   );
 }

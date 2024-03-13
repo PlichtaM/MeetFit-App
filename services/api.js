@@ -16,7 +16,8 @@ const updateCategory = (id, data) => api.put(`/category/${id}`, data);
 const deleteCategory = (id) => api.delete(`/category/${id}`);
 
 // Funkcje dla MapPoint
-const getMapPoint = (id) => api.get(`/mapPoint/${id}`);
+const getMapPoint = () => api.get(`/mapPoint`);
+const getMapPointId = (id) => api.get(`/mapPoint/${id}`);
 const createMapPoint = (data) => api.post('/mapPoint', data);
 const updateMapPoint = (id, data) => api.put(`/mapPoint/${id}`, data);
 const deleteMapPoint = (id) => api.delete(`/mapPoint/${id}`);
@@ -27,6 +28,8 @@ const loginUser = (data) => api.post('/user/Login', data);
 const forgotPassword = (data) => api.post('/user/ForgotPassword', data);
 const resetPassword = (data) => api.post('/user/resetPassword', data);
 
+
+const getFunFacts = () => api.get(`/funFact`);
 export {
   api,
   getCategory,
@@ -34,13 +37,15 @@ export {
   updateCategory,
   deleteCategory,
   getMapPoint,
+  getMapPointId,
   createMapPoint,
   updateMapPoint,
   deleteMapPoint,
   registerUser,
   loginUser,
   forgotPassword,
-  resetPassword
+  resetPassword,
+  getFunFacts
 };
 
 export default api;
