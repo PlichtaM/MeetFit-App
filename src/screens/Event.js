@@ -8,9 +8,11 @@ const colors = getColorScheme()
 
 import { Entypo , MaterialCommunityIcons  } from '@expo/vector-icons';
 import styles from "../styles/EventStyles";
+import { getEventById } from "../../services/api";
 
-const Event = () => {  
-
+const Event = ({route}) => {  
+  const { eventID } = route.params;
+  console.log("Event Screen",eventID);
   const {
     Nazwa,
     data,

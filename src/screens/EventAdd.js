@@ -2,14 +2,11 @@ import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { View, Text, TextInput, TouchableOpacity, ScrollView } from "react-native";
 import Slider from "@react-native-community/slider";
-import { Calendar, LocaleConfig } from "react-native-calendars"; //https://github.com/wix/react-native-calendars
-//import DateTimePicker from '@react-native-community/datetimepicker'  //https://github.com/react-native-datetimepicker/datetimepicker
-//import { RadioButton } from 'react-native-paper';
+import { Calendar, LocaleConfig } from "react-native-calendars";
 import { Checkbox } from "expo-checkbox";
 import style from "../styles/EventAddStyles";
-import { getColorScheme  } from "../components/Colors";
-const colors = getColorScheme()
-
+import { getColorScheme } from "../components/Colors";
+import { createEvent } from "../../services/api";
 LocaleConfig.locales['pl'] = {
   monthNames: [
     'Styczeń',
@@ -33,22 +30,56 @@ LocaleConfig.locales['pl'] = {
 
 LocaleConfig.defaultLocale = 'pl';
 
+const colors = getColorScheme();
 
-function EventAdd() {  
+function EventAdd({ route }) {
   const navigation = useNavigation();
+  const { selectedMarkerId } = route.params;
   const [limitMiejsc, setLimitMiejsc] = useState(5);
   const [selected, setSelected] = useState("");
   const [selectedOption, setSelectedOption] = useState("");
+  const [eventName, setEventName] = useState("");
+  //const [eventId, setEventId] = useState("");
 
   const handleCheckboxChange = (option) => {
     setSelectedOption(option === selectedOption ? "" : option);
   };
+
+  const handleCreateEvent = async () => {
+    try {
+      const eventData = {
+        name: eventName,
+        description: "", //Dodać do formularza
+        date: new Date(selected).toISOString(), //dodać Input godziny
+        mapPointId: selectedMarkerId,
+        limit: limitMiejsc,
+        private: selectedOption === "Prywatne",
+        active: true
+      };
+
+      const response = await createEvent(eventData);
+      //wzięcie ID wydarzenia od response API i użycie w przekierowaniu do ekranu wydarzenia
+      const locationHeader = response.headers.location;
+      const eventIdFromLocation = locationHeader.split("/").pop();
+      console.log("eventAdd",eventIdFromLocation);
+      navigation.navigate('Event', { eventId: eventIdFromLocation });
+    } catch (error) {
+      console.error('Error creating event:', error.response);
+      console.error('Error creating event:', error);
+    }
+  };
+
   return (
     <ScrollView style={style.background}>
       <View style={style.container}>
         <Text style={style.text}>Podaj nazwę wydarzenia:</Text>
         <View style={style.inputContainer}>
-          <TextInput placeholder="Nazwa" style={style.textInput} />
+          <TextInput
+            placeholder="Nazwa"
+            style={style.textInput}
+            value={eventName}
+            onChangeText={setEventName} 
+          />
         </View>
         <Text style={style.text}>Limit miejsc:</Text>
         <View style={style.sliderContainer}>
@@ -106,8 +137,8 @@ function EventAdd() {
           />
           <Text style={{ fontSize: 16, marginHorizontal: 10, color: colors.text }}>Publiczne</Text>
         </View>
-        <TouchableOpacity style={style.addEventButton}>
-          <Text style={style.addEventButtonText} onPress={() => navigation.navigate('Event')}>Utwórz wydarzenie</Text>
+        <TouchableOpacity style={style.addEventButton} onPress={handleCreateEvent}>
+          <Text style={style.addEventButtonText}>Utwórz wydarzenie</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
