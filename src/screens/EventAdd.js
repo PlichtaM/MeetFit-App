@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute  } from "@react-navigation/native";
 import { View, Text, TextInput, TouchableOpacity, ScrollView } from "react-native";
 import Slider from "@react-native-community/slider";
 import { Calendar, LocaleConfig } from "react-native-calendars";
@@ -35,11 +35,11 @@ const colors = getColorScheme();
 function EventAdd({ route }) {
   const navigation = useNavigation();
   const { selectedMarkerId } = route.params;
+  
   const [limitMiejsc, setLimitMiejsc] = useState(5);
   const [selected, setSelected] = useState("");
   const [selectedOption, setSelectedOption] = useState("");
   const [eventName, setEventName] = useState("");
-  //const [eventId, setEventId] = useState("");
 
   const handleCheckboxChange = (option) => {
     setSelectedOption(option === selectedOption ? "" : option);
@@ -48,15 +48,16 @@ function EventAdd({ route }) {
   const handleCreateEvent = async () => {
     try {
       const eventData = {
-        name: eventName,
+        name: eventName,// Póżniej dodać,żeby było co najmniej kilka znaków
         description: "", //Dodać do formularza
         date: new Date(selected).toISOString(), //dodać Input godziny
         mapPointId: selectedMarkerId,
-        limit: limitMiejsc,
-        private: selectedOption === "Prywatne",
+        limit: limitMiejsc, //dodać możliwość "Bez limitu"
+        private: selectedOption === "Prywatne", // ztego chyba rezygnujemy
         active: true
       };
 
+      
       const response = await createEvent(eventData);
       //wzięcie ID wydarzenia od response API i użycie w przekierowaniu do ekranu wydarzenia
       const locationHeader = response.headers.location;
@@ -68,7 +69,7 @@ function EventAdd({ route }) {
       console.error('Error creating event:', error);
     }
   };
-
+  console.log(selected);
   return (
     <ScrollView style={style.background}>
       <View style={style.container}>

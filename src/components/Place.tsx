@@ -88,7 +88,7 @@ const Place = ({ isVisible, onClose, selectedMarkerId }) => {
                   keyExtractor={(item, index) => index.toString()}
                   renderItem={({ item }) => {
                     const limit = item.limit || 1; // Zmiana - używamy limitu z danych wydarzenia
-                    const eventID = item.id
+                    const eventId = item.id
                     const currentCount = item.zapisani_uzytkownicy
                       ? item.zapisani_uzytkownicy.length
                       : 0;
@@ -105,7 +105,7 @@ const Place = ({ isVisible, onClose, selectedMarkerId }) => {
                     };
 
                     return (
-                      <TouchableOpacity onPress={() => { navigation.navigate('Event', { eventID: item.id }) }} >
+                      <TouchableOpacity onPress={() => { navigation.navigate('Event', { eventId: item.id }), onClose(); }} >
                         {/*console.log(eventID)*/}                        
                         <View style={styles.EventListList}>
                           <Entypo

@@ -1,14 +1,13 @@
-import React, { useState } from "react";
-import { useNavigation } from "@react-navigation/native";
+import React, { useLayoutEffect , useState, useEffect} from "react";
+import { useNavigation, useRoute  } from "@react-navigation/native";
 import { View, Text, TextInput, TouchableOpacity, ScrollView } from "react-native";
 import Slider from "@react-native-community/slider";
-import { Calendar, LocaleConfig } from "react-native-calendars"; //https://github.com/wix/react-native-calendars
-//import DateTimePicker from '@react-native-community/datetimepicker'
-//import { RadioButton } from 'react-native-paper';
+import { Calendar, LocaleConfig } from "react-native-calendars";
 import { Checkbox } from "expo-checkbox";
 import style from "../styles/EventAddStyles";
-import { getColorScheme  } from "../components/Colors";
-const colors = getColorScheme()
+import { getColorScheme } from "../components/Colors";
+import { getEventById, updateEvent} from "../../services/api";
+const colors = getColorScheme();
 
 LocaleConfig.locales['pl'] = {
   monthNames: [
@@ -30,26 +29,70 @@ LocaleConfig.locales['pl'] = {
   dayNamesShort: ['Niedz.', 'Pon.', 'Wt.', 'Śr.', 'Czw.', 'Pt.', 'Sob.'],
   today: "Dziś"
 };
-
 LocaleConfig.defaultLocale = 'pl';
 
 
-function EventEdit() {  
+
+
+function EventAdd({ route }) {
   const navigation = useNavigation();
-  const [limitMiejsc, setLimitMiejsc] = useState(5);
-  const [selected, setSelected] = useState("");
-  const [selectedOption, setSelectedOption] = useState("");
-
-
+  const { eventId } = route.params;
+ 
   const handleCheckboxChange = (option) => {
     setSelectedOption(option === selectedOption ? "" : option);
   };
+  const [Event, setEvent] = useState([]);
+  useEffect(() => {
+    const fetchEvent = async () => {
+      try {
+        const response = await getEventById(eventId);
+        setEvent(response.data);
+      } catch (error) {
+        console.error('Error fetching map points:', error);
+      }
+    };
+    fetchEvent();
+  }, []);
+
+  const [limitMiejsc, setLimitMiejsc] = useState(Event.limit);
+  const [selected, setSelected] = useState(Event.date && Event.date.slice(0, 10));
+
+  const [selectedOption, setSelectedOption] = useState(Event.private  === "Prywatne");
+  const [eventName, setEventName] = useState(Event.name);
+
+
+  const handleEditEvent = async () => {
+    try {
+      const eventData = {
+        name: eventName,// Póżniej dodać,żeby było co najmniej kilka znaków
+        description: "", //Dodać do formularza
+        date: new Date(selected).toISOString(), //dodać Input godziny
+        mapPointId: Event.mapPointId,
+        limit: limitMiejsc, //dodać możliwość "Bez limitu"
+        private: selectedOption === "Prywatne", // ztego chyba rezygnujemy
+        active: true
+      };
+      
+      const response = await updateEvent(eventId, eventData);
+      console.log(response);
+      navigation.navigate('Event', { eventId: eventId });
+    } catch (error) {
+      console.error('Error creating event:', error.response);
+      console.error('Error creating event:', error);
+    }
+  };
+
   return (
     <ScrollView style={style.background}>
       <View style={style.container}>
         <Text style={style.text}>Podaj nazwę wydarzenia:</Text>
         <View style={style.inputContainer}>
-          <TextInput placeholder="Nazwa" style={style.textInput} />
+          <TextInput
+            placeholder="Nazwa"
+            style={style.textInput}
+            value={eventName}
+            onChangeText={setEventName} 
+          />
         </View>
         <Text style={style.text}>Limit miejsc:</Text>
         <View style={style.sliderContainer}>
@@ -69,7 +112,7 @@ function EventEdit() {
           />
           <Text style={style.odDo}>10</Text>
         </View>
-        <Text style={style.text}>Limit miejsc: {limitMiejsc}</Text>
+        <Text>Limit miejsc: {limitMiejsc}</Text>
         <Text style={style.text}>Podaj datę wydarzenia:</Text>
         <TouchableOpacity>
           <Calendar
@@ -107,15 +150,15 @@ function EventEdit() {
           />
           <Text style={{ fontSize: 16, marginHorizontal: 10, color: colors.text }}>Publiczne</Text>
         </View>
-        <TouchableOpacity style={style.addEventButton}>
-          <Text style={style.addEventButtonText} onPress={() => navigation.navigate("Event")}>Aktualizuj wydarzenie</Text>
+        <TouchableOpacity style={style.addEventButton} onPress={handleEditEvent}>
+          <Text style={style.addEventButtonText}>Aktualizuj wydarzenie</Text>
         </TouchableOpacity>
          <TouchableOpacity style={style.cancelEventButton}>
-          <Text style={style.addEventButtonText} onPress={() => navigation.popToTop()}>Anuluj wydarzenie</Text>
+          <Text style={style.addEventButtonText} onPress={() => console.log('anuluj')/* navigation.popToTop()*/ }>Anuluj wydarzenie</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
   );
 }
 
-export default EventEdit;
+export default EventAdd;

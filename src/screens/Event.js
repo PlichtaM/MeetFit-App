@@ -1,5 +1,5 @@
-import React, { useLayoutEffect } from "react";
-import { useNavigation } from "@react-navigation/native";
+import React, { useLayoutEffect , useState, useEffect} from "react";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { View, Text, StyleSheet, TouchableOpacity, Image, Pressable  } from "react-native";
 import placeInfo from "../tempAPI/place.json";
 import event from "../tempAPI/event.json";
@@ -10,26 +10,34 @@ import { Entypo , MaterialCommunityIcons  } from '@expo/vector-icons';
 import styles from "../styles/EventStyles";
 import { getEventById } from "../../services/api";
 
-const Event = ({route}) => {  
-  const { eventID } = route.params;
-  console.log("Event Screen",eventID);
-  const {
-    Nazwa,
-    data,
-    godzina,
-    miejsce,
-    zapisani_uzytkownicy,
-    limit_osob,
-    czy_Prywatny,
-  } = event;
-  const navigation = useNavigation();
+const Event = ({navigation}) => {  
+ 
+ // const navigation = useNavigation();
+   const route = useRoute()
+   const { eventId } = route.params;
+   const tempEventID = "607c0086-3e5a-4dc3-ace0-09fa48b06303" // DO TESTÓW
+   const [Event, setEvent] = useState([]);
+   useEffect(() => {
+    const fetchEvent = async () => {
+      try {
+        //const response = await getEventById(eventId);
+        const response = await getEventById(tempEventID);
+        setEvent(response.data);
+      } catch (error) {
+        console.error('Error fetching map points:', error);
+      }
+    };
 
-  const selectedPlace = placeInfo.find((place) => place.Nazwa === miejsce);
-  const placePhotoUri = selectedPlace?.Photo || "";
+    fetchEvent();
+  }, []);
+
+const eventDate = new Date(Event.date);
+const formattedDate = `${eventDate.getDate()}.${eventDate.getMonth() + 1}.${eventDate.getFullYear()}`;
+const formattedTime = `${eventDate.getHours()}:${eventDate.getMinutes().toString().padStart(2, '0')}`;
 
   useLayoutEffect(() => { 
     navigation.setOptions({
-      title: Nazwa,      
+      title: Event.name,      
       headerTitleAlign: 'center',
       headerTintColor: "white",
       headerStyle: {
@@ -45,33 +53,38 @@ const Event = ({route}) => {
         style={styles.closeButton}
         onPress={() => navigation.popToTop()}
       >
-        <MaterialCommunityIcons name="close-circle" size={30} color={colors.secondary} 
+        <MaterialCommunityIcons name="close-circle" size={36} color={'white'} 
           style={styles.closeButtonIcon}
         />
       </TouchableOpacity>
       ),
       headerLeft:() =>(null),
     });
-  }, [navigation]);
+  }, [navigation, Event]);
 
   return (
     <View style={styles.screen}>
       <View style={styles.container}>       
-        <Image style={styles.eventImage} source={{ uri: placePhotoUri }} />
+        {Event.mapPoint && Event.mapPoint.pictureUrl && (
+          <Image style={styles.eventImage} source={{ uri: Event.mapPoint.pictureUrl }} />
+        )}
         <View style={styles.infoContainer}>
-          <Text style={styles.infoText}>Data: {data}</Text>
-          <Text style={styles.infoText}>Godzina: {godzina}</Text>
-          <Text style={styles.infoText}>Miejsce: {miejsce}</Text>
+          <Text style={styles.infoText}>Opis: {Event.description}</Text>
+          <Text style={styles.infoText}>Data: {formattedDate}</Text>
+          <Text style={styles.infoText}>Godzina: {formattedTime}</Text>
+          {Event.mapPoint && (
+            <Text style={styles.infoText}>Miejsce: {Event.mapPoint.name}</Text>
+          )}
           <Text style={styles.infoText}>
-            Zapisani użytkownicy: {zapisani_uzytkownicy.length} / {limit_osob}
+            Zapisani użytkownicy: zapisani_uzytkownicy / {Event.limit}
           </Text>
           <Text style={styles.infoText}>
-            Wydarzenie {czy_Prywatny ? "Prywatne" : "Publiczne"}
+            Wydarzenie {Event.private ? "Prywatne" : "Publiczne"}
           </Text>
         </View>
         <TouchableOpacity
           style={styles.createEventButton}
-          onPress={() => navigation.navigate("EventEdit")}>
+          onPress={() => navigation.navigate("EventEdit", { eventId: tempEventID })}>
           <Text style={styles.createEventButtonText}>
             Edytuj wydarzenie
           </Text>
@@ -79,6 +92,6 @@ const Event = ({route}) => {
       </View>
     </View>
   );
-};
+          }  
 
 export default Event;
