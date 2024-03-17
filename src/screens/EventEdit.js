@@ -34,7 +34,7 @@ LocaleConfig.defaultLocale = 'pl';
 
 
 
-function EventAdd({ route }) {
+function EventEdit({ route }) {
   const navigation = useNavigation();
   const { eventId } = route.params;
  
@@ -161,4 +161,4 @@ function EventAdd({ route }) {
   );
 }
 
-export default EventAdd;
+export default EventEdit;

@@ -15,13 +15,14 @@ const Event = ({navigation}) => {
  // const navigation = useNavigation();
    const route = useRoute()
    const { eventId } = route.params;
-   const tempEventID = "607c0086-3e5a-4dc3-ace0-09fa48b06303" // DO TESTÓW
+   console.log(eventId);
+   //const tempEventID = "607c0086-3e5a-4dc3-ace0-09fa48b06303" // DO TESTÓW
    const [Event, setEvent] = useState([]);
    useEffect(() => {
     const fetchEvent = async () => {
       try {
         //const response = await getEventById(eventId);
-        const response = await getEventById(tempEventID);
+        const response = await getEventById(eventId);
         setEvent(response.data);
       } catch (error) {
         console.error('Error fetching map points:', error);
@@ -84,7 +85,7 @@ const formattedTime = `${eventDate.getHours()}:${eventDate.getMinutes().toString
         </View>
         <TouchableOpacity
           style={styles.createEventButton}
-          onPress={() => navigation.navigate("EventEdit", { eventId: tempEventID })}>
+          onPress={() => navigation.navigate("EventEdit", { eventId: eventId })}>
           <Text style={styles.createEventButtonText}>
             Edytuj wydarzenie
           </Text>
