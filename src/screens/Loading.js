@@ -1,6 +1,5 @@
 import React from "react";
 import { View, Text, StyleSheet, ActivityIndicator, Image } from "react-native";
-import { LinearGradient } from 'expo-linear-gradient';
 import { getColorScheme  } from "../components/Colors";
 const colors = getColorScheme()
 

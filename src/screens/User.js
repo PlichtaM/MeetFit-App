@@ -4,7 +4,6 @@ import { getColorScheme  } from "../components/Colors";
 const colors = getColorScheme()
 import UserStyles from "../styles/UserStyles";
 import user from "../tempAPI/user.json"
-//import Icon from 'react-native-vector-icons/Ionicons';
 import { Entypo, MaterialCommunityIcons, MaterialIcons  } from '@expo/vector-icons';
 import * as Progress from 'react-native-progress'; //https://github.com/oblador/react-native-progress
 
