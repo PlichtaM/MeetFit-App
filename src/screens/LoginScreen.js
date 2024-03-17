@@ -4,6 +4,7 @@ import Checkbox from 'expo-checkbox';
 import LoginButton from '../components/LoginButton';
 import LoginStyles from "../styles/LoginStyles";
 import { loginUser } from "../../services/api";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getColorScheme  } from "../components/Colors";
 const colors = getColorScheme()
 
@@ -17,18 +18,21 @@ function LoginScreen({ navigation }) {
       email: email,
       password: password
     };
-
+  
     loginUser(userCredentials)
       .then((response) => {       
           console.log("Logowanie udane:", response.data);
+          AsyncStorage.setItem('token', response.data.token);
+          AsyncStorage.setItem('userName', response.data.userName);
+          AsyncStorage.setItem('userId', response.data.userId);
       })
       .catch((error) => {
-        console.log("Status odpowiedzi:", error.response.status);
-        console.log("Nagłówki odpowiedzi:", error.response.headers);   
-        Alert.alert("Błąd", "Nieprawidłowy adres email lub hasło");     
+        console.log("Status odpowiedzi:", error);  
         console.log("dane:", userCredentials);
       });
   };
+
+  
 
   return (
     <View style={LoginStyles.container}>

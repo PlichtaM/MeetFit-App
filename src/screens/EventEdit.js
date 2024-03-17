@@ -1,5 +1,5 @@
-import React, { useLayoutEffect , useState, useEffect} from "react";
-import { useNavigation, useRoute  } from "@react-navigation/native";
+import React, { useState, useEffect} from "react";
+import { useNavigation  } from "@react-navigation/native";
 import { View, Text, TextInput, TouchableOpacity, ScrollView } from "react-native";
 import Slider from "@react-native-community/slider";
 import { Calendar, LocaleConfig } from "react-native-calendars";

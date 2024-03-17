@@ -2,8 +2,6 @@ import React from "react";
 import { View, Text, Image } from 'react-native';
 import LoginButton from '../components/LoginButton';
 import LoginStyles from "../styles/LoginStyles";
-import { getColorScheme  } from "../components/Colors";
-const colors = getColorScheme()
 
 function CorrectChangedPasswordScreen() {
   return (

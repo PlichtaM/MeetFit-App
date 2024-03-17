@@ -38,6 +38,11 @@ const loginUser = (data) => api.post('/user/Login', data);
 const forgotPassword = (data) => api.post('/user/ForgotPassword', data);
 const resetPassword = (data) => api.post('/user/resetPassword', data);
 
+// Funkcje dodatkowe dla User
+const confirmEmail = (id) => api.get(`/user/ConfirmEmail/${id}`);
+const getUser = (id) => api.get(`/user/${id}`);
+const updateStepsCount = (id, data) => api.put(`/user/${id}/UpdateStepsCount`, data);
+const changeStepsGoal = (id, data) => api.put(`/user/${id}/ChangeStepsGoal`, data);
 //FunFacts
 const getFunFacts = () => api.get(`/funFact`);
 
@@ -64,6 +69,7 @@ export {
   loginUser,
   forgotPassword,
   resetPassword,
+  confirmEmail,getUser,updateStepsCount,changeStepsGoal,
   getFunFacts
 };
 
