@@ -56,6 +56,7 @@ function User({ navigation }) {
       <LoadingScreen/>
     );
   }
+
   return (
       <View style={UserStyles.container}>
         <View style={UserStyles.top}></View>

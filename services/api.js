@@ -1,14 +1,36 @@
-// services.js
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
-// Ustaw bazowy URL API
-const API_BASE_URL = 'http://meetfitapp.pl/api'; 
-
+const API_BASE_URL = 'http://meetfitapp.pl/api';
 const api = axios.create({
   baseURL: API_BASE_URL,
-  // Możesz dodać inne globalne ustawienia, jak nagłówki
 });
+
+// Funkcja do pobierania tokena z AsyncStorage
+const getToken = async () => {
+  try {
+    const token = await AsyncStorage.getItem('token');
+    return token;
+  } catch (error) {
+    console.error('Error getting token from AsyncStorage:', error);
+    return null;
+  }
+};
+
+// Dodajemy interceptor, który będzie dołączał nagłówek 'Authorization' z tokenem przed wysłaniem żądania
+api.interceptors.request.use(
+  async (config) => {
+    const token = await getToken();
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
 // Funkcje dla Event
 const getEvent = () => api.get(`/event`);
 const getEventById = (id) => api.get(`/event/${id}`);

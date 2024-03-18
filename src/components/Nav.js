@@ -191,13 +191,13 @@ export default function Nav() {
         <Tab.Navigator
          initialRouteName="MapStackScreen"
          screenOptions={({ route }) => ({
-           tabBarIcon: ({ focused, color, size }) => {
+           tabBarIcon: ({ focused }) => {
              return getTabBarIcon(route.name, focused);
             },
             backgroundColor: colors.Background,
            tabBarActiveTintColor: colors.primary,
            tabBarInactiveTintColor: colors.secondary,
-           tabBarLabel: () => null, // Usunięcie napisu pod ikoną
+           tabBarLabel: () => null,
            tabBarStyle: { backgroundColor: colors.Background}
          })}
         >
