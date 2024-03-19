@@ -10,8 +10,8 @@ const colors = getColorScheme()
 
 function LoginScreen({ navigation }) {
   const [isChecked, setChecked] = useState(false);  
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("admin@admin.pl"); //USUNĄĆ PRZED PRODUKCJĄ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  const [password, setPassword] = useState("Qwerty123!");
 
   const handleLogin = () => {  
     const userCredentials = {

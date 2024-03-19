@@ -1,34 +1,40 @@
-import React, { useLayoutEffect, useState, useEffect } from "react";
+import React, { useLayoutEffect, useState, useEffect, useRef } from "react";
+import { View, Text, TouchableOpacity, Image } from "react-native";
 import { useRoute } from "@react-navigation/native";
-import {View,Text,TouchableOpacity,Image} from "react-native";
-import { getColorScheme } from "../components/Colors";
-const colors = getColorScheme();
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getEventById, GetCountPeople, createUserEvent } from "../../services/api";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { getColorScheme } from "../components/Colors";
 import styles from "../styles/EventStyles";
-import { getEventById } from "../../services/api";
+const colors = getColorScheme();
 
 const Event = ({ navigation }) => {
   const route = useRoute();
   const { eventId } = route.params;
   const [Event, setEvent] = useState([]);
+  const [CountPeople, setCountPeople] = useState([]);
+  const fetchEventRef = useRef();
+
   useEffect(() => {
-    const fetchEvent = async () => {
+    fetchEventRef.current = async () => {
       try {
+        const userId = await AsyncStorage.getItem('userId');
         const response = await getEventById(eventId);
+        const ppl = await GetCountPeople(eventId);
+        setCountPeople(ppl.data);
         setEvent(response.data);
       } catch (error) {
         console.error("Error fetching map points:", error);
       }
     };
 
-    fetchEvent();
+    fetchEventRef.current();
   }, []);
 
   const eventDate = new Date(Event.date);
   const formattedDate = `${eventDate.getDate()}.${
     eventDate.getMonth() + 1
-  }.${eventDate.getFullYear()}`;
+    }.${eventDate.getFullYear()}`;
   const formattedTime = `${eventDate.getHours()}:${eventDate
     .getMinutes()
     .toString()
@@ -64,6 +70,18 @@ const Event = ({ navigation }) => {
     });
   }, [navigation, Event]);
 
+  const handleSignUp = async () => {
+    try {
+      const userId = await AsyncStorage.getItem('userId');
+      await createUserEvent({ userId, eventId });
+      // Optionally, you can refresh event data here if needed
+      // Fetch event again or update local state
+      fetchEventRef.current();
+    } catch (error) {
+      console.error("Error signing up for event:", error);
+    }
+  };
+
   return (
     <View style={styles.screen}>
       <View style={styles.container}>
@@ -81,7 +99,7 @@ const Event = ({ navigation }) => {
             <Text style={styles.infoText}>Miejsce: {Event.mapPoint.name}</Text>
           )}
           <Text style={styles.infoText}>
-            Zapisani użytkownicy: zapisani_uzytkownicy / {Event.limit}
+            Zapisani użytkownicy: {CountPeople} / {Event.limit}
           </Text>
           <Text style={styles.infoText}>
             Wydarzenie {Event.private ? "Prywatne" : "Publiczne"}
@@ -92,6 +110,12 @@ const Event = ({ navigation }) => {
           onPress={() => navigation.navigate("EventEdit", { eventId: eventId })}
         >
           <Text style={styles.createEventButtonText}>Edytuj wydarzenie</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.singUp}
+          onPress={handleSignUp}
+        >
+          <Text style={styles.createEventButtonText}>Zapisz mnie na wydarzenie</Text>
         </TouchableOpacity>
       </View>
     </View>

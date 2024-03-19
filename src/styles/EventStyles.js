@@ -44,6 +44,7 @@ const EventStyles = {
   },
   createEventButton: {
     backgroundColor: colors.secondary,
+    marginTop: 15,
     padding: 15,
     borderRadius: 10,
     alignItems: "center",
@@ -52,6 +53,13 @@ const EventStyles = {
     color: "white",
     fontSize: 16,
     fontWeight: "bold",
+  },
+  singUp:{
+    backgroundColor: "#1b9b1b",
+    marginTop: 15,
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
   },
 };
 

@@ -6,7 +6,7 @@ const api = axios.create({
   baseURL: API_BASE_URL,
 });
 
-// Funkcja do pobierania tokena z AsyncStorage
+//token z AsyncStorage
 const getToken = async () => {
   try {
     const token = await AsyncStorage.getItem('token');
@@ -16,8 +16,7 @@ const getToken = async () => {
     return null;
   }
 };
-
-// Dodajemy interceptor, który będzie dołączał nagłówek 'Authorization' z tokenem przed wysłaniem żądania
+// nagłówek 'Authorization' z tokenem przed wysłaniem żądania
 api.interceptors.request.use(
   async (config) => {
     const token = await getToken();
@@ -39,6 +38,7 @@ const updateEvent = (id, data) => api.put(`/event/${id}`, data);
 const deleteEvent = (id) => api.delete(`/event/${id}`);
 const getEventsByMapPointId = (id) => api.get(`/event/ByMapPointId/${id}`);
 const getEventsByUserId = (id) => api.get(`/event/ByUserId/${id}`);
+const GetCountPeople = (id) => api.get(`/event/GetCountPeople/${id}`);
 
 // Funkcje dla UserEvent
 const getUserEvent = () => api.get(`/userEvent`);
@@ -46,6 +46,7 @@ const getUserEventById = (id) => api.get(`/userEvent/${id}`);
 const createUserEvent = (data) => api.post('/userEvent', data);
 const updateUserEvent = (id, data) => api.put(`/userEvent/${id}`, data);
 const deleteUserEvent = (id) => api.delete(`/userEvent/${id}`);
+const GetByUserId = (id) => api.delete(`/userEvent/GetByUserId/${id}`);
 
 // Funkcje dla MapPoint
 const getMapPoint = () => api.get(`/mapPoint`);
@@ -59,14 +60,21 @@ const registerUser = (data) => api.post('/user/Register', data);
 const loginUser = (data) => api.post('/user/Login', data);
 const forgotPassword = (data) => api.post('/user/ForgotPassword', data);
 const resetPassword = (data) => api.post('/user/resetPassword', data);
-
-// Funkcje dodatkowe dla User
 const confirmEmail = (id) => api.get(`/user/ConfirmEmail/${id}`);
 const getUser = (id) => api.get(`/user/${id}`);
 const updateStepsCount = (id, data) => api.put(`/user/${id}/UpdateStepsCount`, data);
 const changeStepsGoal = (id, data) => api.put(`/user/${id}/ChangeStepsGoal`, data);
-//FunFacts
+
+// Funkcje dodatkowe dla User
+const changeAvatar = (id, data) => api.put(`/user/ChangeAvatar/${id}`, data);
+const getAllStepsCount = () => api.get('/user/GetAllStepsCount');
+
+// Funkcje dla FunFact
 const getFunFacts = () => api.get(`/funFact`);
+const createFunFact = (data) => api.post('/funFact', data);
+const getFunFactById = (id) => api.get(`/funFact/${id}`);
+const deleteFunFact = (id) => api.delete(`/funFact/${id}`);
+const updateFunFact = (id, data) => api.put(`/funFact/${id}`, data);
 
 export {
   api,
@@ -77,6 +85,7 @@ export {
   deleteEvent,
   getEventsByMapPointId,
   getEventsByUserId,
+  GetCountPeople,
   getUserEvent,
   getUserEventById,
   createUserEvent,
@@ -91,8 +100,17 @@ export {
   loginUser,
   forgotPassword,
   resetPassword,
-  confirmEmail,getUser,updateStepsCount,changeStepsGoal,
-  getFunFacts
+  confirmEmail,
+  getUser,
+  updateStepsCount,
+  changeStepsGoal,
+  changeAvatar,
+  getAllStepsCount,
+  getFunFacts,
+  createFunFact,
+  getFunFactById,
+  deleteFunFact,
+  updateFunFact
 };
 
 export default api;

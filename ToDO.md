@@ -7,6 +7,7 @@
 - [ ] ikonka kroków do zmiany
 - [ ] kalendarz - style (kolory)
 - [ ] EventAdd, EventEdit - input na godzinę i opis
+- [ ] Zmiana Profilówki
 - [ ] dodać gdzieś w UI
   - [ ] zmiane hasla
   - [ ] zmiane Nicku?

@@ -10,6 +10,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getUser } from "../../services/api";
 import LoadingScreen from "./Loading";
 
+
 function User({ navigation }) {
   const [user, setUser] = useState()
   useEffect(() => {
@@ -19,7 +20,7 @@ function User({ navigation }) {
         const token = await AsyncStorage.getItem('token');
         const userName = await AsyncStorage.getItem('userName');
         const userId = await AsyncStorage.getItem('userId');
-        const tempId = "5fdd66f8-797e-4a0c-9285-83e3fde4cfdb";
+        const tempId = "7e0d85bc-9e8c-4781-b460-35b280d2aadf";
         //dane z api
         const response = await getUser(tempId);//ZMIENIC POZNIEJ TEMP ID
         setUser(response.data);
@@ -64,8 +65,7 @@ function User({ navigation }) {
         <View style={UserStyles.UserNameContainer}>
           <Text style={UserStyles.UserName}>{`${user.userName}`}</Text>
           {/*<Icon name="footsteps" size={24} color={colors.primary} />*/}
-          <MaterialCommunityIcons name="foot-print" size={30} color={colors.primary}  style={UserStyles.stepIcon} />
-          {/*<Image style={UserStyles.stepIcon} source={require("../../assets/iconFunFacts.png")}/>  */}          
+          <MaterialCommunityIcons name="foot-print" size={30} color={colors.primary}  style={UserStyles.stepIcon} />         
             <Progress.Bar
               styleAttr="Horizontal"
               indeterminate={false}

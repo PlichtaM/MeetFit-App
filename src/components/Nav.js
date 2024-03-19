@@ -202,7 +202,7 @@ export default function Nav() {
          })}
         >
           <Tab.Screen
-            name="Settings" component={Settings}
+            name="Settings" component={LoginScreen}
             options={{ title: "Ustawienia", ...headerOptions }}
             
           />
