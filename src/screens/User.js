@@ -49,8 +49,19 @@ function User({ navigation }) {
   const tempUserData = tempuser[0];
   //const progress = (tempUserData.liczba_kroków / user.cel_kroków) * 100;
   // https://docs.expo.dev/versions/latest/sdk/pedometer/
-  
- const progress = user ? (user.stepsCount / user.stepsGoal) * 100 : 0;
+  async function handleLogOut() {
+    try {
+      await AsyncStorage.removeItem('token');
+      //navigation.navigate('LoginStackScreen',{screen:'LoginScreen'})
+      console.log("Wylogowano");
+      return true;
+    } catch (error) {
+      console.error('Error during logout:', error);
+      return false;
+    }
+  }
+
+ const progress = user ? (user.stepsCount / user.stepsGoal) * 100 : 0; 
 
   if (!user) {
     return (
@@ -82,7 +93,7 @@ function User({ navigation }) {
           <Entypo name="chat" size={26} color={colors.secondary} style={UserStyles.ButtonImage} /> 
             <Text style={UserStyles.buttonText}>Moje Wydarzenia</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('Map')} style={UserStyles.UserButton}>
+          <TouchableOpacity onPress={() => navigation.navigate('MapStackScreen')} style={UserStyles.UserButton}>
           <MaterialCommunityIcons name="map" size={26} color={colors.secondary}  style={UserStyles.ButtonImage} />
             <Text style={UserStyles.buttonText}>Mapa z punktami</Text>
           </TouchableOpacity>
@@ -97,10 +108,14 @@ function User({ navigation }) {
           <TouchableOpacity onPress={() => navigation.navigate('FunFacts')} style={UserStyles.UserButton}>
           <MaterialCommunityIcons name="head-question" size={26} color={colors.secondary}  style={UserStyles.ButtonImage} />
             <Text style={UserStyles.buttonText}>Ciekawostki</Text>
-          </TouchableOpacity>          
+          </TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate('OtherScreens')} style={UserStyles.UserButton}>
           <MaterialCommunityIcons name="account-alert" size={26} color={colors.secondary}  style={UserStyles.ButtonImage} />
             <Text style={UserStyles.buttonText}>OtherScreens</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={handleLogOut} style={UserStyles.UserButton}>
+          <MaterialCommunityIcons name="logout" size={26} color={colors.secondary}  style={UserStyles.ButtonImage} />
+            <Text style={UserStyles.buttonText}>Wyloguj</Text>
           </TouchableOpacity>
         </View>
       </View>

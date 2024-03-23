@@ -56,6 +56,7 @@ const updateMapPoint = (id, data) => api.put(`/mapPoint/${id}`, data);
 const deleteMapPoint = (id) => api.delete(`/mapPoint/${id}`);
 
 // Funkcje dla User
+const user = () => api.get(`/user`);
 const registerUser = (data) => api.post('/user/Register', data);
 const loginUser = (data) => api.post('/user/Login', data);
 const forgotPassword = (data) => api.post('/user/ForgotPassword', data);
@@ -95,6 +96,7 @@ export {
   getMapPointId,
   createMapPoint,
   updateMapPoint,
+  user,
   deleteMapPoint,
   registerUser,
   loginUser,

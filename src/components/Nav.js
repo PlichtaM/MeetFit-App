@@ -1,8 +1,10 @@
-import React from "react";
-import { Image, View, Pressable , useColorScheme} from "react-native";
-import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
+import React, { useState, useEffect } from "react";
+import { Image, View, useColorScheme, ActivityIndicator } from "react-native";
+import { NavigationContainer, DefaultTheme, useNavigation } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { GetCountPeople } from "../../services/api";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { MaterialCommunityIcons, MaterialIcons, FontAwesome  } from '@expo/vector-icons';
 import FooterStyles from "../styles/FooterStyles";
@@ -19,8 +21,7 @@ import Event from "../screens/Event";
 import EventAdd from "../screens/EventAdd";
 import EventEdit from "../screens/EventEdit";
 import Place from "../components/Place";
-
-import OtherScreens from "../screens/OtherScreens";
+import OtherScreens from "../screens/OtherScreens"; //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 import LoadingScreen from '../screens/Loading';
 import RegisterScreen from '../screens/RegisterScreen';
 import LoginScreen from '../screens/LoginScreen';
@@ -32,20 +33,47 @@ import VerifiedScreen from '../screens/VerifiedScreen';
 
 
 
-
 export default function Nav() {
-  const headerOptions = {
-    headerStyle: {
-      backgroundColor: colors.primary,
-    },
-    headerTitleStyle: {
-      fontWeight: "bold",
-      color: "white",
-      fontSize: 30,
-    },
-    headerTitleAlign: "center",
-    headerTintColor: "white",
-  };
+  const [isLoading, setIsLoading] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigation = useNavigation();
+  useEffect(() => {
+    const checkTokenValidity = async () => {
+      try {
+        const token = await AsyncStorage.getItem("token");
+        if (token) {// sprawdzanie czy token jest wazny przez Request GetCountPeople
+          const response = await GetCountPeople(token); 
+          if (response.status='200') {
+            //navigation.navigate('MapStackScreen');
+            setIsLoggedIn(true);
+          }
+        }
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Error while verifying token:", error);
+        setIsLoading(false);
+      }
+    };
+
+    checkTokenValidity();
+  }, [AsyncStorage.getItem("token")]);
+ 
+  
+const LoginStack = createStackNavigator();
+function LoginStackScreen() {
+ return (
+   <View style={{ flex: 1 }}>
+     <LoginStack.Navigator>
+     <LoginStack.Screen name="Login" component={LoginScreen} />
+       <LoginStack.Screen name="Register" component={RegisterScreen} />
+       <LoginStack.Screen name="ForgotPasswordScreen" component={ForgotPasswordScreen} />
+       <LoginStack.Screen name="ChangePasswordScreen" component={ChangePasswordScreen} />
+       <LoginStack.Screen name="CorrectChangedPasswordScreen" component={CorrectChangedPasswordScreen} />
+       <LoginStack.Screen name="VerifiedScreen" component={VerifiedScreen} />
+     </LoginStack.Navigator>
+   </View>
+ );
+}
 
   const MapStack = createStackNavigator();
   function MapStackScreen() {
@@ -67,14 +95,10 @@ export default function Nav() {
           name="EventEdit"
           component={EventEdit}
           options={{ ...headerOptions }}
-        />
+        />        
       </MapStack.Navigator>
     );
   }
-
-
-  
-  
 
   const UserStack = createStackNavigator();
   function UserStackScreen() {
@@ -103,6 +127,7 @@ export default function Nav() {
       </UserStack.Navigator>
     );
   }
+  
   const CalendarStack = createStackNavigator();
   function CalendarStackScreen() {
     return (
@@ -117,6 +142,7 @@ export default function Nav() {
       </CalendarStack.Navigator>
     );
   }
+
 
   const getTabBarIcon = (routeName, focused) => {
     let iconComponent;
@@ -166,64 +192,66 @@ export default function Nav() {
     return iconComponent;
   };
 
-
-  const MyTheme = {
-    dark: false,
-    colors: {
-      primary: "rgb(255, 45, 85)",
-      background: "rgb(242, 242, 242)",
-      card: "rgb(255, 255, 255)",
-      text: "rgb(28, 28, 30)",
-      border: "rgb(199, 199, 204)",
-      notification: "rgb(255, 69, 58)",
-      secondary: "#466EFC",
-      disabled: "#f1f1f1",
-      text: "#000",
-      buttonBackground: "#fff",
-      buttonBorder: "#000",
+  const headerOptions = {
+    headerStyle: {
+      backgroundColor: colors.primary,
     },
+    headerTitleStyle: {
+      fontWeight: "bold",
+      color: "white",
+      fontSize: 30,
+    },
+    headerTitleAlign: "center",
+    headerTintColor: "white",
   };
+
   const Tab = createBottomTabNavigator();
-  const theme = useColorScheme();
+  const MainNavigator =() =>{
+    return(
+      <Tab.Navigator
+      initialRouteName="MapStackScreen"
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused }) => {
+          return getTabBarIcon(route.name, focused);
+        },
+        backgroundColor: colors.Background,
+        tabBarActiveTintColor: colors.primary,
+        tabBarInactiveTintColor: colors.secondary,
+        tabBarLabel: () => null,
+        tabBarStyle: { backgroundColor: colors.Background }
+      })}
+    >
+     <Tab.Screen
+       name="Settings" component={LoginScreen}
+       options={{ title: "Ustawienia", ...headerOptions }}
+       
+     />
+     <Tab.Screen
+       name="Ranking" component={Ranking}
+       options={{ title: "Ranking", ...headerOptions }}
+     />
+     <Tab.Screen
+       name="MapStackScreen" component={MapStackScreen}
+       options={{ headerShown: false }}
+     />
+     <Tab.Screen
+       name="CalendarStackScreen" component={CalendarStackScreen}
+       options={{ headerShown: false, ...headerOptions }}
+     />
+     <Tab.Screen
+       name="UserStackScreen" component={UserStackScreen}
+       options={{ headerShown: false }}
+     />
+   </Tab.Navigator>
+    )
+  }
+
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
   return (
     <View style={{ flex: 1, }}>
-      <NavigationContainer theme={theme === 'dark' ? dark : light}>
-        <Tab.Navigator
-         initialRouteName="MapStackScreen"
-         screenOptions={({ route }) => ({
-           tabBarIcon: ({ focused }) => {
-             return getTabBarIcon(route.name, focused);
-            },
-            backgroundColor: colors.Background,
-           tabBarActiveTintColor: colors.primary,
-           tabBarInactiveTintColor: colors.secondary,
-           tabBarLabel: () => null,
-           tabBarStyle: { backgroundColor: colors.Background}
-         })}
-        >
-          <Tab.Screen
-            name="Settings" component={LoginScreen}
-            options={{ title: "Ustawienia", ...headerOptions }}
-            
-          />
-          <Tab.Screen
-            name="Ranking" component={Ranking}
-            options={{ title: "Ranking", ...headerOptions }}
-          />
-          <Tab.Screen
-            name="MapStackScreen" component={MapStackScreen}
-            options={{ headerShown: false }}
-          />
-          <Tab.Screen
-            name="CalendarStackScreen" component={CalendarStackScreen}
-            options={{ headerShown: false, ...headerOptions }}
-          />
-          <Tab.Screen
-            name="UserStackScreen" component={UserStackScreen}
-            options={{ headerShown: false }}
-          />
-        </Tab.Navigator>
-      </NavigationContainer>
+       {isLoggedIn ? <MainNavigator /> : <LoginStackScreen />}
     </View>
   );
 }

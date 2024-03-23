@@ -8,9 +8,9 @@
 - [ ] kalendarz - style (kolory)
 - [ ] EventAdd, EventEdit - input na godzinę i opis
 - [ ] Zmiana Profilówki
+- [ ] logika logowania/wylogowania
 - [ ] dodać gdzieś w UI
   - [ ] zmiane hasla
   - [ ] zmiane Nicku?
-  - [ ] wylogowanie
   - [ ] usuniecie konta?
-  - [ ] ustawienie krokow
+  - [ ] ~~ustawienie krokow~~

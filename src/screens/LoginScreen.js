@@ -25,14 +25,14 @@ function LoginScreen({ navigation }) {
           AsyncStorage.setItem('token', response.data.token);
           AsyncStorage.setItem('userName', response.data.userName);
           AsyncStorage.setItem('userId', response.data.userId);
+         // navigation.navigate('MainNavigator', {screen:'MapStackScreen'});
+         // navigation.navigate('MapStackScreen');
       })
       .catch((error) => {
         console.log("Status odpowiedzi:", error);  
         console.log("dane:", userCredentials);
       });
   };
-
-  
 
   return (
     <View style={LoginStyles.container}>

@@ -12,7 +12,7 @@ const INITIAL_REGION = {
   longitudeDelta: 0.2,
 };
 
-function Map() {
+function Map({navigation}) {
   const [markers, setMarkers] = useState([]);
   const [popupVisible, setPopupVisible] = useState(false);
   const [selectedMarkerId, setSelectedMarkerId] = useState(null);
