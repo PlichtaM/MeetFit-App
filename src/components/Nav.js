@@ -58,23 +58,6 @@ export default function Nav() {
     checkTokenValidity();
   }, [AsyncStorage.getItem("token")]);
  
-  
-const LoginStack = createStackNavigator();
-function LoginStackScreen() {
- return (
-   <View style={{ flex: 1 }}>
-     <LoginStack.Navigator>
-     <LoginStack.Screen name="Login" component={LoginScreen} />
-       <LoginStack.Screen name="Register" component={RegisterScreen} />
-       <LoginStack.Screen name="ForgotPasswordScreen" component={ForgotPasswordScreen} />
-       <LoginStack.Screen name="ChangePasswordScreen" component={ChangePasswordScreen} />
-       <LoginStack.Screen name="CorrectChangedPasswordScreen" component={CorrectChangedPasswordScreen} />
-       <LoginStack.Screen name="VerifiedScreen" component={VerifiedScreen} />
-     </LoginStack.Navigator>
-   </View>
- );
-}
-
   const MapStack = createStackNavigator();
   function MapStackScreen() {
     return (
@@ -86,16 +69,15 @@ function LoginStackScreen() {
         />
         <MapStack.Screen name="Place" component={Place} />
         <MapStack.Screen name="Event" component={Event} />
-        <MapStack.Screen
-          name="EventAdd"
-          component={EventAdd}
+        <MapStack.Screen name="EventAdd" component={EventAdd}
           options={{ title: "Utwórz wydarzenie", ...headerOptions }}
         />
-        <MapStack.Screen
-          name="EventEdit"
-          component={EventEdit}
+        <MapStack.Screen name="EventEdit" component={EventEdit}
           options={{ ...headerOptions }}
-        />        
+        />
+        <MapStack.Screen name="Login" component={LoginScreen}
+          options={{ headerShown: false }}
+        />
       </MapStack.Navigator>
     );
   }
@@ -250,8 +232,8 @@ function LoginStackScreen() {
     return <LoadingScreen />;
   }
   return (
-    <View style={{ flex: 1, }}>
-       {isLoggedIn ? <MainNavigator /> : <LoginStackScreen />}
+    <View style={{ flex: 1 }}>
+      {isLoggedIn ? <MainNavigator /> : <LoginScreen navigation={navigation} />}
     </View>
   );
 }

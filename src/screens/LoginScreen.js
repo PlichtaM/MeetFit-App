@@ -26,7 +26,7 @@ function LoginScreen({ navigation }) {
           AsyncStorage.setItem('userName', response.data.userName);
           AsyncStorage.setItem('userId', response.data.userId);
          // navigation.navigate('MainNavigator', {screen:'MapStackScreen'});
-         // navigation.navigate('MapStackScreen');
+         navigation.navigate('Map');
       })
       .catch((error) => {
         console.log("Status odpowiedzi:", error);  
