@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 import { StyleSheet, View, Dimensions, Text, TouchableOpacity, Keyboard } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
-import {GOOGLE_API_KEY} from '../../environments';
+import {GOOGLE_API_KEY} from '../../.env';
 
 const {width, height} = Dimensions.get("window");
 
