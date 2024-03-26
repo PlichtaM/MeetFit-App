@@ -1,0 +1,102 @@
+{
+    "config": {
+        "adapter": [
+            "xhr",
+            "http"
+        ],
+        "data": undefined,
+        "env": {
+            "Blob": [Function Blob
+            ],
+            "FormData": [Function FormData
+            ]
+        },
+        "headers": [Object
+        ],
+        "maxBodyLength": -1,
+        "maxContentLength": -1,
+        "method": "get",
+        "timeout": 0,
+        "transformRequest": [
+            [Function transformRequest
+            ]
+        ],
+        "transformResponse": [
+            [Function transformResponse
+            ]
+        ],
+        "transitional": {
+            "clarifyTimeoutError": false,
+            "forcedJSONParsing": true,
+            "silentJSONParsing": true
+        },
+        "url": "https://maps.googleapis.com/maps/api/place/details/json?place_id=null&key=AIzaSyBcKJIT16fC3xzEUf3Ohngq4Snon_3a6vQ",
+        "validateStatus": [Function validateStatus
+        ],
+        "xsrfCookieName": "XSRF-TOKEN",
+        "xsrfHeaderName": "X-XSRF-TOKEN"
+    },
+    "data": {
+        "error_message": "Invalid request. Invalid 'placeid' parameter.",
+        "html_attributions": [],
+        "status": "INVALID_REQUEST"
+    },
+    "headers": {
+        "alt-svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000",
+        "cache-control": "public, max-age=300",
+        "content-length": "134",
+        "content-type": "application/json; charset=UTF-8",
+        "date": "Tue, 26 Mar 2024 22:02:51 GMT",
+        "expires": "Tue, 26 Mar 2024 22:07:51 GMT",
+        "server": "scaffolding on HTTPServer2",
+        "server-timing": "gfet4t7; dur=128",
+        "vary": "Accept-Language",
+        "x-frame-options": "SAMEORIGIN",
+        "x-xss-protection": "0"
+    },
+    "request": {
+        "DONE": 4,
+        "HEADERS_RECEIVED": 2,
+        "LOADING": 3,
+        "OPENED": 1,
+        "UNSENT": 0,
+        "_aborted": false,
+        "_cachedResponse": undefined,
+        "_hasError": false,
+        "_headers": {
+            "accept": "application/json, text/plain, */*"
+        },
+        "_incrementalEvents": false,
+        "_lowerCaseResponseHeaders": {
+            "alt-svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000",
+            "cache-control": "public, max-age=300",
+            "content-length": "134",
+            "content-type": "application/json; charset=UTF-8",
+            "date": "Tue, 26 Mar 2024 22:02:51 GMT",
+            "expires": "Tue, 26 Mar 2024 22:07:51 GMT",
+            "server": "scaffolding on HTTPServer2",
+            "server-timing": "gfet4t7; dur=128",
+            "vary": "Accept-Language",
+            "x-frame-options": "SAMEORIGIN",
+            "x-xss-protection": "0"
+        },
+        "_method": "GET",
+        "_perfKey": "network_XMLHttpRequest_https://maps.googleapis.com/maps/api/place/details/json?place_id=null&key=AIzaSyBcKJIT16fC3xzEUf3Ohngq4Snon_3a6vQ",
+        "_performanceLogger": {
+            "_closed": false,
+            "_extras": [Object
+            ],
+            "_isLoggingForWebPerformance": false,
+            "_pointExtras": [Object
+            ],
+            "_points": [Object
+            ],
+            "_timespans": [Object
+            ]
+        },
+        "_requestId": null,
+        "_response": "{
+   \"error_message\" : \"Invalid request. Invalid 'placeid' parameter.\",
+   \"html_attributions\" : [],
+   \"status\" : \"INVALID_REQUEST\"
+    }", "_responseType": "", "_sent": true, "_subscriptions": [], "_timedOut": false, "_trackingName": "unknown", "_url": "https: //maps.googleapis.com/maps/api/place/details/json?place_id=null&key=AIzaSyBcKJIT16fC3xzEUf3Ohngq4Snon_3a6vQ", "readyState": 4, "responseHeaders": {"alt-svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000", "cache-control": "public, max-age=300", "content-length": "134", "content-type": "application/json; charset=UTF-8", "date": "Tue, 26 Mar 2024 22:02:51 GMT", "expires": "Tue, 26 Mar 2024 22:07:51 GMT", "server": "scaffolding on HTTPServer2", "server-timing": "gfet4t7; dur=128", "vary": "Accept-Language", "x-frame-options": "SAMEORIGIN", "x-xss-protection": "0"}, "responseURL": "https://maps.googleapis.com/maps/api/place/details/json?place_id=null&key=AIzaSyBcKJIT16fC3xzEUf3Ohngq4Snon_3a6vQ", "status": 200, "timeout": 0, "upload": {}, "withCredentials": true}, "status": 200, "statusText": undefined}

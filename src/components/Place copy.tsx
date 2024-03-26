@@ -12,85 +12,50 @@ import { useNavigation } from "@react-navigation/native";
 import { MaterialCommunityIcons, Entypo } from "@expo/vector-icons";
 import { getMapPointId, getEventsByMapPointId, GetCountPeople } from "../../services/api";
 import { getColorScheme } from "../components/Colors";
-import { GOOGLE_API_KEY } from "../../env";
-import axios from 'axios';
+
 const colors = getColorScheme();
-
-const MAX_WIDTH = 285;
-const MAX_HEIGHT = 150;
-
 
 const Place = ({ isVisible, onClose, selectedMarkerId }) => {
   const navigation = useNavigation();
   const [mapPointData, setMapPointData] = useState(null);
   const [EventsData, setEventsData] = useState(null);
   const [CountPeople, setCountPeople] = useState([]);
-  
- const googleApisUrl = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${selectedMarkerId}&key=${GOOGLE_API_KEY}`
- 
-
   useEffect(() => {
-    const fetchPlaceInfo = async () => {
-      if(selectedMarkerId){
+    const fetchMapPointData = async () => {
       try {
-        const response = await axios.get(googleApisUrl);
-        const eventResponse = await getEventsByMapPointId(selectedMarkerId);        
-        setEventsData(eventResponse.data);
-        // Pobierz CountPeople dla każdego wydarzenia i zaktualizuj stan
-        const countPromises = eventResponse.data.map(async event => {
-          const countResponse = await GetCountPeople(event.id);
-          return { eventId: event.id, count: countResponse.data };
-        });
-        const counts = await Promise.all(countPromises);
-        setCountPeople(counts);
-        if (response.data.status === 'OK') {
-          setMapPointData(response.data.result);
-        } else {
-          console.error('Failed to fetch place info');
-          //console.log("id",selectedMarkerId);          
-          //console.log(response);          
+        if (selectedMarkerId) {
+          const response = await getMapPointId(selectedMarkerId);
+          setMapPointData(response.data);
+          const eventResponse = await getEventsByMapPointId(selectedMarkerId);
+          setEventsData(eventResponse.data);
+          // Pobierz CountPeople dla każdego wydarzenia i zaktualizuj stan
+          const countPromises = eventResponse.data.map(async event => {
+            const countResponse = await GetCountPeople(event.id);
+            return { eventId: event.id, count: countResponse.data };
+          });
+          const counts = await Promise.all(countPromises);
+          setCountPeople(counts);
         }
       } catch (error) {
-        console.error('Error fetching place info:', error);
+        console.error("Error fetching map point data:", error);
       }
-    };}
-    fetchPlaceInfo();
-    // Cleanup function
-    return () => {
-      // any cleanup code here if needed
     };
-  }, [selectedMarkerId]); 
+    fetchMapPointData();
+  }, [selectedMarkerId]);
+
   if (!isVisible || !mapPointData) {
     return null;
   }
 
   const {
+    /*openingHours,
+    description,
+    latitude,
+    longitude, */
     name,
-    formatted_address  ,
-    opening_hours,
-    photos
-  } =mapPointData || {};
-
-  const PHOTO_REFERENCE = photos[0].photo_reference;
-  const pictureUrl = `https://maps.googleapis.com/maps/api/place/photo?photoreference=${PHOTO_REFERENCE}&sensor=false&maxheight=${MAX_HEIGHT}&maxwidth=${MAX_WIDTH}&key=${GOOGLE_API_KEY}`;
-
-  //usuwanie kraju z adresu Kraju
-  const addressParts = formatted_address.split(", "); 
-  const address = addressParts.slice(0, -1).join(", "); 
-  
-  const openingHours = opening_hours.weekday_text
-  const today = new Date().toLocaleDateString('en-US', { weekday: 'long' });
-  let todayOpeningTime = 'Closed';
-  let todayClosingTime = 'Closed';
-
-  if (opening_hours && opening_hours.weekday_text) {
-    const todaySchedule = opening_hours.weekday_text.find(schedule => schedule.includes(today));
-    if (todaySchedule) {
-      const todayHours = todaySchedule.split(': ')[1];
-      [todayOpeningTime, todayClosingTime] = todayHours.split(' – ');
-    }
-  }
-  //const tempPhoto ="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.how-to-design.org%2Fweb-design%2Fdemos%2Fdemo-05-advanced-css3-transitions-photo-gallery%2Fimg%2Fel-capitan-color.jpg&f=1&nofb=1&ipt=f62b8f231bde0fc3b86eb7895d26927b528def27eaa832bcc4cb29a69e4634d2&ipo=images"
+    address,
+    pictureUrl,
+  } = mapPointData;
 
   return (
     <Modal transparent animationType="slide" visible={isVisible}>
@@ -114,9 +79,11 @@ const Place = ({ isVisible, onClose, selectedMarkerId }) => {
             <Text style={styles.AdressTextBold}>Lokalizacja</Text>
             <Text style={styles.AdressText}>{address}</Text>
             <Text style={styles.AdressTextBold}>Godziny otwarcia</Text>
-            <Text style={styles.AdressText}>
-              {today}, {todayOpeningTime} - {todayClosingTime}
-            </Text>
+            {/*Object.entries(openingHours).map(([day, hours]) => (
+              <Text key={day} style={styles.AdressText}>
+                {`${day}: ${hours}`}
+              </Text>
+            ))*/}
           </View>
 
           <View style={styles.bottomBox}>
