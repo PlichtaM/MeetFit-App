@@ -86,7 +86,7 @@ function Map({navigation}) {
   const searchEvents = () => {};
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.container}>
       <MapView
         style={StyleSheet.absoluteFillObject}
         provider={PROVIDER_GOOGLE}
@@ -141,4 +141,61 @@ function Map({navigation}) {
   );
 }
 
-export default Map;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  map: {
+    width: "100%",
+    height: "100%",
+  },
+  searchBox: {
+    position: "absolute",
+    width: "90%",
+    borderRadius: 20,
+    borderColor: "#aaa",
+    backgroundColor: "white",
+    padding: 8,
+    alignSelf: "center",
+    marginTop: 60,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent:"center",
+  },
+  searchIcon: {
+    marginRight: 8,
+  },
+
+  searchBoxField: {
+    flex: 1,
+    borderRadius: 4,
+    backgroundColor: "grey",
+    width: '80%',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    fontSize: 18,
+    marginBottom: 8,
+
+  },
+  categoryBox:{
+    position: "absolute",
+    marginTop: 130,
+    marginLeft:'10%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap:10,
+  },
+  buttonContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 8,
+    backgroundColor: "#26f",
+    borderRadius: 50,
+
+  },
+  buttonLabel: {
+    fontSize: 18,
+    color: "white",
+  },
+  mapLabel: {},
+});
