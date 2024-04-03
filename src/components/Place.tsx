@@ -16,8 +16,8 @@ import { GOOGLE_API_KEY } from "../../env";
 import axios from 'axios';
 const colors = getColorScheme();
 
-const MAX_WIDTH = 285;
-const MAX_HEIGHT = 150;
+const MAX_WIDTH = 1425;
+const MAX_HEIGHT = 750;
 
 
 const Place = ({ isVisible, onClose, selectedMarkerId }) => {
@@ -60,6 +60,7 @@ const Place = ({ isVisible, onClose, selectedMarkerId }) => {
       // any cleanup code here if needed
     };
   }, [selectedMarkerId]); 
+  
   if (!isVisible || !mapPointData) {
     return null;
   }
@@ -90,6 +91,8 @@ const Place = ({ isVisible, onClose, selectedMarkerId }) => {
       [todayOpeningTime, todayClosingTime] = todayHours.split(' – ');
     }
   }
+  console.log(EventsData);
+  
   //const tempPhoto ="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.how-to-design.org%2Fweb-design%2Fdemos%2Fdemo-05-advanced-css3-transitions-photo-gallery%2Fimg%2Fel-capitan-color.jpg&f=1&nofb=1&ipt=f62b8f231bde0fc3b86eb7895d26927b528def27eaa832bcc4cb29a69e4634d2&ipo=images"
 
   return (

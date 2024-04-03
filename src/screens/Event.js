@@ -7,6 +7,12 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { getColorScheme } from "../components/Colors";
 import styles from "../styles/EventStyles";
 const colors = getColorScheme();
+import { GOOGLE_API_KEY } from "../../env";
+import axios from 'axios';
+
+const MAX_WIDTH = 1425;
+const MAX_HEIGHT = 750;
+
 
 const Event = ({ navigation }) => {
   const route = useRoute();
@@ -30,6 +36,29 @@ const Event = ({ navigation }) => {
 
     fetchEventRef.current();
   }, []);
+  const googleApisUrl = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${Event.mapPointId}&key=${GOOGLE_API_KEY}`
+  
+  const [mapPointData, setMapPointData] = useState(null);
+
+
+  useEffect(() => {
+    const fetchPlaceInfo = async () => {
+      try {
+        const response = await axios.get(googleApisUrl);
+        if (response.data.status === 'OK') {
+          setMapPointData(response.data.result);
+          console.log(mapPointData);
+        } else {
+          console.error('Failed to fetch place info');
+      } 
+    }catch (error) {
+      console.error('Error fetching place info:', error);
+    }}
+    fetchPlaceInfo();
+    return () => {
+    };
+  }, [Event.mapPointId]); 
+
 
   const eventDate = new Date(Event.date);
   const formattedDate = `${eventDate.getDate()}.${

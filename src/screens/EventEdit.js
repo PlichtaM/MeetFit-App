@@ -9,31 +9,6 @@ import { getColorScheme } from "../components/Colors";
 import { getEventById, updateEvent} from "../../services/api";
 const colors = getColorScheme();
 
-LocaleConfig.locales['pl'] = {
-  monthNames: [
-    'Styczeń',
-    'Luty',
-    'Marzec',
-    'Kwiecień',
-    'Maj',
-    'Czerwiec',
-    'Lipiec',
-    'Sierpień',
-    'Wrzesień',
-    'Październik',
-    'Listopad',
-    'Grudzień'
-  ],
-  monthNamesShort: ['Sty.', 'Lut.', 'Mar.', 'Kwi.', 'Maj', 'Cze.', 'Lip.', 'Sie.', 'Wrz.', 'Paź.', 'Lis.', 'Gru.'],
-  dayNames: ['Niedziela', 'Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota'],
-  dayNamesShort: ['Niedz.', 'Pon.', 'Wt.', 'Śr.', 'Czw.', 'Pt.', 'Sob.'],
-  today: "Dziś"
-};
-LocaleConfig.defaultLocale = 'pl';
-
-
-
-
 function EventEdit({ route }) {
   const navigation = useNavigation();
   const { eventId } = route.params;
@@ -67,7 +42,7 @@ function EventEdit({ route }) {
         name: eventName,// Póżniej dodać,żeby było co najmniej kilka znaków
         description: "", //Dodać do formularza
         date: new Date(selected).toISOString(), //dodać Input godziny
-        mapPointId: Event.mapPointId,
+        mapPointGoogleId: Event.mapPointId,
         limit: limitMiejsc, //dodać możliwość "Bez limitu"
         private: selectedOption === "Prywatne", // ztego chyba rezygnujemy
         active: true
@@ -162,3 +137,27 @@ function EventEdit({ route }) {
 }
 
 export default EventEdit;
+
+
+
+LocaleConfig.locales['pl'] = {
+  monthNames: [
+    'Styczeń',
+    'Luty',
+    'Marzec',
+    'Kwiecień',
+    'Maj',
+    'Czerwiec',
+    'Lipiec',
+    'Sierpień',
+    'Wrzesień',
+    'Październik',
+    'Listopad',
+    'Grudzień'
+  ],
+  monthNamesShort: ['Sty.', 'Lut.', 'Mar.', 'Kwi.', 'Maj', 'Cze.', 'Lip.', 'Sie.', 'Wrz.', 'Paź.', 'Lis.', 'Gru.'],
+  dayNames: ['Niedziela', 'Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota'],
+  dayNamesShort: ['Niedz.', 'Pon.', 'Wt.', 'Śr.', 'Czw.', 'Pt.', 'Sob.'],
+  today: "Dziś"
+};
+LocaleConfig.defaultLocale = 'pl';

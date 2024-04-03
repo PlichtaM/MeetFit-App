@@ -3,7 +3,6 @@ import { View, Text, TouchableOpacity, Image, Pressable  } from "react-native";
 import { getColorScheme  } from "../components/Colors";
 const colors = getColorScheme()
 import UserStyles from "../styles/UserStyles";
-import tempuser from "../tempAPI/user.json"
 import { Entypo, MaterialCommunityIcons, MaterialIcons  } from '@expo/vector-icons';
 import * as Progress from 'react-native-progress'; //https://github.com/oblador/react-native-progress
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -20,9 +19,9 @@ function User({ navigation }) {
         const token = await AsyncStorage.getItem('token');
         const userName = await AsyncStorage.getItem('userName');
         const userId = await AsyncStorage.getItem('userId');
-        const tempId = "7e0d85bc-9e8c-4781-b460-35b280d2aadf";
+        const tempId = "57b34c09-290c-4891-96d9-5b42ac5d4d55";
         //dane z api
-        const response = await getUser(tempId);//ZMIENIC POZNIEJ TEMP ID
+        const response = await getUser(userId);//ZMIENIC POZNIEJ TEMP ID
         setUser(response.data);
         //console.log("response: ",response.data);
   
@@ -46,8 +45,7 @@ function User({ navigation }) {
       headerTintColor: "white",
     });
   }, [navigation]);
-  const tempUserData = tempuser[0];
-  //const progress = (tempUserData.liczba_kroków / user.cel_kroków) * 100;
+  const tempURI = "https://meetfitapp.pl/avatars/default-avatar.jpg"
   // https://docs.expo.dev/versions/latest/sdk/pedometer/
   async function handleLogOut() {
     try {
@@ -72,7 +70,7 @@ function User({ navigation }) {
   return (
       <View style={UserStyles.container}>
         <View style={UserStyles.top}></View>
-        <Image style={UserStyles.UserIcon} source={{uri: tempUserData.zdjecie_profilowe}}/>
+        <Image style={UserStyles.UserIcon} source={{uri: tempURI}}/>
         <View style={UserStyles.UserNameContainer}>
           <Text style={UserStyles.UserName}>{`${user.userName}`}</Text>
           {/*<Icon name="footsteps" size={24} color={colors.primary} />*/}

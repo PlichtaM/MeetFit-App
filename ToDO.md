@@ -2,6 +2,7 @@
 
 - [ ] KROKI z systemu
 - [ ] API MAP GOOGLE
+- [ ] upload zdjecia
 - [ ] Powiadomienia (wydarzenia, cel krokow)
 - [ ] ustawienia
 - [ ] ikonka kroków do zmiany

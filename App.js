@@ -8,7 +8,7 @@ import { NavigationContainer} from "@react-navigation/native";
 export default function App() {
  
   return (
-    <ThemeProvider>      
+    <ThemeProvider>
       <NavigationContainer >
       <View style={{ flex: 1}}>
         <Nav /> 

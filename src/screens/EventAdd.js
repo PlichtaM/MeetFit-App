@@ -7,26 +7,6 @@ import { Checkbox } from "expo-checkbox";
 import style from "../styles/EventAddStyles";
 import { getColorScheme } from "../components/Colors";
 import { createEvent } from "../../services/api";
-LocaleConfig.locales['pl'] = {
-  monthNames: [
-    'Styczeń',
-    'Luty',
-    'Marzec',
-    'Kwiecień',
-    'Maj',
-    'Czerwiec',
-    'Lipiec',
-    'Sierpień',
-    'Wrzesień',
-    'Październik',
-    'Listopad',
-    'Grudzień'
-  ],
-  monthNamesShort: ['Sty.', 'Lut.', 'Mar.', 'Kwi.', 'Maj', 'Cze.', 'Lip.', 'Sie.', 'Wrz.', 'Paź.', 'Lis.', 'Gru.'],
-  dayNames: ['Niedziela', 'Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota'],
-  dayNamesShort: ['Niedz.', 'Pon.', 'Wt.', 'Śr.', 'Czw.', 'Pt.', 'Sob.'],
-  today: "Dziś"
-};
 
 LocaleConfig.defaultLocale = 'pl';
 
@@ -51,7 +31,7 @@ function EventAdd({ route }) {
         name: eventName,// Póżniej dodać,żeby było co najmniej kilka znaków
         description: "", //Dodać do formularza
         date: new Date(selected).toISOString(), //dodać Input godziny
-        mapPointId: selectedMarkerId,
+        mapPointGoogleId: selectedMarkerId,
         limit: limitMiejsc, //dodać możliwość "Bez limitu"
         private: selectedOption === "Prywatne", // ztego chyba rezygnujemy
         active: true
@@ -147,3 +127,25 @@ function EventAdd({ route }) {
 }
 
 export default EventAdd;
+
+
+LocaleConfig.locales['pl'] = {
+  monthNames: [
+    'Styczeń',
+    'Luty',
+    'Marzec',
+    'Kwiecień',
+    'Maj',
+    'Czerwiec',
+    'Lipiec',
+    'Sierpień',
+    'Wrzesień',
+    'Październik',
+    'Listopad',
+    'Grudzień'
+  ],
+  monthNamesShort: ['Sty.', 'Lut.', 'Mar.', 'Kwi.', 'Maj', 'Cze.', 'Lip.', 'Sie.', 'Wrz.', 'Paź.', 'Lis.', 'Gru.'],
+  dayNames: ['Niedziela', 'Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota'],
+  dayNamesShort: ['Niedz.', 'Pon.', 'Wt.', 'Śr.', 'Czw.', 'Pt.', 'Sob.'],
+  today: "Dziś"
+};

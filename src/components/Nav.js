@@ -29,7 +29,7 @@ import ForgotPasswordScreen from '../screens/ForgotPasswordScreen';
 import ChangePasswordScreen from '../screens/ChangePasswordScreen';
 import CorrectChangedPasswordScreen from '../screens/CorrectChangedPasswordScreen ';
 import VerifiedScreen from '../screens/VerifiedScreen';
-
+import MyEvents from "../screens/myEvents";
 
 
 
@@ -43,6 +43,8 @@ export default function Nav() {
         const token = await AsyncStorage.getItem("token");
         if (token) {// sprawdzanie czy token jest wazny przez Request GetCountPeople
           const response = await GetCountPeople(token); 
+          
+          setIsLoggedIn(true);
           if (response.status='200') {
             //navigation.navigate('MapStackScreen');
             setIsLoggedIn(true);
@@ -189,51 +191,65 @@ export default function Nav() {
 
   const Tab = createBottomTabNavigator();
   const MainNavigator =() =>{
-    return(
+    return (
       <Tab.Navigator
-      initialRouteName="MapStackScreen"
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused }) => {
-          return getTabBarIcon(route.name, focused);
-        },
-        backgroundColor: colors.Background,
-        tabBarActiveTintColor: colors.primary,
-        tabBarInactiveTintColor: colors.secondary,
-        tabBarLabel: () => null,
-        tabBarStyle: { backgroundColor: colors.Background }
-      })}
-    >
-     <Tab.Screen
-       name="Settings" component={LoginScreen}
-       options={{ title: "Ustawienia", ...headerOptions }}
-       
-     />
-     <Tab.Screen
-       name="Ranking" component={Ranking}
-       options={{ title: "Ranking", ...headerOptions }}
-     />
-     <Tab.Screen
-       name="MapStackScreen" component={MapStackScreen}
-       options={{ headerShown: false }}
-     />
-     <Tab.Screen
-       name="CalendarStackScreen" component={CalendarStackScreen}
-       options={{ headerShown: false, ...headerOptions }}
-     />
-     <Tab.Screen
-       name="UserStackScreen" component={UserStackScreen}
-       options={{ headerShown: false }}
-     />
-   </Tab.Navigator>
-    )
-  }
+        initialRouteName={isLoggedIn ? "MapStackScreen" : "LoginScreen"}
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused }) => {
+            return getTabBarIcon(route.name, focused);
+          },
+          backgroundColor: colors.Background,
+          tabBarActiveTintColor: colors.primary,
+          tabBarInactiveTintColor: colors.secondary,
+          tabBarLabel: () => null,
+          tabBarStyle: { backgroundColor: colors.Background }
+        })}
+      >
+        {isLoggedIn ? (
+          <>
+            <Tab.Screen
+              name="Settings"
+              component={Settings}
+              options={{ title: "Ustawienia", ...headerOptions }}
+            />
+            <Tab.Screen
+              name="Ranking"
+              component={Ranking}
+              options={{ title: "Ranking", ...headerOptions }}
+            />
+            <Tab.Screen
+              name="MapStackScreen"
+              component={MapStackScreen}
+              options={{ headerShown: false }}
+            />
+            <Tab.Screen
+              name="CalendarStackScreen"
+              component={CalendarStackScreen}
+              options={{ headerShown: false, ...headerOptions }}
+            />
+            <Tab.Screen
+              name="UserStackScreen"
+              component={UserStackScreen}
+              options={{ headerShown: false }}
+            />
+          </>
+        ) : (
+          <Tab.Screen
+            name="LoginScreen"
+            component={LoginScreen}
+            options={{ headerShown: false }}
+          />
+        )}
+      </Tab.Navigator>
+    );
+  };
 
   if (isLoading) {
     return <LoadingScreen />;
   }
   return (
     <View style={{ flex: 1 }}>
-      {isLoggedIn ? <MainNavigator /> : <LoginScreen navigation={navigation} />}
+    <MainNavigator />
     </View>
   );
 }

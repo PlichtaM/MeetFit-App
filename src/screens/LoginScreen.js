@@ -6,12 +6,13 @@ import LoginStyles from "../styles/LoginStyles";
 import { loginUser } from "../../services/api";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getColorScheme  } from "../components/Colors";
+import { ADMIN_LOGIN, ADMIN_PASSWORD } from '../../env.js';
 const colors = getColorScheme()
 
 function LoginScreen({ navigation }) {
   const [isChecked, setChecked] = useState(false);  
-  const [email, setEmail] = useState("admin@admin.pl"); //USUNĄĆ PRZED PRODUKCJĄ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  const [password, setPassword] = useState("Qwerty123!");
+  const [email, setEmail] = useState(ADMIN_LOGIN); //USUNĄĆ PRZED PRODUKCJĄ !!!!!
+  const [password, setPassword] = useState(ADMIN_PASSWORD);
 
   const handleLogin = () => {  
     const userCredentials = {
@@ -26,7 +27,7 @@ function LoginScreen({ navigation }) {
           AsyncStorage.setItem('userName', response.data.userName);
           AsyncStorage.setItem('userId', response.data.userId);
          // navigation.navigate('MainNavigator', {screen:'MapStackScreen'});
-         navigation.navigate('Map');
+         navigation.navigate('MapStackScreen');
       })
       .catch((error) => {
         console.log("Status odpowiedzi:", error);  
