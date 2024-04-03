@@ -55,10 +55,7 @@ const Place = ({ isVisible, onClose, selectedMarkerId }) => {
       }
     };}
     fetchPlaceInfo();
-    // Cleanup function
-    return () => {
-      // any cleanup code here if needed
-    };
+    return () => {};
   }, [selectedMarkerId]); 
   
   if (!isVisible || !mapPointData) {

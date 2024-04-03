@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import Place from '../components/Place';
-import { getMapPoint, updateEvent } from '../../services/api';
+import { getMapPoint, updateEvent, getEvent } from '../../services/api';
 import mapstyle from '../styles/mapstyle.json';
 import Mapstyles from '../styles/mapStyles';
 import { TextInput } from "react-native-gesture-handler";
@@ -75,6 +75,47 @@ function Map({navigation}) {
     }
   };
 
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const response = await getEvent();
+        setMarkers(response.data);
+      } catch (error) {
+        console.error('Error fetching map points:', error);
+      }
+    };
+    fetchEvents();
+  }, []);
+
+  
+  const searchEvents = async () => {
+    const eventsWithMapPoints = markers.filter(marker => marker.mapPointGoogleId);
+    
+    const newResults = [];
+  
+    for (const event of eventsWithMapPoints) {
+      try {
+        const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${event.mapPointGoogleId}&fields=name,geometry&key=${GOOGLE_API_KEY}`;
+        const response = await fetch(url);
+        const json = await response.json();
+    
+        if (json.result && json.result.geometry && json.result.geometry.location) {
+          const { lat, lng } = json.result.geometry.location;
+    
+          newResults.push({
+            place_id: event.mapPointGoogleId,
+            latitude: lat,
+            longitude: lng,
+            name: json.result.name, 
+          });
+        }
+      } catch (error) {
+        console.error('Error fetching map point:', error);
+      }
+    }
+    setResults(newResults);
+  };
+  
   const onMarkerSelected = (markerId) => {
     setSelectedMarkerId(markerId);
     setPopupVisible(true);
@@ -83,7 +124,6 @@ function Map({navigation}) {
   const closePopup = () => {
     setPopupVisible(false);
   };
-  const searchEvents = () => {};
 
   return (
     <View style={{ flex: 1 }}>
@@ -97,10 +137,10 @@ function Map({navigation}) {
       >
         {results.length
           ? results.map((item, i) => {
-              const coord = {
-                latitude: item.geometry.location.lat,
-                longitude: item.geometry.location.lng,
-              };
+            const coord = {
+              latitude: item.latitude ? item.latitude : item.geometry.location.lat ,
+              longitude: item.longitude ? item.longitude: item.geometry.location.lng,
+            };
               return (
                 <Marker
                   key={`search-item-${i}`}
