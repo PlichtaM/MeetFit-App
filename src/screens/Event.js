@@ -21,8 +21,10 @@ const Event = ({ navigation }) => {
   const [CountPeople, setCountPeople] = useState([]);
   const [userEvents, setUserEvents] = useState([]);  
   const [user_Id, setUser_Id] = useState([]);
+  const [mapPointData, setMapPointData] = useState(null);
   const fetchEventRef = useRef();
 
+  //get event info
   useEffect(() => {
     fetchEventRef.current = async () => {
       try {
@@ -32,16 +34,16 @@ const Event = ({ navigation }) => {
         const ppl = await GetCountPeople(eventId);
         setCountPeople(ppl.data);
         setEvent(response.data);
+        fetchUserEvents();
       } catch (error) {
         console.error("Error fetching map points:", error);
       }
     };
-
     fetchEventRef.current();
-  }, []);
-  const googleApisUrl = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${Event.mapPointGoogleId}&key=${GOOGLE_API_KEY}`;
-  const [mapPointData, setMapPointData] = useState(null);
+  }, [user_Id, navigation]);
 
+  //get google Place info 
+  const googleApisUrl = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${Event.mapPointGoogleId}&key=${GOOGLE_API_KEY}`;
   useEffect(() => {
     const fetchPlaceInfo = async () => {
       try {
@@ -59,21 +61,43 @@ const Event = ({ navigation }) => {
     return () => {};
   }, [Event.mapPointGoogleId]);
 
+  //set google Photo and place name 
   const { photos, name } = mapPointData || {};
- // console.log(photos);
+  //console.log(photos);
   //const PHOTO_REFERENCE = photos[0].photo_reference;
- // console.log(PHOTO_REFERENCE);
- //const pictureUrl = `https://maps.googleapis.com/maps/api/place/photo?photoreference=${PHOTO_REFERENCE}&sensor=false&maxheight=${MAX_HEIGHT}&maxwidth=${MAX_WIDTH}&key=${GOOGLE_API_KEY}`;
- const pictureUrl = "https://meetfitapp.pl/avatars/default-avatar.jpg" //temp
+  //console.log(PHOTO_REFERENCE);
+  //const pictureUrl = `https://maps.googleapis.com/maps/api/place/photo?photoreference=${PHOTO_REFERENCE}&sensor=false&maxheight=${MAX_HEIGHT}&maxwidth=${MAX_WIDTH}&key=${GOOGLE_API_KEY}`;
+  const pictureUrl = "https://meetfitapp.pl/avatars/default-avatar.jpg" //temp
 
+ 
+ //formating Event Date
   const eventDate = new Date(Event.date);
-  const formattedDate = `${eventDate.getDate()}.${
-    eventDate.getMonth() + 1
-  }.${eventDate.getFullYear()}`;
-  const formattedTime = `${eventDate.getHours()}:${eventDate
-    .getMinutes()
-    .toString()
-    .padStart(2, "0")}`;
+  const formattedDate = `${eventDate.getDate()}.${eventDate.getMonth() + 1}.${eventDate.getFullYear()}`;
+  const formattedTime = `${eventDate.getHours()}:${eventDate.getMinutes().toString().padStart(2, "0")}`;
+
+  //Sign user for Event
+  const handleSignUp = async () => {
+    try {
+      await createUserEvent({ 
+        "userId":user_Id,
+        "eventId": eventId });
+        fetchUserEvents();
+      fetchEventRef.current();
+    } catch (error) {
+      console.error("Error signing up for event:", error);
+    }
+  };
+
+  //check if user is signed for event  
+    const fetchUserEvents = async () => {
+      try {      
+        const response = await GetUserEventByUserId(user_Id);
+        setUserEvents(response.data)
+      } catch (error) {
+        console.error("Error fetching user events:", error);
+      }
+    };
+  const isUserSignedUp = userEvents.some(event => event.eventId === eventId);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -105,36 +129,6 @@ const Event = ({ navigation }) => {
     });
   }, [navigation, Event]);
 
-  //Sign user for Event
-  const handleSignUp = async () => {
-    try {
-      await createUserEvent({ 
-        "userId":user_Id,
-        "eventId": eventId });
-      fetchEventRef.current();
-    } catch (error) {
-      console.error("Error signing up for event:", error);
-    }
-  };
-
-  //check if user is signed for event  
-  useEffect(() => {
-    const fetchUserEvents = async () => {
-      try {      
-        const response = await GetUserEventByUserId(user_Id);
-        setUserEvents(response.data)
-      } catch (error) {
-        console.error("Error fetching user events:", error);
-      }
-    };
-  
-    fetchUserEvents();
-  }, []);
-
-  const isUserSignedUp = userEvents.some(event => event.eventId === eventId);
-  console.log("isUserSignedUp ",isUserSignedUp);
-
-
   return (
     <View style={styles.screen}>
       <View style={styles.container}>
@@ -160,11 +154,10 @@ const Event = ({ navigation }) => {
           <Text style={styles.createEventButtonText}>Edytuj wydarzenie</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.singUp} onPress={handleSignUp}>
-  <Text style={styles.createEventButtonText}>
-    {isUserSignedUp ? "Jesteś już zapisany na to wydarzenie" : "Zapisz mnie na wydarzenie"}
-  </Text>
-</TouchableOpacity>
-
+            <Text style={styles.createEventButtonText}>
+              {isUserSignedUp ? "Jesteś już zapisany na to wydarzenie" : "Zapisz mnie na wydarzenie"}
+            </Text>
+        </TouchableOpacity>
       </View>
     </View>
   );

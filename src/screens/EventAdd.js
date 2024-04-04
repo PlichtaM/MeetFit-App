@@ -7,6 +7,8 @@ import { Checkbox } from "expo-checkbox";
 import style from "../styles/EventAddStyles";
 import { getColorScheme } from "../components/Colors";
 import { createEvent } from "../../services/api";
+import DateTimePicker from '@react-native-community/datetimepicker';
+
 
 LocaleConfig.defaultLocale = 'pl';
 
@@ -20,7 +22,9 @@ function EventAdd({ route }) {
   const [selected, setSelected] = useState("");
   const [selectedOption, setSelectedOption] = useState("");
   const [eventName, setEventName] = useState("");
+  const [time, setTime] = useState("00:00");
   const [description, setDescription] = useState("");
+  const [isPickerShow, setIsPickerShow] = useState(false);
 
   const handleCheckboxChange = (option) => {
     setSelectedOption(option === selectedOption ? "" : option);
@@ -29,15 +33,14 @@ function EventAdd({ route }) {
   const handleCreateEvent = async () => {
     try {
       const eventData = {
-        name: eventName,// Póżniej dodać,żeby było co najmniej kilka znaków
+        name: eventName,// dodać,żeby było co najmniej kilka znaków
         description: description,
-        date: new Date(selected).toISOString(), //dodać Input godziny
+        date: new Date(selected + ' ' + time).toISOString(),
         mapPointGoogleId: selectedMarkerId,
         limit: limitMiejsc, //dodać możliwość "Bez limitu"
         private: selectedOption === "Prywatne", // ztego chyba rezygnujemy
         active: true
       };
-
       
       const response = await createEvent(eventData);
       //wzięcie ID wydarzenia od response API i użycie w przekierowaniu do ekranu wydarzenia
@@ -50,7 +53,22 @@ function EventAdd({ route }) {
       console.error('Error creating event:', error);
     }
   };
-  console.log(selected);
+
+  const showPicker = () => {
+    setIsPickerShow(true);
+  };
+  const onChange = (event, selectedTime) => {
+    if (event.type === 'set') { // Dodaj sprawdzenie, czy użytkownik wybrał czas
+      const hours = selectedTime.getHours();
+      const minutes = selectedTime.getMinutes();
+      const formattedTime = `${hours}:${minutes < 10 ? '0' : ''}${minutes}`;
+      setTime(formattedTime);
+    }
+    setIsPickerShow(false);    
+  };
+  
+  
+  
   return (
     <ScrollView style={style.background}>
       <View style={style.container}>
@@ -115,6 +133,13 @@ function EventAdd({ route }) {
             }}
           />
         </TouchableOpacity>
+        <Text style={style.text}> Godzina wydarzenia:</Text>
+        <Text style={style.text}>{time}</Text>
+        <TouchableOpacity style={style.addEventButton} onPress={showPicker}>
+          <Text style={style.addEventButtonText}>Wybierz godzinę wydarzenia</Text>
+        </TouchableOpacity>
+        {isPickerShow && (
+        <DateTimePicker  mode="time" value={new Date()} is24Hour={true} onChange={onChange} />)}
         <Text style={style.text}>Podaj rodzaj wydarzenia:</Text>
         <View style={style.Checkboxes}>
           <Checkbox
