@@ -87,7 +87,6 @@ function Map({navigation}) {
     fetchEvents();
   }, []);
 
-  
   const searchEvents = async () => {
     const eventsWithMapPoints = markers.filter(marker => marker.mapPointGoogleId);
     
@@ -124,6 +123,10 @@ function Map({navigation}) {
   const closePopup = () => {
     setPopupVisible(false);
   };
+  
+  useEffect(() => {
+    searchEvents(); 
+  }, []);
 
   return (
     <View style={{ flex: 1 }}>

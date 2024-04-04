@@ -46,7 +46,7 @@ const getUserEventById = (id) => api.get(`/userEvent/${id}`);
 const createUserEvent = (data) => api.post('/userEvent', data);
 const updateUserEvent = (id, data) => api.put(`/userEvent/${id}`, data);
 const deleteUserEvent = (id) => api.delete(`/userEvent/${id}`);
-const GetByUserId = (id) => api.delete(`/userEvent/GetByUserId/${id}`);
+const GetUserEventByUserId = (id) => api.get(`/userEvent/GetByUserId/${id}`);
 
 // Funkcje dla MapPoint
 const getMapPoint = () => api.get(`/mapPoint`);
@@ -85,6 +85,7 @@ export {
   updateEvent,
   deleteEvent,
   getEventsByMapPointId,
+  GetUserEventByUserId,
   getEventsByUserId,
   GetCountPeople,
   getUserEvent,

@@ -20,6 +20,7 @@ function EventAdd({ route }) {
   const [selected, setSelected] = useState("");
   const [selectedOption, setSelectedOption] = useState("");
   const [eventName, setEventName] = useState("");
+  const [description, setDescription] = useState("");
 
   const handleCheckboxChange = (option) => {
     setSelectedOption(option === selectedOption ? "" : option);
@@ -29,7 +30,7 @@ function EventAdd({ route }) {
     try {
       const eventData = {
         name: eventName,// Póżniej dodać,żeby było co najmniej kilka znaków
-        description: "", //Dodać do formularza
+        description: description,
         date: new Date(selected).toISOString(), //dodać Input godziny
         mapPointGoogleId: selectedMarkerId,
         limit: limitMiejsc, //dodać możliwość "Bez limitu"
@@ -60,6 +61,15 @@ function EventAdd({ route }) {
             style={style.textInput}
             value={eventName}
             onChangeText={setEventName} 
+          />
+        </View>
+        <Text style={style.text}>Podaj opis wydarzenia:</Text>
+        <View style={style.inputContainer}>
+          <TextInput
+            placeholder="Opis"
+            style={style.textInput}
+            value={description}
+            onChangeText={setDescription} 
           />
         </View>
         <Text style={style.text}>Limit miejsc:</Text>

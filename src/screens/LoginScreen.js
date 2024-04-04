@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, Image, TouchableOpacity, TextInput, Alert } from 'react-native';
+import { View, Text, Image, TouchableOpacity, TextInput, Keyboard } from 'react-native';
 import Checkbox from 'expo-checkbox';
 import LoginButton from '../components/LoginButton';
 import LoginStyles from "../styles/LoginStyles";
@@ -28,7 +28,7 @@ function LoginScreen({ navigation }) {
           AsyncStorage.setItem('userId', response.data.userId);
          // navigation.navigate('MainNavigator', {screen:'MapStackScreen'});
          Keyboard.dismiss();
-         navigation.navigate('MapStackScreen');
+         navigation.navigate('Map');
       })
       .catch((error) => {
         console.log("Status odpowiedzi:", error);  

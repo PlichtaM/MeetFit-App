@@ -2,11 +2,7 @@ import React, { useLayoutEffect, useState, useEffect, useRef } from "react";
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {
-  getEventById,
-  GetCountPeople,
-  createUserEvent,
-} from "../../services/api";
+import { getEventById, GetCountPeople, createUserEvent, GetUserEventByUserId} from "../../services/api";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { getColorScheme } from "../components/Colors";
 import styles from "../styles/EventStyles";
@@ -23,12 +19,15 @@ const Event = ({ navigation }) => {
   const { eventId } = route.params;
   const [Event, setEvent] = useState([]);
   const [CountPeople, setCountPeople] = useState([]);
+  const [userEvents, setUserEvents] = useState([]);  
+  const [user_Id, setUser_Id] = useState([]);
   const fetchEventRef = useRef();
 
   useEffect(() => {
     fetchEventRef.current = async () => {
       try {
         const userId = await AsyncStorage.getItem("userId");
+        setUser_Id(userId);
         const response = await getEventById(eventId);
         const ppl = await GetCountPeople(eventId);
         setCountPeople(ppl.data);
@@ -41,7 +40,6 @@ const Event = ({ navigation }) => {
     fetchEventRef.current();
   }, []);
   const googleApisUrl = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${Event.mapPointGoogleId}&key=${GOOGLE_API_KEY}`;
-
   const [mapPointData, setMapPointData] = useState(null);
 
   useEffect(() => {
@@ -59,13 +57,14 @@ const Event = ({ navigation }) => {
     };
     fetchPlaceInfo();
     return () => {};
-  }, [Event.mapPointId]);
+  }, [Event.mapPointGoogleId]);
 
-  const { photos } = mapPointData || {};
-  console.log(photos);
-  const PHOTO_REFERENCE = photos[0].photo_reference;
-  console.log(PHOTO_REFERENCE);
-  const pictureUrl = `https://maps.googleapis.com/maps/api/place/photo?photoreference=${PHOTO_REFERENCE}&sensor=false&maxheight=${MAX_HEIGHT}&maxwidth=${MAX_WIDTH}&key=${GOOGLE_API_KEY}`;
+  const { photos, name } = mapPointData || {};
+ // console.log(photos);
+  //const PHOTO_REFERENCE = photos[0].photo_reference;
+ // console.log(PHOTO_REFERENCE);
+ //const pictureUrl = `https://maps.googleapis.com/maps/api/place/photo?photoreference=${PHOTO_REFERENCE}&sensor=false&maxheight=${MAX_HEIGHT}&maxwidth=${MAX_WIDTH}&key=${GOOGLE_API_KEY}`;
+ const pictureUrl = "https://meetfitapp.pl/avatars/default-avatar.jpg" //temp
 
   const eventDate = new Date(Event.date);
   const formattedDate = `${eventDate.getDate()}.${
@@ -106,17 +105,35 @@ const Event = ({ navigation }) => {
     });
   }, [navigation, Event]);
 
+  //Sign user for Event
   const handleSignUp = async () => {
     try {
-      const userId = await AsyncStorage.getItem("userId");
-      await createUserEvent({ userId, eventId });
-      // Optionally, you can refresh event data here if needed
-      // Fetch event again or update local state
+      await createUserEvent({ 
+        "userId":user_Id,
+        "eventId": eventId });
       fetchEventRef.current();
     } catch (error) {
       console.error("Error signing up for event:", error);
     }
   };
+
+  //check if user is signed for event  
+  useEffect(() => {
+    const fetchUserEvents = async () => {
+      try {      
+        const response = await GetUserEventByUserId(user_Id);
+        setUserEvents(response.data)
+      } catch (error) {
+        console.error("Error fetching user events:", error);
+      }
+    };
+  
+    fetchUserEvents();
+  }, []);
+
+  const isUserSignedUp = userEvents.some(event => event.eventId === eventId);
+  console.log("isUserSignedUp ",isUserSignedUp);
+
 
   return (
     <View style={styles.screen}>
@@ -126,8 +143,8 @@ const Event = ({ navigation }) => {
           <Text style={styles.infoText}>Opis: {Event.description}</Text>
           <Text style={styles.infoText}>Data: {formattedDate}</Text>
           <Text style={styles.infoText}>Godzina: {formattedTime}</Text>
-          {Event.mapPoint && (
-            <Text style={styles.infoText}>Miejsce: {Event.mapPoint.name}</Text>
+          {name && (
+            <Text style={styles.infoText}>Miejsce: {name}{/* temp */}</Text>
           )}
           <Text style={styles.infoText}>
             Zapisani użytkownicy: {CountPeople} / {Event.limit}
@@ -143,10 +160,11 @@ const Event = ({ navigation }) => {
           <Text style={styles.createEventButtonText}>Edytuj wydarzenie</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.singUp} onPress={handleSignUp}>
-          <Text style={styles.createEventButtonText}>
-            Zapisz mnie na wydarzenie
-          </Text>
-        </TouchableOpacity>
+  <Text style={styles.createEventButtonText}>
+    {isUserSignedUp ? "Jesteś już zapisany na to wydarzenie" : "Zapisz mnie na wydarzenie"}
+  </Text>
+</TouchableOpacity>
+
       </View>
     </View>
   );

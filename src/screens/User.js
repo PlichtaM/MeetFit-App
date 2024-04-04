@@ -19,7 +19,6 @@ function User({ navigation }) {
         const token = await AsyncStorage.getItem('token');
         const userName = await AsyncStorage.getItem('userName');
         const userId = await AsyncStorage.getItem('userId');
-        const tempId = "57b34c09-290c-4891-96d9-5b42ac5d4d55";
         //dane z api
         const response = await getUser(userId);//ZMIENIC POZNIEJ TEMP ID
         setUser(response.data);
