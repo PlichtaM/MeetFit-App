@@ -9,6 +9,8 @@
 - [X] EventAdd, EventEdit - input na godzinę i opis
 - [ ] Zmiana Profilówki
 - [ ] upload zdjecia
+- [ ] Edytowanie wydarzenia Jesli jestem włascicelem
+- [ ] Customowe pinezki
 - [ ] logika logowania/wylogowania
 - [ ] odnosnik z ekranu Event do Place
 - [ ] dodać gdzieś w UI

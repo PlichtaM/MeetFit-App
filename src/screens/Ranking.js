@@ -1,22 +1,39 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, Image, FlatList } from 'react-native';
 import { useTheme } from '../components/ThemeContext';
-import getRankingStyles from '../styles/RankingStyles'; // Upewnij się, że RankingStyles.js jest funkcją, jak omówiono wcześniej
-import users from '../tempAPI/userlist.json';
+import getRankingStyles from '../styles/RankingStyles';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { getAllStepsCount } from '../../services/api';
+import LoadingScreen from "./Loading";
 
-const Ranking = () => {
+const Ranking = ({navigation}) => {
   const { theme, themeStyles } = useTheme();
   const styles = getRankingStyles(themeStyles);
+  const [steps, setSteps] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  // Posortuj użytkowników według liczby kroków w kolejności malejącej
-  // Następnie przypisz miejsca w rankingu
-  const rankedUsers = [...users] // Kopia, żeby nie modyfikować oryginalnej tablicy
-    .sort((a, b) => b.liczba_kroków - a.liczba_kroków)
-    .map((user, index) => ({
-      ...user,
-      miejsce: index + 1
-    }));
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getAllStepsCount();
+        const sortedSteps = response.data.sort((a, b) => b.stepsCount - a.stepsCount);
+        setSteps(sortedSteps.map((user, index) => ({
+          ...user,
+          miejsce: index + 1
+        })));
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching steps count:', error);
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [navigation]);
+
+  if (loading) {
+    return <LoadingScreen />;
+  }
 
   const renderUserItem = ({ item, index }) => {
     let backgroundColor, textColor;
@@ -50,8 +67,8 @@ const Ranking = () => {
         <View style={[styles.userItem, { backgroundColor }]}>
           <Text style={[styles.rank, { color: textColor }]}>{item.miejsce}</Text>
           <Image source={{ uri: item.zdjecie_profilowe }} style={styles.avatar} />
-          <Text style={[styles.userName, { color: textColor }]}>{`${item.imie} ${item.Nazwisko}`}</Text>
-          <Text style={[styles.steps, { color: textColor }]}>{`${item.liczba_kroków}`}</Text>
+          <Text style={[styles.userName, { color: textColor }]}>{`${item.userName}`}</Text>
+          <Text style={[styles.steps, { color: textColor }]}>{`${item.stepsCount}`}</Text>
           <MaterialCommunityIcons name="foot-print" size={24} color={textColor} />
         </View>
       </>
@@ -61,7 +78,7 @@ const Ranking = () => {
   return (
     <View style={styles.container}>
       <FlatList
-        data={rankedUsers}
+        data={steps}
         keyExtractor={(item, index) => index.toString()}
         renderItem={renderUserItem}
       />

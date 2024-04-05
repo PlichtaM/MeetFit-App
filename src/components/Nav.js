@@ -220,8 +220,7 @@ export default function Nav() {
           tabBarLabel: () => null,
           tabBarStyle: { backgroundColor: colors.Background }
         })}
-      >
-        
+      >        
             <Tab.Screen
               name="Settings"
               component={LoginScreen}

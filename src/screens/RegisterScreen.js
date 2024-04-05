@@ -7,14 +7,13 @@ const colors = getColorScheme();
 import { registerUser } from "../../services/api";
 import LoginStyles from "../styles/LoginStyles";
 
-function RegisterScreen() {
+function RegisterScreen({navigation}) {
   const [isChecked, setChecked] = useState(false);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  // Tutaj jest funkcja do obsługi rejestracji
   const handleRegister = () => {
     if (password !== confirmPassword) {
       Alert.alert("Błąd", "Hasła nie są identyczne");
@@ -24,7 +23,6 @@ function RegisterScreen() {
       Alert.alert("Błąd", "Musisz zaakceptować regulamin");
       return;
     }
-
     const userData = {
       userName: username,
       email: email,
@@ -34,12 +32,13 @@ function RegisterScreen() {
     registerUser(userData)
       .then((response) => {
         console.log("Rejestracja udana:", response.data);
-        // Działania po pomyślnej rejestracji
+        console.log("Rejestracja udana status:", response.data.status);
+        if(response.data.status === "Success")
+        navigation.navgate("LoginScreen")
       })
       .catch((error) => {
         console.log("Status odpowiedzi:", error.response.status);
         console.log("Nagłówki odpowiedzi:", error.response.headers);
-        console.log("haslo: ", username);
       });
   };
 

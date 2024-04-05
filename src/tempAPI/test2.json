@@ -1,0 +1,110 @@
+ LOG  {
+    "config": {
+        "adapter": [
+            "xhr",
+            "http"
+        ],
+        "baseURL": "https://meetfitapp.pl/api",
+        "data": undefined,
+        "env": {
+            "Blob": [Function Blob
+            ],
+            "FormData": [Function FormData
+            ]
+        },
+        "headers": [Object
+        ],
+        "maxBodyLength": -1,
+        "maxContentLength": -1,
+        "method": "get",
+        "timeout": 0,
+        "transformRequest": [
+            [Function transformRequest
+            ]
+        ],
+        "transformResponse": [
+            [Function transformResponse
+            ]
+        ],
+        "transitional": {
+            "clarifyTimeoutError": false,
+            "forcedJSONParsing": true,
+            "silentJSONParsing": true
+        },
+        "url": "/user/GetAllStepsCount",
+        "validateStatus": [Function validateStatus
+        ],
+        "xsrfCookieName": "XSRF-TOKEN",
+        "xsrfHeaderName": "X-XSRF-TOKEN"
+    },
+    "data": [
+        {
+            "stepsCount": 0,
+            "userName": "admin"
+        },
+        {
+            "stepsCount": 2137,
+            "userName": "Johny_Karate"
+        }
+    ],
+    "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "date": "Fri, 05 Apr 2024 14:40:35 GMT",
+        "server": "Kestrel"
+    },
+    "request": {
+        "DONE": 4,
+        "HEADERS_RECEIVED": 2,
+        "LOADING": 3,
+        "OPENED": 1,
+        "UNSENT": 0,
+        "_aborted": false,
+        "_cachedResponse": undefined,
+        "_hasError": false,
+        "_headers": {
+            "accept": "application/json, text/plain, */*",
+            "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6ImZhYzU4NGZiLTMzNGQtNDkwZS04YjNjLTI2N2U2YjA1YjgzNiIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6ImJnbTI2NjgxQHZvZ2NvLmNvbSIsImp0aSI6IjBjYzBjNWY5LWQ4MzEtNGVjYS05NDczLTk5MWQwMzYzODgxNyIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IlVzZXIiLCJleHAiOjE3MTI0MTMzNTUsImlzcyI6Imh0dHBzOi8vbWVldGZpdC5wbC9zd2FnZ2VyIiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgxIn0.vPrg_YbRa8dJEWlhpgvxMRX3QcFI3qAMdGtenyi7zbY"
+        },
+        "_incrementalEvents": false,
+        "_lowerCaseResponseHeaders": {
+            "content-type": "application/json; charset=utf-8",
+            "date": "Fri, 05 Apr 2024 14:40:35 GMT",
+            "server": "Kestrel"
+        },
+        "_method": "GET",
+        "_perfKey": "network_XMLHttpRequest_https://meetfitapp.pl/api/user/GetAllStepsCount",
+        "_performanceLogger": {
+            "_closed": false,
+            "_extras": [Object
+            ],
+            "_isLoggingForWebPerformance": false,
+            "_pointExtras": [Object
+            ],
+            "_points": [Object
+            ],
+            "_timespans": [Object
+            ]
+        },
+        "_requestId": null,
+        "_response": "[{\"userName\":\"admin\",\"stepsCount\":0},{\"userName\":\"Johny_Karate\",\"stepsCount\":2137}]",
+        "_responseType": "",
+        "_sent": true,
+        "_subscriptions": [],
+        "_timedOut": false,
+        "_trackingName": "unknown",
+        "_url": "https://meetfitapp.pl/api/user/GetAllStepsCount",
+        "readyState": 4,
+        "responseHeaders": {
+            "content-type": "application/json; charset=utf-8",
+            "date": "Fri, 05 Apr 2024 14:40:35 GMT",
+            "server": "Kestrel"
+        },
+        "responseURL": "https://meetfitapp.pl/api/user/GetAllStepsCount",
+        "status": 200,
+        "timeout": 0,
+        "upload": {},
+        "withCredentials": true
+    },
+    "status": 200,
+    "statusText": undefined
+}
