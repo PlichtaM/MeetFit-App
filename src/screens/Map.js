@@ -148,10 +148,7 @@ function Map({navigation}) {
                 <Marker
                   key={`search-item-${i}`}
                   coordinate={coord}
-                  title={item.name}
-                  description=""
-                  onPress={() => {onMarkerSelected(item.place_id);
-                    console.log(item.place_id);}}
+                  onPress={() => {onMarkerSelected(item.place_id);}}
                 />
               );
             })

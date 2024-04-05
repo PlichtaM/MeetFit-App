@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity,ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Entypo } from '@expo/vector-icons';
 import { useTheme } from '../components/ThemeContext';
@@ -28,16 +28,15 @@ function MyEvents() {
 
     fetchData();
   }, []);
-  
+
   if (loading) {
     return <LoadingScreen />;
   }
-
-
   return (
     <View style={[dynamicStyles.container, { backgroundColor: themeStyles.Background }]}>
      
       <View>
+        <Text> To jest do zmiany - po update API dodamy tutaj tylko wydarzenia na ktore user jest zapisany</Text>
         {events.map((event, index) => (
           <TouchableOpacity
             key={index}

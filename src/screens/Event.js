@@ -9,7 +9,7 @@ import styles from "../styles/EventStyles";
 const colors = getColorScheme();
 import { GOOGLE_API_KEY } from "../../env";
 import axios from "axios";
-
+import LoadingScreen from "./Loading";
 
 const MAX_WIDTH = 1425;
 const MAX_HEIGHT = 750;
@@ -40,7 +40,7 @@ const Event = ({ navigation }) => {
       }
     };
     fetchEventRef.current();
-  }, [user_Id, navigation]);
+  }, [user_Id, navigation,fetchEventRef]);
 
   //get google Place info 
   const googleApisUrl = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${Event.mapPointGoogleId}&key=${GOOGLE_API_KEY}`;
@@ -61,13 +61,7 @@ const Event = ({ navigation }) => {
     return () => {};
   }, [Event.mapPointGoogleId]);
 
-  //set google Photo and place name 
-  const { photos, name } = mapPointData || {};
-  //console.log(photos);
-  //const PHOTO_REFERENCE = photos[0].photo_reference;
-  //console.log(PHOTO_REFERENCE);
-  //const pictureUrl = `https://maps.googleapis.com/maps/api/place/photo?photoreference=${PHOTO_REFERENCE}&sensor=false&maxheight=${MAX_HEIGHT}&maxwidth=${MAX_WIDTH}&key=${GOOGLE_API_KEY}`;
-  const pictureUrl = "https://meetfitapp.pl/avatars/default-avatar.jpg" //temp
+ 
 
  
  //formating Event Date
@@ -99,6 +93,14 @@ const Event = ({ navigation }) => {
     };
   const isUserSignedUp = userEvents.some(event => event.eventId === eventId);
 
+   //set google Photo and place name 
+   const { photos, name } = mapPointData || {};
+   let pictureUrl = "https://meetfitapp.pl/avatars/default-avatar.jpg"; 
+   if (photos) {
+     const PHOTO_REFERENCE = photos[0].photo_reference;
+     pictureUrl = `https://maps.googleapis.com/maps/api/place/photo?photoreference=${PHOTO_REFERENCE}&sensor=false&maxheight=${MAX_HEIGHT}&maxwidth=${MAX_WIDTH}&key=${GOOGLE_API_KEY}`;
+     // pictureUrl is assigned here
+   }
   useLayoutEffect(() => {
     navigation.setOptions({
       title: Event.name,
@@ -132,9 +134,11 @@ const Event = ({ navigation }) => {
   return (
     <View style={styles.screen}>
       <View style={styles.container}>
+        {photos&&(
         <Image style={styles.eventImage} source={{ uri: pictureUrl || "" }} />
+        )}
         <View style={styles.infoContainer}>
-          <Text style={styles.infoText}>Opis: {Event.description}</Text>
+          <Text style={styles.infoText}>Opis:{Event.description}</Text>
           <Text style={styles.infoText}>Data: {formattedDate}</Text>
           <Text style={styles.infoText}>Godzina: {formattedTime}</Text>
           {name && (

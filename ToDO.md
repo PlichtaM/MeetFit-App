@@ -12,7 +12,7 @@
 - [ ] Edytowanie wydarzenia Jesli jestem włascicelem
 - [ ] Customowe pinezki
 - [ ] logika logowania/wylogowania
-- [ ] odnosnik z ekranu Event do Place
+- [ ] odnosnik z ekranu Event do Place 
 - [ ] dodać gdzieś w UI
   - [ ] zmiane hasla
   - [ ] zmiane Nicku?

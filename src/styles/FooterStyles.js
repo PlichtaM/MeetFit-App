@@ -10,6 +10,7 @@ const FooterStyles = {
   MapIconStyle:{
     height:60,
     width:60,
+    zIndex:1,
   }
 };
 

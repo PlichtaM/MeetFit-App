@@ -38,7 +38,7 @@ function User({ navigation }) {
       headerTitleAlign: 'center',
       headerTintColor: "white",
     });
-  }, [navigation]);
+  }, [navigation, handleAvatarChange]);
 
   async function handleLogOut() {
     try {
@@ -53,14 +53,11 @@ function User({ navigation }) {
   }
 
   const handleAvatarChange = async () => {
-    // Upewnij się, że użytkownik udzielił zgody na dostęp do galerii/zdjęć
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (permissionResult.granted === false) {
       alert("Potrzebujemy dostępu do galerii, aby zmienić awatar!");
       return;
     }
-
-    // Wybieranie zdjęcia
     const pickerResult = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
@@ -69,9 +66,8 @@ function User({ navigation }) {
     });
 
     if (!pickerResult.cancelled) {
-      // Jeśli użytkownik wybrał zdjęcie, wysyłamy je na serwer w celu zmiany awatara
       const data = new FormData();
-      data.append('avatar', {
+      data.append('file', {
         uri: pickerResult.uri,
         name: `user_avatar_${user.id}.jpg`,
         type: 'image/jpeg',

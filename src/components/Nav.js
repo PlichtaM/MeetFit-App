@@ -223,8 +223,8 @@ export default function Nav() {
       >        
             <Tab.Screen
               name="Settings"
-              component={LoginScreen}
-              options={{ title: "Ustawienia", ...headerOptions }}
+              component={MyEvents}
+              options={{ title: "Moje wydarzenia", ...headerOptions }}
             />
             <Tab.Screen
               name="Ranking"

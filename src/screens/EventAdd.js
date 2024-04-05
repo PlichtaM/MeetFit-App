@@ -8,16 +8,13 @@ import style from "../styles/EventAddStyles";
 import { getColorScheme } from "../components/Colors";
 import { createEvent } from "../../services/api";
 import DateTimePicker from '@react-native-community/datetimepicker';
-
+const colors = getColorScheme();
 
 LocaleConfig.defaultLocale = 'pl';
 
-const colors = getColorScheme();
-
 function EventAdd({ route }) {
   const navigation = useNavigation();
-  const { selectedMarkerId } = route.params;
-  
+  const { selectedMarkerId } = route.params;  
   const [limitMiejsc, setLimitMiejsc] = useState(5);
   const [selected, setSelected] = useState("");
   const [selectedOption, setSelectedOption] = useState("");
