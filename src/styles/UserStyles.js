@@ -15,7 +15,7 @@ const UserStyles = StyleSheet.create({
     width: 200,
     height: 200,
     position: 'absolute', 
-    top: 100,
+    top: 50,
     left: '50%',
     marginLeft: -100,
   },

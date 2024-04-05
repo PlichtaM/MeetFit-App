@@ -1,55 +1,49 @@
 import React, { useLayoutEffect, useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, Image, Pressable  } from "react-native";
-import { getColorScheme  } from "../components/Colors";
-const colors = getColorScheme()
+import { View, Text, TouchableOpacity, Image, Pressable, Platform } from "react-native";
+import * as ImagePicker from 'expo-image-picker'; // Import ImagePicker from Expo
+import { getColorScheme } from "../components/Colors";
+const colors = getColorScheme();
 import UserStyles from "../styles/UserStyles";
-import { Entypo, MaterialCommunityIcons, MaterialIcons  } from '@expo/vector-icons';
-import * as Progress from 'react-native-progress'; //https://github.com/oblador/react-native-progress
+import { Entypo, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
+import * as Progress from 'react-native-progress';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getUser } from "../../services/api";
+import { getUser, changeAvatar } from "../../services/api";
 import LoadingScreen from "./Loading";
 
-
 function User({ navigation }) {
-  const [user, setUser] = useState()
+  const [user, setUser] = useState();
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        //dane z AsyncStorage - dostepne po zalogowaniu
-        const token = await AsyncStorage.getItem('token');
-        const userName = await AsyncStorage.getItem('userName');
         const userId = await AsyncStorage.getItem('userId');
-        //dane z api
-        const response = await getUser(userId);//ZMIENIC POZNIEJ TEMP ID
+        const response = await getUser(userId);
         setUser(response.data);
-        //console.log("response: ",response.data);
-  
       } catch (error) {
         console.error('Błąd odczytu danych:', error);
       }
     };
-  
+
     fetchData();
-  }, []);
+  }, [navigation]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      title:  'MeetFit',
+      title: 'MeetFit',
       headerRight: () => (
         <Pressable onPress={() => navigation.navigate('Settings')}>
-          <MaterialIcons name="settings" size={28}  color="white" style={{height: 25, marginRight: 15}} />
+          <MaterialIcons name="settings" size={28} color="white" style={{ height: 25, marginRight: 15 }} />
         </Pressable>
       ),
       headerTitleAlign: 'center',
       headerTintColor: "white",
     });
   }, [navigation]);
-  const tempURI = "https://meetfitapp.pl/avatars/default-avatar.jpg"
-  // https://docs.expo.dev/versions/latest/sdk/pedometer/
+
   async function handleLogOut() {
     try {
       await AsyncStorage.removeItem('token');
-      navigation.navigate('Login')
+      navigation.navigate('Login');
       console.log("Wylogowano");
       return true;
     } catch (error) {
@@ -58,32 +52,70 @@ function User({ navigation }) {
     }
   }
 
- const progress = user ? (user.stepsCount / user.stepsGoal) * 100 : 0; 
+  const handleAvatarChange = async () => {
+    // Upewnij się, że użytkownik udzielił zgody na dostęp do galerii/zdjęć
+    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (permissionResult.granted === false) {
+      alert("Potrzebujemy dostępu do galerii, aby zmienić awatar!");
+      return;
+    }
+
+    // Wybieranie zdjęcia
+    const pickerResult = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+    });
+
+    if (!pickerResult.cancelled) {
+      // Jeśli użytkownik wybrał zdjęcie, wysyłamy je na serwer w celu zmiany awatara
+      const data = new FormData();
+      data.append('avatar', {
+        uri: pickerResult.uri,
+        name: `user_avatar_${user.id}.jpg`,
+        type: 'image/jpeg',
+      });
+
+      try {
+        await changeAvatar(user.id, data);
+        // Jeśli zmiana awatara powiodła się, odświeżamy dane użytkownika
+        const response = await getUser(user.id);
+        setUser(response.data);
+      } catch (error) {
+        console.error('Błąd podczas zmiany awatara:', error);
+      }
+    }
+  };
 
   if (!user) {
     return (
-      <LoadingScreen/>
+      <LoadingScreen />
     );
   }
 
+  const pictureUrl = "https://meetfitapp.pl" + (user.profilePictureUrl);
+  const progress = user ? (user.stepsCount / user.stepsGoal) * 100 : 0;
+
   return (
-      <View style={UserStyles.container}>
-        <View style={UserStyles.top}></View>
-        <Image style={UserStyles.UserIcon} source={{uri: tempURI}}/>
-        <View style={UserStyles.UserNameContainer}>
-          <Text style={UserStyles.UserName}>{`${user.userName}`}</Text>
-          {/*<Icon name="footsteps" size={24} color={colors.primary} />*/}
-          <MaterialCommunityIcons name="foot-print" size={30} color={colors.primary}  style={UserStyles.stepIcon} />         
-            <Progress.Bar
-              styleAttr="Horizontal"
-              indeterminate={false}
-              progress={progress / 100}
-              style={{ width: 150, marginTop: 10, borderRadius: 0, }}
-              color={colors.primary}
-              unfilledColor={colors.disabled}
-              borderWidth={0}
-            />          
-          <Text style={UserStyles.StepsNumber}>{`${user.stepsCount }/${ user.stepsGoal}`} </Text>
+    <View style={UserStyles.container}>
+      <View style={UserStyles.top}></View>
+      <TouchableOpacity onPress={handleAvatarChange} style={UserStyles.UserIcon}>
+        <Image style={UserStyles.UserIcon} source={{ uri: pictureUrl }} />
+      </TouchableOpacity>
+      <View style={UserStyles.UserNameContainer}>
+        <Text style={UserStyles.UserName}>{`${user.userName}`}</Text>
+        <MaterialCommunityIcons name="foot-print" size={30} color={colors.primary} style={UserStyles.stepIcon} />
+        <Progress.Bar
+          styleAttr="Horizontal"
+          indeterminate={false}
+          progress={progress / 100}
+          style={{ width: 150, marginTop: 10, borderRadius: 0, }}
+          color={colors.primary}
+          unfilledColor={colors.disabled}
+          borderWidth={0}
+        />
+       <Text style={UserStyles.StepsNumber}>{`${user.stepsCount }/${ user.stepsGoal}`} </Text>
         </View>
         <View style={UserStyles.MenuContainer}>
           <TouchableOpacity onPress={() => navigation.navigate('Calendar')} style={UserStyles.UserButton}>

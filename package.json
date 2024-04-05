@@ -28,7 +28,8 @@
     "react-native-maps": "1.7.1",
     "react-native-progress": "^5.0.1",
     "typescript": "^5.1.3",
-    "vector-icons": "^0.1.0"
+    "vector-icons": "^0.1.0",
+    "expo-image-picker": "~14.7.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

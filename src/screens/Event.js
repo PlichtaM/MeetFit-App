@@ -138,7 +138,7 @@ const Event = ({ navigation }) => {
           <Text style={styles.infoText}>Data: {formattedDate}</Text>
           <Text style={styles.infoText}>Godzina: {formattedTime}</Text>
           {name && (
-            <Text style={styles.infoText}>Miejsce: {name}{/* temp */}</Text>
+            <Text style={styles.infoText}>Miejsce: {name}</Text>
           )}
           <Text style={styles.infoText}>
             Zapisani użytkownicy: {CountPeople} / {Event.limit}
