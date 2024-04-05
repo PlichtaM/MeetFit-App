@@ -19,19 +19,18 @@ function LoginScreen({ navigation }) {
       email: email,
       password: password
     };
-  
+
     loginUser(userCredentials)
-      .then((response) => {       
+      .then((response) => {
           console.log("Logowanie udane:", response.data);
           AsyncStorage.setItem('token', response.data.token);
           AsyncStorage.setItem('userName', response.data.userName);
           AsyncStorage.setItem('userId', response.data.userId);
-         // navigation.navigate('MainNavigator', {screen:'MapStackScreen'});
-         Keyboard.dismiss();
-         navigation.navigate('Map');
+          Keyboard.dismiss();
+          navigation.navigate('MapStackScreen', { screen: 'Map' }); // Tutaj zmieniłem
       })
       .catch((error) => {
-        console.log("Status odpowiedzi:", error);  
+        console.log("Status odpowiedzi:", error);
         console.log("dane:", userCredentials);
       });
   };

@@ -37,17 +37,17 @@ export default function Nav() {
   const [isLoading, setIsLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigation = useNavigation();
+
   useEffect(() => {
     const checkTokenValidity = async () => {
       try {
         const token = await AsyncStorage.getItem("token");
-        if (token) {// sprawdzanie czy token jest wazny przez Request GetCountPeople
-          const response = await GetCountPeople(token); 
-          
-          setIsLoggedIn(true);
-          if (response.status='200') {
-            //navigation.navigate('MapStackScreen');
+        if (token) {
+          const response = await GetCountPeople(token);
+
+          if (response.status === '200') {
             setIsLoggedIn(true);
+            navigation.navigate('MapStackScreen'); // Tutaj Ci dodałem
           }
         }
         setIsLoading(false);
@@ -58,7 +58,7 @@ export default function Nav() {
     };
 
     checkTokenValidity();
-  }, [AsyncStorage.getItem("token")]);
+  }, [AsyncStorage.getItem("token"), navigation]);
  
   const LoginStack = createStackNavigator();
   function LoginStackScreen() {
