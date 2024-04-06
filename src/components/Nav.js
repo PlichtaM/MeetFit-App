@@ -31,26 +31,16 @@ import CorrectChangedPasswordScreen from '../screens/CorrectChangedPasswordScree
 import VerifiedScreen from '../screens/VerifiedScreen';
 import MyEvents from "../screens/myEvents";
 
-
-
 export default function Nav() {
   const [isLoading, setIsLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const navigation = useNavigation();
+  const [token, setToken] = useState(false);
 
   useEffect(() => {
     const checkTokenValidity = async () => {
       try {
-        const token = await AsyncStorage.getItem("token");
-        if (token) {
-          const response = await GetCountPeople(token);
-
-          if (response.status === '200') {
-            setIsLoggedIn(true);
-            navigation.navigate('MapStackScreen'); // Tutaj Ci dodałem
-          }
-        }
-        setIsLoading(false);
+        const response = await AsyncStorage.getItem("token");
+        setToken(response);        
       } catch (error) {
         console.error("Error while verifying token:", error);
         setIsLoading(false);
@@ -58,24 +48,8 @@ export default function Nav() {
     };
 
     checkTokenValidity();
-  }, [AsyncStorage.getItem("token"), navigation]);
- 
-  const LoginStack = createStackNavigator();
-  function LoginStackScreen() {
-    return (
-      <View style={{ flex: 1 }}>
-        <LoginStack.Navigator>
-          <LoginStack.Screen name="Login" component={LoginScreen} />
-          <LoginStack.Screen name="Register" component={RegisterScreen} />
-          <LoginStack.Screen name="ForgotPasswordScreen" component={ForgotPasswordScreen} />
-          <LoginStack.Screen name="ChangePasswordScreen" component={ChangePasswordScreen} />
-          <LoginStack.Screen name="CorrectChangedPasswordScreen" component={CorrectChangedPasswordScreen} />
-          <LoginStack.Screen name="VerifiedScreen" component={VerifiedScreen} />
-          <MainNavigator />
-        </LoginStack.Navigator>
-      </View>
-    );
-  }
+  }, []);
+
   const MapStack = createStackNavigator();
   function MapStackScreen() {
     return (
@@ -93,7 +67,7 @@ export default function Nav() {
         <MapStack.Screen name="EventEdit" component={EventEdit}
           options={{ ...headerOptions }}
         />
-        <MapStack.Screen name="Login" component={LoginScreen}
+        <MapStack.Screen name="LoginScreen" component={LoginScreen}
           options={{ headerShown: false }}
         />
       </MapStack.Navigator>
@@ -115,7 +89,6 @@ export default function Nav() {
         <UserStack.Screen name="FunFacts" component={FunFacts}  options={{ title: "Ciekawostki", ...headerOptions }}/>
         <UserStack.Screen name="Settings" component={Settings}  options={{ title: "Ustawienia", ...headerOptions }}/>
 
-        
         <UserStack.Screen name="OtherScreens" component={OtherScreens}  options={{ title: "Ekrany Logowania", ...headerOptions }}/>
          <UserStack.Screen name='Loading' component={LoadingScreen}/>
          <UserStack.Screen name='RegisterScreen' component={RegisterScreen}/>
@@ -127,7 +100,7 @@ export default function Nav() {
       </UserStack.Navigator>
     );
   }
-  
+
   const CalendarStack = createStackNavigator();
   function CalendarStackScreen() {
     return (
@@ -142,7 +115,6 @@ export default function Nav() {
       </CalendarStack.Navigator>
     );
   }
-
 
   const getTabBarIcon = (routeName, focused) => {
     let iconComponent;
@@ -206,10 +178,10 @@ export default function Nav() {
   };
 
   const Tab = createBottomTabNavigator();
-  const MainNavigator =() =>{
+  const MainNavigator = () => {
     return (
       <Tab.Navigator
-        initialRouteName={isLoggedIn ? "MapStackScreen" : "LoginScreen"}
+        initialRouteName="MapStackScreen"
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused }) => {
             return getTabBarIcon(route.name, focused);
@@ -250,12 +222,41 @@ export default function Nav() {
     );
   };
 
+  const LoginStack = createStackNavigator();
+  function LoginStackScreen() {
+    return (
+      <LoginStack.Navigator screenOptions={{ headerShown: false }}>
+        <LoginStack.Screen name="LoginScreen" component={LoginScreen} />
+        <LoginStack.Screen name="RegisterScreen" component={RegisterScreen} />
+        <LoginStack.Screen name="ForgotPasswordScreen" component={ForgotPasswordScreen} />
+        <LoginStack.Screen name="ChangePasswordScreen" component={ChangePasswordScreen} />
+        <LoginStack.Screen name="CorrectChangedPasswordScreen" component={CorrectChangedPasswordScreen} />
+        <LoginStack.Screen name="VerifiedScreen" component={VerifiedScreen} />
+      </LoginStack.Navigator>
+    );
+  }
+
+  const Stack = createStackNavigator();
+
+  /*
   if (isLoading) {
     return <LoadingScreen />;
   }
+  */
   return (
-    <View style={{ flex: 1 }}>
-    <MainNavigator />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName={isLoggedIn ? "MainNavigator" : "LoginStackScreen"}>
+        <Stack.Screen
+          name="MainNavigator"
+          component={MainNavigator}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="LoginStackScreen"
+          component={LoginStackScreen}
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }

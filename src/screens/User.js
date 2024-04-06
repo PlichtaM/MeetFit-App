@@ -43,7 +43,7 @@ function User({ navigation }) {
   async function handleLogOut() {
     try {
       await AsyncStorage.removeItem('token');
-      navigation.navigate('Login');
+      navigation.navigate('LoginStackScreen');
       console.log("Wylogowano");
       return true;
     } catch (error) {
