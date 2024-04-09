@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, Image, TouchableOpacity, TextInput, Keyboard } from 'react-native';
 import Checkbox from 'expo-checkbox';
 import LoginButton from '../components/LoginButton';
@@ -7,12 +7,34 @@ import { loginUser } from "../../services/api";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getColorScheme  } from "../components/Colors";
 import { ADMIN_LOGIN, ADMIN_PASSWORD } from '../../env.js';
+import { GetCountPeople } from "../../services/api";
 const colors = getColorScheme()
 
 function LoginScreen({ navigation }) {
   const [isChecked, setChecked] = useState(false);  
-  const [email, setEmail] = useState(ADMIN_LOGIN); //USUNĄĆ PRZED PRODUKCJĄ !!!!!
-  const [password, setPassword] = useState(ADMIN_PASSWORD);
+  const [email, setEmail] = useState(ADMIN_LOGIN); //USUNĄĆ PRZED PRODUKCJĄ !!!!! 
+  const [password, setPassword] = useState(ADMIN_PASSWORD);//temp
+  
+  useEffect(() => {
+    const checkTokenValidity = async () => {
+      try {
+        console.log("log");
+        const token = await AsyncStorage.getItem("token");
+        console.log(token);
+        if (token) {
+          const response = await GetCountPeople(token);
+          console.log("response", response);
+          if (response.status === '200') {
+            navigation.navigate("MainNavigator")
+          }
+        }
+      } catch (error) {
+        console.error("Error while verifying token:", error);
+      }
+    };
+
+    checkTokenValidity();
+  }, [navigation]);
 
   const handleLogin = () => {  
     const userCredentials = {

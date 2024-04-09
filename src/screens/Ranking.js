@@ -56,6 +56,8 @@ const Ranking = ({navigation}) => {
         textColor = themeStyles.text;
     }
 
+    const pictureUrl = (profile) => "https://meetfitapp.pl" + profile;
+
     return (
       <>
         {index >= 4 && theme === 'dark' && (
@@ -66,7 +68,7 @@ const Ranking = ({navigation}) => {
         )}
         <View style={[styles.userItem, { backgroundColor }]}>
           <Text style={[styles.rank, { color: textColor }]}>{item.miejsce}</Text>
-          <Image source={{ uri: item.zdjecie_profilowe }} style={styles.avatar} />
+          <Image source={{ uri: pictureUrl(item.profilePictureUrl) }} style={styles.avatar} />
           <Text style={[styles.userName, { color: textColor }]}>{`${item.userName}`}</Text>
           <Text style={[styles.steps, { color: textColor }]}>{`${item.stepsCount}`}</Text>
           <MaterialCommunityIcons name="foot-print" size={24} color={textColor} />

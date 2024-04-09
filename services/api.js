@@ -37,6 +37,7 @@ const createEvent = (data) => api.post('/event', data);
 const updateEvent = (id, data) => api.put(`/event/${id}`, data);
 const deleteEvent = (id) => api.delete(`/event/${id}`);
 const getEventsByMapPointId = (id) => api.get(`/event/ByMapPointId/${id}`);
+const getEventsByMapPointGoogleId = (id) => api.get(`/event/ByMapPointGoogleId/${id}`);
 const getEventsByUserId = (id) => api.get(`/event/ByUserId/${id}`);
 const GetCountPeople = (id) => api.get(`/event/GetCountPeople/${id}`);
 
@@ -85,6 +86,7 @@ export {
   updateEvent,
   deleteEvent,
   getEventsByMapPointId,
+  getEventsByMapPointGoogleId,
   GetUserEventByUserId,
   getEventsByUserId,
   GetCountPeople,

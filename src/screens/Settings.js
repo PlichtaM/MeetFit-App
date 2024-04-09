@@ -1,11 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import React, { useState, useEffect, useReducer } from "react";
+import { View, Text, TouchableOpacity, Switch } from "react-native";
+import { Checkbox } from "expo-checkbox";
+import style from "../styles/SettingsStyles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useTheme } from '../components/ThemeContext';
-import getSettingsStyles from "../styles/SettingsStyles";
+import { useTheme } from "../components/ThemeContext"; // Upewnij się, że ścieżka do ThemeContext jest poprawna
 
-function Settings() {
-  const { theme, toggleTheme, themeStyles } = useTheme(); // Używamy toggleTheme zamiast setTheme
+function Settings({navigation}) {
+  const { themeStyles, changeTheme, currentTheme } = useTheme();
+
+  const [, forceUpdate] = useReducer(x => x + 1, 0);
+  const [selectedOption, setSelectedOption] = useState(currentTheme);
   const [notificationsEnabled, setNotificationsEnabled] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(false);
 
@@ -15,6 +19,7 @@ function Settings() {
         const storedSettings = await AsyncStorage.getItem("appSettings");
         if (storedSettings) {
           const parsedSettings = JSON.parse(storedSettings);
+          setSelectedOption(parsedSettings.theme);
           setNotificationsEnabled(parsedSettings.notifications);
           setSoundEnabled(parsedSettings.sound);
         }
@@ -22,47 +27,99 @@ function Settings() {
         console.error("Error loading settings:", error);
       }
     }
+
     loadSettings();
   }, []);
+
+  const handleCheckboxChange = option => {
+    setSelectedOption(option);
+    changeTheme(option); // Zmieniamy motyw za pomocą funkcji changeTheme
+    forceUpdate();
+  };
+
+  const toggleNotificationsSwitch = () => {
+    setNotificationsEnabled(previousState => !previousState);
+  };
+
+  const toggleSoundSwitch = () => {
+    setSoundEnabled(previousState => !previousState);
+  };
 
   const saveSettings = async () => {
     try {
       const settingsToSave = {
+        theme: selectedOption,
         notifications: notificationsEnabled,
         sound: soundEnabled,
       };
+      console.log("Saving settings:", settingsToSave);
+
+      // Zapisujemy ustawienia w AsyncStorage
       await AsyncStorage.setItem("appSettings", JSON.stringify(settingsToSave));
-      alert('Ustawienia zostały zapisane.');
+      console.log("Settings saved.");
     } catch (error) {
       console.error("Error saving settings:", error);
     }
   };
 
-  const styles = getSettingsStyles(themeStyles);
-
   return (
-    <View style={styles.screen}>
-      <View style={styles.container}>
-        <Text style={styles.text}>Wybierz motyw:</Text>
-        <TouchableOpacity
-          style={styles.themeButton}
-          onPress={toggleTheme}>
-          <Text style={styles.themeButtonText}>{theme === 'light' ? 'Ciemny' : 'Jasny'}</Text>
+    <View style={style.screen}>
+      <View style={style.container}>
+        <Text style={style.text}>Motyw aplikacji:</Text>
+        <View style={style.Checkboxes}>
+          <Checkbox
+            value={selectedOption === "dark"}
+            onValueChange={() => handleCheckboxChange("dark")}
+          />
+          <Text
+            style={{
+              fontSize: 16,
+              marginHorizontal: 10,
+              color: themeStyles.text,
+            }}
+          >
+            Ciemny
+          </Text>
+          <Checkbox
+            value={selectedOption === "light"}
+            onValueChange={() => handleCheckboxChange("light")}
+          />
+          <Text
+            style={{
+              fontSize: 16,
+              marginHorizontal: 10,
+              color: themeStyles.text,
+            }}
+          >
+            Jasny
+          </Text>
+        </View>
+
+        <View style={style.switchContainer}>
+          <Text style={style.text}>Powiadomienia:</Text>
+          <Switch
+            trackColor={{ false: "#767577", true: themeStyles.primary }}
+            thumbColor={notificationsEnabled ? "#f5dd4b" : "#f4f3f4"}
+            onValueChange={toggleNotificationsSwitch}
+            value={notificationsEnabled}
+          />
+        </View>
+
+        <View style={style.switchContainer}>
+          <Text style={style.text}>Dźwięk:</Text>
+          <Switch
+            trackColor={{ false: "#767577", true: themeStyles.primary }}
+            thumbColor={soundEnabled ? "#f5dd4b" : "#f4f3f4"}
+            onValueChange={toggleSoundSwitch}
+            value={soundEnabled}
+          />
+        </View>
+
+        <TouchableOpacity style={style.addEventButton} onPress={navigation.navigate("ChangePasswordScreen")}>
+          <Text style={style.addEventButtonText}>Zmień hasło</Text>
         </TouchableOpacity>
-        <Text style={styles.text}>Powiadomienia:</Text>
-        <TouchableOpacity
-          style={styles.themeButton}
-          onPress={() => setNotificationsEnabled(!notificationsEnabled)}>
-          <Text style={styles.themeButtonText}>{notificationsEnabled ? 'Włączone' : 'Wyłączone'}</Text>
-        </TouchableOpacity>
-        <Text style={styles.text}>Dźwięk:</Text>
-        <TouchableOpacity
-          style={styles.themeButton}
-          onPress={() => setSoundEnabled(!soundEnabled)}>
-          <Text style={styles.themeButtonText}>{soundEnabled ? 'Włączony' : 'Wyłączony'}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.addEventButton} onPress={saveSettings}>
-          <Text style={styles.addEventButtonText}>Zapisz Ustawienia</Text>
+        <TouchableOpacity style={style.saveButton} onPress={saveSettings}>
+          <Text style={style.addEventButtonText}>Zapisz Ustawienia</Text>
         </TouchableOpacity>
       </View>
     </View>

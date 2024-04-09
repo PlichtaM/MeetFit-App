@@ -34,13 +34,20 @@ import MyEvents from "../screens/myEvents";
 export default function Nav() {
   const [isLoading, setIsLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [token, setToken] = useState(false);
 
   useEffect(() => {
     const checkTokenValidity = async () => {
       try {
+        const token = await AsyncStorage.getItem("token");
+        if (token) {
+          const response = await GetCountPeople(token);
+
+          if (response.status === '200') {
+            setIsLoggedIn(true);
+          }
+        }
+        setIsLoading(false);
         const response = await AsyncStorage.getItem("token");
-        setToken(response);        
       } catch (error) {
         console.error("Error while verifying token:", error);
         setIsLoading(false);
@@ -48,7 +55,7 @@ export default function Nav() {
     };
 
     checkTokenValidity();
-  }, []);
+  }, [AsyncStorage.getItem("token")]);
 
   const MapStack = createStackNavigator();
   function MapStackScreen() {

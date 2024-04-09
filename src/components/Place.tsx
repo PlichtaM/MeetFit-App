@@ -10,7 +10,7 @@ import {
 import styles from "../styles/PlaceStyles";
 import { useNavigation } from "@react-navigation/native";
 import { MaterialCommunityIcons, Entypo } from "@expo/vector-icons";
-import { getMapPointId, getEventsByMapPointId, GetCountPeople } from "../../services/api";
+import { getEventsByMapPointGoogleId, GetCountPeople } from "../../services/api";
 import { getColorScheme } from "../components/Colors";
 import { GOOGLE_API_KEY } from "../../env";
 import axios from 'axios';
@@ -34,7 +34,7 @@ const Place = ({ isVisible, onClose, selectedMarkerId }) => {
       if(selectedMarkerId){
       try {
         const response = await axios.get(googleApisUrl);
-        const eventResponse = await getEventsByMapPointId(selectedMarkerId);        
+        const eventResponse = await getEventsByMapPointGoogleId(selectedMarkerId);        
         setEventsData(eventResponse.data);
         // Pobierz CountPeople dla każdego wydarzenia i zaktualizuj stan
         const countPromises = eventResponse.data.map(async event => {
