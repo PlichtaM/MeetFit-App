@@ -28,34 +28,35 @@ function Map({navigation}) {
   const [selectedMarkerId, setSelectedMarkerId] = useState(null);
   const [searchText, setSearchText] = useState("");
   const [results, setResults] = useState([]);
-  const map = useRef(null);
+  const [currentRegion, setCurrentRegion] = useState(INITIAL_REGION);
 
+  const map = useRef(null);
+  const onRegionChangeComplete = (region) => {
+  setCurrentRegion(region);
+};
   const searchGym = async () => {
     const gymInput = "gym";
-    await search(gymInput);
+    await search(gymInput, currentRegion);
   };
   const searchHealthyFood = async () => {
     const healthyFoodInput = "healthy food";
-    await search(healthyFoodInput);
+    await search(healthyFoodInput, currentRegion);
   };  
   const searchPlaces= async () => {
-    await search(searchText);
+    await search(searchText, currentRegion);
   };
 
-  const search = async (input) => {
+  const search = async (input, region) => {
     if (!input.trim().length) return;
-    const url = `${googleApisUrl}?query=${input}&location=${location}&key=${GOOGLE_API_KEY}`;
+    const { latitude, longitude } = region;
+    const url = `${googleApisUrl}?query=${input}&location=${latitude},${longitude}&radius=2000&key=${GOOGLE_API_KEY}`;
     const coords = [];
     try {
       const resp = await fetch(url);
       const json = await resp.json();
       // console.log(json);
       if (json && json.results) {
-        for (const item of json.results)
-          coords.push({
-            latitude: item.geometry.location.lat,
-            longitude: item.geometry.location.lng,
-          });
+        
       }
       setResults(json.results);
       if (coords.length) {
@@ -88,10 +89,9 @@ function Map({navigation}) {
   }, []);
 
   const searchEvents = async () => {
-    const eventsWithMapPoints = markers.filter(marker => marker.mapPointGoogleId);
-    
+    const eventsWithMapPoints = markers.filter(marker => marker.mapPointGoogleId);    
     const newResults = [];
-  
+
     for (const event of eventsWithMapPoints) {
       try {
         const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${event.mapPointGoogleId}&fields=name,geometry&key=${GOOGLE_API_KEY}`;
@@ -125,8 +125,11 @@ function Map({navigation}) {
   };
   
   useEffect(() => {
+  if (markers.length > 0) {
     searchEvents(); 
-  }, []);
+  }
+}, [markers]);
+
 
   return (
     <View style={{ flex: 1 }}>
@@ -137,6 +140,8 @@ function Map({navigation}) {
         initialRegion={INITIAL_REGION}
         showsUserLocation
         showsMyLocationButton
+        region={currentRegion}
+        onRegionChangeComplete={onRegionChangeComplete}
       >
         {results.length
           ? results.map((item, i) => {
