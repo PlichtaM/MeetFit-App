@@ -95,7 +95,7 @@ function User({ navigation }) {
 
   return (
     <View style={UserStyles.container}>
-      <View style={UserStyles.top}></View>
+      <View style={UserStyles.top}/>
       <TouchableOpacity onPress={handleAvatarChange} style={UserStyles.UserIcon}>
         <Image style={UserStyles.UserIcon} source={{ uri: pictureUrl }} />
       </TouchableOpacity>

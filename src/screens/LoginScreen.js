@@ -1,31 +1,36 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Image, TouchableOpacity, TextInput, Keyboard } from 'react-native';
-import Checkbox from 'expo-checkbox';
-import LoginButton from '../components/LoginButton';
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  TextInput,
+  Keyboard,
+} from "react-native";
+import Checkbox from "expo-checkbox";
+import LoginButton from "../components/LoginButton";
 import LoginStyles from "../styles/LoginStyles";
 import { loginUser } from "../../services/api";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getColorScheme  } from "../components/Colors";
-import { ADMIN_LOGIN, ADMIN_PASSWORD } from '../../env.js';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ADMIN_LOGIN, ADMIN_PASSWORD } from "../../env.js";
 import { GetCountPeople } from "../../services/api";
-const colors = getColorScheme()
+import { getColorScheme } from "../components/Colors";
+const colors = getColorScheme();
 
 function LoginScreen({ navigation }) {
-  const [isChecked, setChecked] = useState(false);  
-  const [email, setEmail] = useState(ADMIN_LOGIN); //USUNĄĆ PRZED PRODUKCJĄ !!!!! 
-  const [password, setPassword] = useState(ADMIN_PASSWORD);//temp
-  
+  const [isChecked, setChecked] = useState(false);
+  const [email, setEmail] = useState(ADMIN_LOGIN); //USUNĄĆ PRZED PRODUKCJĄ !!!!!
+  const [password, setPassword] = useState(ADMIN_PASSWORD); //temp
+
   useEffect(() => {
     const checkTokenValidity = async () => {
       try {
-        console.log("log");
         const token = await AsyncStorage.getItem("token");
-        console.log(token);
         if (token) {
           const response = await GetCountPeople(token);
-          console.log("response", response);
-          if (response.status === '200') {
-            navigation.navigate("MainNavigator")
+          //console.log("response", response);
+          if (response.status === "200") {
+            navigation.navigate("MainNavigator");
           }
         }
       } catch (error) {
@@ -36,41 +41,52 @@ function LoginScreen({ navigation }) {
     checkTokenValidity();
   }, [navigation]);
 
-  const handleLogin = () => {  
+  const handleLogin = () => {
     const userCredentials = {
       email: email,
-      password: password
+      password: password,
     };
 
     loginUser(userCredentials)
       .then((response) => {
-          console.log("Logowanie udane:", response.data);
-          AsyncStorage.setItem('token', response.data.token);
-          AsyncStorage.setItem('userName', response.data.userName);
-          AsyncStorage.setItem('userId', response.data.userId);
-          Keyboard.dismiss();
-          navigation.navigate("MainNavigator"); 
+        AsyncStorage.setItem("token", response.data.token);
+        AsyncStorage.setItem("userName", response.data.userName);
+        AsyncStorage.setItem("userId", response.data.userId);
+        Keyboard.dismiss();
+        //console.log("Logowanie udane:", response.data);
+        console.log("token: ", response.data.token);
+        navigation.navigate("MainNavigator");
       })
       .catch((error) => {
-        console.log("Status odpowiedzi:", error);
-        console.log("dane:", userCredentials);
+        console.error("Status odpowiedzi:", error);
       });
   };
 
   return (
     <View style={LoginStyles.container}>
-      <View style={LoginStyles.LoginContainer}>        
+      <View style={LoginStyles.LoginContainer}>
         <View style={LoginStyles.logoContainer}>
-          <Image source={require('../../assets/logo.png')} style={LoginStyles.logo} />
+          <Image source={require('../../assets/logo2.svg')} style={LoginStyles.logo} />
         </View>
         <Text style={LoginStyles.LoginText}>LOGOWANIE</Text>
       </View>
-      <View style={LoginStyles.bottomBox}>       
-      <View style={LoginStyles.inputContainer}>       
-        <TextInput placeholder="Podaj adres email" style={LoginStyles.textInput} onChangeText={setEmail}/> 
+      <View style={LoginStyles.bottomBox}>
+        <View style={LoginStyles.inputContainer}>
+          <TextInput
+            placeholder="Podaj adres email"
+            style={LoginStyles.textInput}
+            onChangeText={setEmail}
+            cursorColor={colors.primary}
+          />
         </View>
         <View style={LoginStyles.inputContainer}>
-        <TextInput placeholder="Podaj hasło" secureTextEntry={true} style={LoginStyles.textInput} onChangeText={setPassword}/>
+          <TextInput
+            placeholder="Podaj hasło"
+            secureTextEntry={true}
+            style={LoginStyles.textInput}
+            onChangeText={setPassword}
+            cursorColor={colors.primary}
+          />
         </View>
         <View style={LoginStyles.CheckboxContainer}>
           <Checkbox
@@ -81,9 +97,16 @@ function LoginScreen({ navigation }) {
           <Text style={LoginStyles.CheckboxLabel}>Zapamiętaj dane</Text>
         </View>
         <LoginButton onPress={handleLogin} title="Zaloguj się" />
-        <LoginButton onPress={() => navigation.navigate('RegisterScreen')} title="Zarejestruj się" />
-        <TouchableOpacity onPress={() => navigation.navigate('ForgotPasswordScreen') }>
-        <Text style={LoginStyles.ForgotLabel}>Zapomniałeś hasła? [Kliknij tutaj]</Text>
+        <LoginButton
+          onPress={() => navigation.navigate("RegisterScreen")}
+          title="Zarejestruj się"
+        />
+        <TouchableOpacity
+          onPress={() => navigation.navigate("ForgotPasswordScreen")}
+        >
+          <Text style={LoginStyles.ForgotLabel}>
+            Zapomniałeś hasła? [Kliknij tutaj]
+          </Text>
         </TouchableOpacity>
       </View>
     </View>

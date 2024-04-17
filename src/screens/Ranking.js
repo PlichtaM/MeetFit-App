@@ -60,9 +60,6 @@ const Ranking = ({navigation}) => {
 
     return (
       <>
-        {index >= 4 && theme === 'dark' && (
-          <View style={{ width: 359, height: 3, backgroundColor: 'white', alignSelf: 'center' }} />
-        )}
         {index >= 4 && theme === 'light' && (
           <View style={{ width: 359, height: 3, backgroundColor: '#D9D9D9', alignSelf: 'center' }} />
         )}

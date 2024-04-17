@@ -11,6 +11,12 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 const colors = getColorScheme();
 
 LocaleConfig.defaultLocale = 'pl';
+const getCurrentTime = () => {
+  const now = new Date();
+  const hours = now.getHours();
+  const minutes = now.getMinutes();
+  return `${hours < 10 ? '0' : ''}${hours}:${minutes < 10 ? '0' : ''}${minutes}`;
+};
 
 function EventAdd({ route }) {
   const navigation = useNavigation();
@@ -19,9 +25,12 @@ function EventAdd({ route }) {
   const [selected, setSelected] = useState("");
   const [selectedOption, setSelectedOption] = useState("");
   const [eventName, setEventName] = useState("");
-  const [time, setTime] = useState("00:00");
   const [description, setDescription] = useState("");
   const [isPickerShow, setIsPickerShow] = useState(false);
+  const [time, setTime] = useState(getCurrentTime());
+
+ 
+  
 
   const handleCheckboxChange = (option) => {
     setSelectedOption(option === selectedOption ? "" : option);
@@ -75,7 +84,8 @@ function EventAdd({ route }) {
             placeholder="Nazwa"
             style={style.textInput}
             value={eventName}
-            onChangeText={setEventName} 
+            onChangeText={setEventName}
+            cursorColor={colors.primary}
           />
         </View>
         <Text style={style.text}>Podaj opis wydarzenia:</Text>
@@ -85,21 +95,22 @@ function EventAdd({ route }) {
             style={style.textInput}
             value={description}
             onChangeText={setDescription} 
+            cursorColor={colors.primary}
           />
         </View>
         <Text style={style.text}>Limit miejsc:</Text>
         <View style={style.sliderContainer}>
-          <Text style={style.odDo}>1</Text>
+          <Text style={style.odDo}>2</Text>
           <Slider
             value={limitMiejsc}
             onValueChange={(value) => setLimitMiejsc(value)}
             minimumValue={2}
             maximumValue={10}
             step={1}
-            style={style.slider}
             maximumTrackTintColor={colors.disabled}
             minimumTrackTintColor={colors.disabled}
             thumbTintColor={colors.secondary}
+            style={style.slider}
             thumbStyle={style.thumb}
             trackStyle={style.track}
           />
@@ -117,7 +128,9 @@ function EventAdd({ route }) {
               selectedDayTextColor: "white",
               todayTextColor: colors.primary,
               dayTextColor: "black",
+              arrowColor: colors.secondary
             }}
+            hideArrows={false}//https://www.npmjs.com/package/react-native-calendars/v/1.1286.0
             onDayPress={(day) => {
               setSelected(day.dateString);
             }}

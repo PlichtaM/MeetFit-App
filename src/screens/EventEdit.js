@@ -43,6 +43,7 @@ function EventEdit({ route }) {
   const [eventName, setEventName] = useState(Event.name);
   const [time, setTime] = useState(Event.date && Event.date.slice(11, 16)); //"date": "2024-04-04T21:55:16.688Z",
   const [description, setDescription] = useState(Event.description);
+ 
   
 
   const handleCheckboxChange = (option) => {
@@ -53,12 +54,13 @@ function EventEdit({ route }) {
     try {
       const eventData = {
         name: eventName,// Póżniej dodać,żeby było co najmniej kilka znaków
-        description: "", //Dodać do formularza
+        description: description,
         date: new Date(selected + ' ' + time).toISOString(),
         mapPointGoogleId: Event.mapPointId,
         limit: limitMiejsc, //dodać możliwość "Bez limitu"
         private: selectedOption === "Prywatne", // ztego chyba rezygnujemy
-        active: true
+        active: true,
+        mapPointGoogleId: Event.mapPointGoogleId
       };      
       const response = await updateEvent(eventId, eventData);
       navigation.navigate('Event', { eventId: eventId });
@@ -96,13 +98,15 @@ function EventEdit({ route }) {
             style={style.textInput}
             value={eventName}
             onChangeText={setEventName} 
+            cursorColor={colors.primary}
           />
         </View>
-        <Text style={style.text}>Opis wydarzenia:</Text>
+        <Text style={style.text}>Opis wydarzenia: </Text>
         <View style={style.inputContainer}>
           <TextInput
             placeholder="Opis"
             style={style.textInput}
+            cursorColor={colors.primary}
             value={description}
             onChangeText={setDescription} 
           />

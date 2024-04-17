@@ -3,6 +3,8 @@ import { View, Text, Image, TextInput } from 'react-native';
 import LoginButton from '../components/LoginButton';
 import LoginStyles from "../styles/LoginStyles";
 import { forgotPassword } from "../../services/api";
+import { getColorScheme } from "../components/Colors";
+const colors = getColorScheme();
 
 function ForgotPasswordScreen() {
   const [email, setEmail] = useState("");
@@ -53,6 +55,7 @@ function ForgotPasswordScreen() {
             placeholder="Podaj adres email"
             style={[LoginStyles.textInput, !isEmailValid && LoginStyles.textInputError]}
             onChangeText={handleEmailChange}
+            cursorColor={colors.primary}
           />          
         </View>
         <LoginButton onPress={handleForgotPassword} title="Przywróć hasło" />

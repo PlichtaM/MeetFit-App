@@ -33,10 +33,6 @@ const MapPlace = {
     right: -20,
     padding: 10,
   },
-  closeButtonIcon: {
-    height: 45,
-    width: 45,
-  },
   placeText: {
     marginTop: 15,
     marginBottom: 25,

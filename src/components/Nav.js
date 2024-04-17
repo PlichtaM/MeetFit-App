@@ -132,7 +132,7 @@ export default function Nav() {
         <MaterialIcons
           name="chat"
           size={26}
-          color={focused ? colors.secondary : colors.primary}
+          color={focused ? colors.primary: colors.secondary }
           style={iconStyle}
         />
       );
@@ -141,19 +141,19 @@ export default function Nav() {
         <MaterialCommunityIcons
           name="trophy"
           size={26}
-          color={focused ? colors.secondary : colors.primary}
+          color={focused ? colors.primary: colors.secondary }
           style={iconStyle}
         />
       );
     } else if (routeName === "MapStackScreen") {
       iconComponent = (
-        <Image  source={require("../../assets/LogoIcon.png")} style={FooterStyles.MapIconStyle} /> );
+        <Image  source={require('../../assets/LogoIcon.png')} style={FooterStyles.MapIconStyle} /> );
     } else if (routeName === "CalendarStackScreen") {
       iconComponent = (
         <MaterialCommunityIcons
           name="calendar-multiselect"
           size={26}
-          color={focused ? colors.secondary : colors.primary}
+          color={focused ? colors.primary: colors.secondary }
           style={iconStyle}
         />
       );
@@ -162,7 +162,7 @@ export default function Nav() {
         <FontAwesome
           name="user"
           size={26}
-          color={focused ? colors.secondary : colors.primary}
+          color={focused ? colors.primary: colors.secondary }
           style={iconStyle}
         />
       );

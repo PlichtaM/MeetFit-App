@@ -56,7 +56,7 @@ const Place = ({ isVisible, onClose, selectedMarkerId }) => {
     };}
     fetchPlaceInfo();
     return () => {};
-  }, [selectedMarkerId]); 
+  }, [selectedMarkerId,isVisible]); 
   
   if (!isVisible || !mapPointData) {
     return null;
@@ -76,7 +76,6 @@ const Place = ({ isVisible, onClose, selectedMarkerId }) => {
   const addressParts = formatted_address.split(", "); 
   const address = addressParts.slice(0, -1).join(", "); 
   
-  const openingHours = opening_hours.weekday_text
   const today = new Date().toLocaleDateString('en-US', { weekday: 'long' });
   let todayOpeningTime = 'Closed';
   let todayClosingTime = 'Closed';
@@ -103,7 +102,6 @@ const Place = ({ isVisible, onClose, selectedMarkerId }) => {
                 name="close-circle-outline"
                 size={50}
                 color="white"
-                style={styles.closeButtonIcon}
               />
             </TouchableOpacity>
             <Image

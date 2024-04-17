@@ -13,7 +13,7 @@ const getRankingStyles = (themeStyles) => ({
     marginVertical: 4,
     backgroundColor: 'transparent',
     borderRadius: 10,
-    width: 360,
+    width: '100%',
     padding: 10,
   },
   rank: {

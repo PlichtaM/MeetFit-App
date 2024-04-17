@@ -60,10 +60,11 @@ function RegisterScreen({navigation}) {
             placeholder="Podaj nazwę użytkownika"
             onChangeText={setUsername}
             style={LoginStyles.textInput}
+            cursorColor={colors.primary}
           />
         </View>
         <View style={LoginStyles.inputContainer}>
-          <TextInput placeholder="Podaj adres email" onChangeText={setEmail} style={LoginStyles.textInput} />
+          <TextInput placeholder="Podaj adres email" onChangeText={setEmail} style={LoginStyles.textInput} cursorColor={colors.primary}/>
         </View>
         <View style={LoginStyles.inputContainer} >
           <TextInput
@@ -71,6 +72,7 @@ function RegisterScreen({navigation}) {
             secureTextEntry={true}
             onChangeText={setPassword}
             style={LoginStyles.textInput}
+            cursorColor={colors.primary}
           />
         </View>
         <View style={LoginStyles.inputContainer}>
@@ -79,6 +81,7 @@ function RegisterScreen({navigation}) {
             secureTextEntry={true}
             onChangeText={setConfirmPassword}
             style={LoginStyles.textInput}
+            cursorColor={colors.primary}
           />
         </View>
         <View style={LoginStyles.CheckboxContainer}>

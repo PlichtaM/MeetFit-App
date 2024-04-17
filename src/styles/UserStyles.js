@@ -8,20 +8,20 @@ const UserStyles = StyleSheet.create({
     height: '100%',
   },
   top: {
-    height: 200,
+    height: 150,
     backgroundColor: colors.primary,
   },
   UserIcon: {
     width: 200,
     height: 200,
     position: 'absolute', 
-    top: 50,
+    top: 25,
     left: '50%',
     marginLeft: -100,
   },
   UserNameContainer:{
     position: 'absolute',
-    top: 300,
+    top: 275,
     alignSelf: 'center',
     alignItems: 'center'
   },
@@ -42,7 +42,7 @@ const UserStyles = StyleSheet.create({
   },
   MenuContainer:{
     position: 'absolute',
-    top: 400,
+    top: 375,
     marginLeft:50,
     height:250,
     width:250,

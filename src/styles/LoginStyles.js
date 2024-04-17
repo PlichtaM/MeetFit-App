@@ -5,6 +5,7 @@ const LoginStyles = {
   container: {
     flex: 1,
     backgroundColor: colors.Background,
+   // fontFamily: "Lato",
   },
   LoginContainer: {
     marginBottom: 20,
@@ -23,7 +24,7 @@ const LoginStyles = {
     width: 67,
     height: 97,
     marginTop: 89,
-    tintColor: colors.primary,
+    //backgroundColor:'black',
   },
   bottomBox: {
     alignItems: "center",
@@ -38,7 +39,7 @@ const LoginStyles = {
   textInput: {
     marginLeft: 20,
     fontSize: 20,
-    color: "#858181",
+    color: "#858181"
   },
   CheckboxContainer: {
     flexDirection: "row",

@@ -92,7 +92,7 @@ const Event = ({ navigation }) => {
       }
     };
   const isUserSignedUp = userEvents.some(event => event.eventId === eventId);
-
+  const isUserCreator = (user_Id === Event.createdBy)
    //set google Photo and place name 
    const { photos, name } = mapPointData || {};
    let pictureUrl = "https://meetfitapp.pl/avatars/default-avatar.jpg"; 
@@ -123,7 +123,6 @@ const Event = ({ navigation }) => {
             name="close-circle"
             size={36}
             color={"white"}
-            style={styles.closeButtonIcon}
           />
         </TouchableOpacity>
       ),
@@ -151,12 +150,14 @@ const Event = ({ navigation }) => {
             Wydarzenie {Event.private ? "Prywatne" : "Publiczne"}
           </Text>
         </View>
+          {isUserCreator && (
         <TouchableOpacity
           style={styles.createEventButton}
           onPress={() => navigation.navigate("EventEdit", { eventId: eventId })}
         >
           <Text style={styles.createEventButtonText}>Edytuj wydarzenie</Text>
         </TouchableOpacity>
+        )}
         <TouchableOpacity style={styles.singUp} onPress={handleSignUp}>
             <Text style={styles.createEventButtonText}>
               {isUserSignedUp ? "Jesteś już zapisany na to wydarzenie" : "Zapisz mnie na wydarzenie"}

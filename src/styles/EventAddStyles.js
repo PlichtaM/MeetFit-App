@@ -9,7 +9,7 @@ const EventAddStyles = {
   },
   container: {
     marginTop:10,
-    marginLeft: 20,
+    marginLeft: 20, 
   },
   text: {
     marginVertical:10,
@@ -23,7 +23,7 @@ const EventAddStyles = {
     borderRadius:15,
   },
   textInput:{
-    marginLeft:20,
+    marginLeft:23,
     fontSize:20,
     color:'#858181'
   },
@@ -38,7 +38,7 @@ const EventAddStyles = {
     width:'80%',
     alignSelf:'center',
     color:colors.primary,    
-    height: 5,
+    height: 50,
   },
   thumb: {
     width: 50,
@@ -57,8 +57,9 @@ const EventAddStyles = {
   },
   addEventButton:{
     marginTop: 15,
+    marginBottom:20,
     backgroundColor: colors.secondary,
-    width:'90%',
+    width:'95%',
     height:35,
     borderRadius:10,
     justifyContent:'center',
@@ -70,7 +71,8 @@ const EventAddStyles = {
   },
   calendar:{    
     borderRadius:15,
-    width: 350,
+    width: 350,    
+    zIndex:1,
   },
   cancelEventButton:{
     marginTop: 15,

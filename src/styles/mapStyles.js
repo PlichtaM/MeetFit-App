@@ -26,7 +26,7 @@ const Mapstyles = {
         justifyContent: "center",
         width:50,
         height:50,
-        top:-5,        
+        top:-5,
         zIndex:1,
       },    
       searchBoxField: {

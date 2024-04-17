@@ -164,6 +164,7 @@ function Map({navigation}) {
           onChangeText={setSearchText}
           autoCapitalize="sentences"
           placeholder="Wyszukaj miejsce po nazwie"
+          cursorColor={colors.primary}
         />
       </View>
       <View style={Mapstyles.categoryBox}>
