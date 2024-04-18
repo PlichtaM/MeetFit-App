@@ -95,13 +95,13 @@ export default function Nav() {
         <UserStack.Screen name="Ranking" component={Ranking}  options={{ title: "Ranking", ...headerOptions }} />
         <UserStack.Screen name="FunFacts" component={FunFacts}  options={{ title: "Ciekawostki", ...headerOptions }}/>
         <UserStack.Screen name="Settings" component={Settings}  options={{ title: "Ustawienia", ...headerOptions }}/>
+         <UserStack.Screen name='ChangePasswordScreen' component={ChangePasswordScreen}/>
 
         <UserStack.Screen name="OtherScreens" component={OtherScreens}  options={{ title: "Ekrany Logowania", ...headerOptions }}/>
          <UserStack.Screen name='Loading' component={LoadingScreen}/>
          <UserStack.Screen name='RegisterScreen' component={RegisterScreen}/>
          <UserStack.Screen name='LoginScreen' component={LoginScreen}/>
          <UserStack.Screen name='ForgotPasswordScreen' component={ForgotPasswordScreen}/>
-         <UserStack.Screen name='ChangePasswordScreen' component={ChangePasswordScreen}/>
          <UserStack.Screen name='CorrectChangedPasswordScreen' component={CorrectChangedPasswordScreen}/>
          <UserStack.Screen name='VerifiedScreen' component={VerifiedScreen}/>
       </UserStack.Navigator>

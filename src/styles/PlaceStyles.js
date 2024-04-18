@@ -15,12 +15,13 @@ const MapPlace = {
     top: -100,
     flexDirection: "column",
     width: "80%",
-    height: "80%",
+    height: "85%",
   },
   topBox: {
     flex: 1,
     alignItems: "center",
     backgroundColor: colors.primary,
+    maxHeight: 420,
   },
   bottomBox: {
     flex: 1,
@@ -40,6 +41,7 @@ const MapPlace = {
     fontSize: 24,
     color: "white",
     fontWeight: "bold",
+    maxHeight: 28,
   },
   PlacePicture: {
     width: 285,

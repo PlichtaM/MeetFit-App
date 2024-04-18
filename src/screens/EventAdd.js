@@ -13,7 +13,7 @@ const colors = getColorScheme();
 LocaleConfig.defaultLocale = 'pl';
 const getCurrentTime = () => {
   const now = new Date();
-  const hours = now.getHours();
+  const hours = now.getHours() + 2; // temp???
   const minutes = now.getMinutes();
   return `${hours < 10 ? '0' : ''}${hours}:${minutes < 10 ? '0' : ''}${minutes}`;
 };

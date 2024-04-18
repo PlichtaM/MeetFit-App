@@ -37,6 +37,7 @@ function User({ navigation }) {
       ),
       headerTitleAlign: 'center',
       headerTintColor: "white",
+      headerShadowVisible: false,
     });
   }, [navigation, handleAvatarChange]);
 

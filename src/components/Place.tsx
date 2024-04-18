@@ -98,16 +98,9 @@ const Place = ({ isVisible, onClose, selectedMarkerId }) => {
           <View style={styles.topBox}>
             <Text style={styles.placeText}>{name}</Text>
             <TouchableOpacity onPress={onClose} style={styles.closeButton}>
-              <MaterialCommunityIcons
-                name="close-circle-outline"
-                size={50}
-                color="white"
-              />
+              <MaterialCommunityIcons name="close-circle-outline" size={50} color="white" />
             </TouchableOpacity>
-            <Image
-              style={styles.PlacePicture}
-              source={{ uri: pictureUrl || "" }}
-            />
+            <Image style={styles.PlacePicture} source={{ uri: pictureUrl || "" }} />
             <Text style={styles.AdressTextBold}>Lokalizacja</Text>
             <Text style={styles.AdressText}>{address}</Text>
             <Text style={styles.AdressTextBold}>Godziny otwarcia</Text>
@@ -118,7 +111,6 @@ const Place = ({ isVisible, onClose, selectedMarkerId }) => {
 
           <View style={styles.bottomBox}>
             <Text style={styles.EventListText}>Lista Wydarzeń</Text>
-
             <View style={styles.ListBox}>
               {EventsData && EventsData.length > 0 ? (
                 <FlatList
@@ -149,12 +141,7 @@ const Place = ({ isVisible, onClose, selectedMarkerId }) => {
                           size={24}
                           color={colors.secondary}
                         />
-                        <Text
-                          style={{
-                            ...styles.ListLimit,
-                            color: getLimitColor(),
-                          }}
-                        >
+                        <Text style={{...styles.ListLimit, color: getLimitColor(),}}>
                           {`${currentCount}/${limit}`}
                         </Text>
                         <Text style={styles.EventListItemText}>

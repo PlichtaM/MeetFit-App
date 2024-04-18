@@ -41,11 +41,13 @@ const Mapstyles = {
         //zIndex:-1,
         paddingLeft:30,
         borderRadius: 12,
+        borderWidth:0.5,
+        borderColor:colors.Background,
       },
       categoryBox: {
         position: "absolute",
         marginTop: 100,
-        marginLeft: "10%",
+        marginLeft: "5%",
         flexDirection: "row",
         alignItems: "center",
         gap: 10,
@@ -57,6 +59,8 @@ const Mapstyles = {
         height:50,
         backgroundColor: colors.Background,
         borderRadius: 50,
+        borderWidth:2,
+        borderColor:colors.disabled,
       },
       buttonLabel: {
         fontSize: 18,
