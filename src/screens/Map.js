@@ -11,7 +11,6 @@ import { StyleSheet, View, TouchableOpacity, Keyboard } from "react-native";
 import { getColorScheme } from "../components/Colors";
 const colors = getColorScheme();
 
-
 const INITIAL_REGION = {
   latitude: 52.4,
   longitude: 16.92,
@@ -29,21 +28,26 @@ function Map({navigation}) {
   const [searchText, setSearchText] = useState("");
   const [results, setResults] = useState([]);
   const [currentRegion, setCurrentRegion] = useState(INITIAL_REGION);
+  const [selectedIcon, setSelectedIcon] = useState(require('../../assets/pin.png'));
 
   const map = useRef(null);
   const onRegionChangeComplete = (region) => {
-  setCurrentRegion(region);
-};
+    setCurrentRegion(region);
+  };
+
   const searchGym = async () => {
     const gymInput = "gym";
     await search(gymInput, currentRegion);
+    setSelectedIcon(require('../../assets/gymPin.png'));
   };
   const searchHealthyFood = async () => {
     const healthyFoodInput = "healthy food";
     await search(healthyFoodInput, currentRegion);
+    setSelectedIcon(require('../../assets/foodPin.png'));
   };  
   const searchPlaces= async () => {
     await search(searchText, currentRegion);
+    setSelectedIcon(require('../../assets/pin.png'));
   };
 
   const search = async (input, region) => {
@@ -54,10 +58,6 @@ function Map({navigation}) {
     try {
       const resp = await fetch(url);
       const json = await resp.json();
-      // console.log(json);
-      if (json && json.results) {
-        
-      }
       setResults(json.results);
       if (coords.length) {
         map.current?.fitToCoordinates(coords, {
@@ -100,6 +100,7 @@ function Map({navigation}) {
     
         if (json.result && json.result.geometry && json.result.geometry.location) {
           const { lat, lng } = json.result.geometry.location;
+          setSelectedIcon(require('../../assets/meetPin.png'));
     
           newResults.push({
             place_id: event.mapPointGoogleId,
@@ -125,11 +126,10 @@ function Map({navigation}) {
   };
   
   useEffect(() => {
-  if (markers.length > 0) {
-    searchEvents(); 
-  }
-}, [markers]);
-
+    if (markers.length > 0) {
+      searchEvents(); 
+    }
+  }, [markers]);
 
   return (
     <View style={{ flex: 1 }}>
@@ -154,6 +154,7 @@ function Map({navigation}) {
                   key={`search-item-${i}`}
                   coordinate={coord}
                   onPress={() => {onMarkerSelected(item.place_id);}}
+                  image={selectedIcon} // Użyj wybranej ikony markera
                 />
               );
             })
@@ -173,10 +174,10 @@ function Map({navigation}) {
         />
       </View>
       <View style={Mapstyles.categoryBox}>
-        <TouchableOpacity style={Mapstyles.buttonContainer} onPress={searchGym}>
+        <TouchableOpacity style={Mapstyles.buttonContainer} onPress={() => { searchGym() }}>
           <MaterialCommunityIcons name="dumbbell" size={30} color={colors.secondary} />
         </TouchableOpacity>
-        <TouchableOpacity style={Mapstyles.buttonContainer} onPress={searchHealthyFood} >
+        <TouchableOpacity style={Mapstyles.buttonContainer} onPress={() => { searchHealthyFood() }} >
           <MaterialCommunityIcons name="food-apple" size={30} color={colors.secondary}/>
         </TouchableOpacity>
         <TouchableOpacity style={Mapstyles.buttonContainer} onPress={searchEvents} >
