@@ -25,6 +25,7 @@ const LoginStyles = {
     height: 97,
     marginTop: 89,
     //backgroundColor:'black',
+    //zIndex:1,
   },
   bottomBox: {
     alignItems: "center",

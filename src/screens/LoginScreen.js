@@ -66,7 +66,7 @@ function LoginScreen({ navigation }) {
     <View style={LoginStyles.container}>
       <View style={LoginStyles.LoginContainer}>
         <View style={LoginStyles.logoContainer}>
-          <Image source={require('../../assets/logo2.svg')} style={LoginStyles.logo} />
+          <Image source={require('../../assets/logo2.png')} style={LoginStyles.logo} />
         </View>
         <Text style={LoginStyles.LoginText}>LOGOWANIE</Text>
       </View>
@@ -92,7 +92,7 @@ function LoginScreen({ navigation }) {
           <Checkbox
             value={isChecked}
             onValueChange={setChecked}
-            tintColor={colors.text}
+            tintColor={colors.primary}
           />
           <Text style={LoginStyles.CheckboxLabel}>Zapamiętaj dane</Text>
         </View>
