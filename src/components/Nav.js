@@ -182,6 +182,7 @@ export default function Nav() {
     },
     headerTitleAlign: "center",
     headerTintColor: "white",
+    headerShadowVisible: false,
   };
 
   const Tab = createBottomTabNavigator();
@@ -223,7 +224,7 @@ export default function Nav() {
             <Tab.Screen
               name="UserStackScreen"
               component={UserStackScreen}
-              options={{ headerShown: false }}
+              options={{ headerShown: false, ...headerOptions }}
             />
       </Tab.Navigator>
     );

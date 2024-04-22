@@ -34,7 +34,7 @@ function LoginScreen({ navigation }) {
           }
         }
       } catch (error) {
-        console.error("Error while verifying token:", error);
+        //console.error("Error while verifying token:", error);
       }
     };
 

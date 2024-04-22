@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity,ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Entypo } from '@expo/vector-icons';
 import { useTheme } from '../components/ThemeContext';
 import getCalendarStyles from '../styles/CalendarStyles';
-import { getEvent } from '../../services/api';
+import { getEventsByUserId } from '../../services/api';
 import LoadingScreen from "./Loading";
 
 function MyEvents() {
@@ -17,7 +18,8 @@ function MyEvents() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data: eventsData } = await getEvent();
+        const userId = await AsyncStorage.getItem('userId');
+        const { data: eventsData } = await getEventsByUserId(userId);
         setEvents(eventsData);
         setLoading(false);
       } catch (error) {
@@ -36,7 +38,6 @@ function MyEvents() {
     <View style={[dynamicStyles.container, { backgroundColor: themeStyles.Background }]}>
      
       <View>
-        <Text> To jest do zmiany - po update API dodamy tutaj tylko wydarzenia na ktore user jest zapisany</Text>
         {events.map((event, index) => (
           <TouchableOpacity
             key={index}

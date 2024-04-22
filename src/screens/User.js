@@ -40,7 +40,6 @@ function User({ navigation }) {
       headerShadowVisible: false,
     });
   }, [navigation, handleAvatarChange]);
-
   async function handleLogOut() {
     try {
       await AsyncStorage.removeItem('token');
