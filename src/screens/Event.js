@@ -36,7 +36,7 @@ const Event = ({ navigation }) => {
         setEvent(response.data);
         fetchUserEvents();
       } catch (error) {
-        console.error("Error fetching map points:", error);
+        //console.error("Error fetching map points:", error);
       }
     };
     fetchEventRef.current();
@@ -51,10 +51,10 @@ const Event = ({ navigation }) => {
         if (response.data.status === "OK") {
           setMapPointData(response.data.result);
         } else {
-          console.error("Failed to fetch place info");
+          //console.error("Failed to fetch place info");
         }
       } catch (error) {
-        console.error("Error fetching place info:", error);
+        //console.error("Error fetching place info:", error);
       }
     };
     fetchPlaceInfo();
@@ -78,7 +78,7 @@ const Event = ({ navigation }) => {
         fetchUserEvents();
       fetchEventRef.current();
     } catch (error) {
-      console.error("Error signing up for event:", error);
+      //console.error("Error signing up for event:", error);
     }
   };
 
@@ -88,7 +88,7 @@ const Event = ({ navigation }) => {
         const response = await GetUserEventByUserId(user_Id);
         setUserEvents(response.data)
       } catch (error) {
-        console.error("Error fetching user events:", error);
+        //console.error("Error fetching user events:", error);
       }
     };
   const isUserSignedUp = userEvents.some(event => event.eventId === eventId);
@@ -129,6 +129,7 @@ const Event = ({ navigation }) => {
       headerLeft: () => null,
     });
   }, [navigation, Event]);
+  
 
   return (
     <View style={styles.screen}>
@@ -137,7 +138,7 @@ const Event = ({ navigation }) => {
         <Image style={styles.eventImage} source={{ uri: pictureUrl || "" }} />
         )}
         <View style={styles.infoContainer}>
-          <Text style={styles.infoText}>Opis:{Event.description}</Text>
+          <Text style={styles.infoText}>Opis: {Event.description}</Text>
           <Text style={styles.infoText}>Data: {formattedDate}</Text>
           <Text style={styles.infoText}>Godzina: {formattedTime}</Text>
           {name && (

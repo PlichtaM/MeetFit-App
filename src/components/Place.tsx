@@ -51,7 +51,7 @@ const Place = ({ isVisible, onClose, selectedMarkerId }) => {
           //console.log(response);          
         }
       } catch (error) {
-        console.error('Error fetching place info:', error);
+        //console.error('Error fetching place info:', error);
       }
     };}
     fetchPlaceInfo();

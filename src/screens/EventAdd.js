@@ -28,6 +28,7 @@ function EventAdd({ route }) {
   const [description, setDescription] = useState("");
   const [isPickerShow, setIsPickerShow] = useState(false);
   const [time, setTime] = useState(getCurrentTime());
+  const [warning, setWarning] = useState(false);
 
  
   
@@ -37,6 +38,7 @@ function EventAdd({ route }) {
   };
 
   const handleCreateEvent = async () => {
+    setWarning(false)
     try {
       const eventData = {
         name: eventName,// dodać,żeby było co najmniej kilka znaków
@@ -55,8 +57,8 @@ function EventAdd({ route }) {
       console.log("eventAdd",eventIdFromLocation);
       navigation.navigate('Event', { eventId: eventIdFromLocation });
     } catch (error) {
-      console.error('Error creating event:', error.response);
-      console.error('Error creating event:', error);
+      //console.error('Error creating event:', error);
+      setWarning(true)
     }
   };
 
@@ -163,6 +165,7 @@ function EventAdd({ route }) {
           />
           <Text style={{ fontSize: 16, marginHorizontal: 10, color: colors.text }}>Publiczne</Text>
         </View>
+        {warning && <Text style={style.warning}>Uzupełnij wszystkie pola!</Text> }
         <TouchableOpacity style={style.addEventButton} onPress={handleCreateEvent}>
           <Text style={style.addEventButtonText}>Utwórz wydarzenie</Text>
         </TouchableOpacity>

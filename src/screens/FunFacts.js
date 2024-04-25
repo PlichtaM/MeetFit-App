@@ -13,7 +13,7 @@ const FunFacts = () => {
         const sortedFunFacts = response.data.sort((a, b) => new Date(b.date) - new Date(a.date));
         setFunFacts(sortedFunFacts);
       } catch (error) {
-        console.error('Error fetching fun facts:', error);
+        //console.error('Error fetching fun facts:', error);
       }
     };
 

@@ -3,9 +3,10 @@ import { View, Text, Image, TextInput } from 'react-native';
 import LoginButton from '../components/LoginButton';
 import LoginStyles from "../styles/LoginStyles";
 import { getColorScheme } from "../components/Colors";
+import CorrectChangedPasswordScreen from "./CorrectChangedPasswordScreen ";
 const colors = getColorScheme();
 
-function ChangePasswordScreen() {
+function ChangePasswordScreen(navigation) {
   return (
     <View style={LoginStyles.container}>
       <View style={LoginStyles.LoginContainer}>        

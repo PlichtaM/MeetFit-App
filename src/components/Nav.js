@@ -3,7 +3,7 @@ import { Image, View, useColorScheme, ActivityIndicator } from "react-native";
 import { NavigationContainer, DefaultTheme, useNavigation } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { GetCountPeople } from "../../services/api";
+import { GetCountPeople, getUser } from "../../services/api";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { MaterialCommunityIcons, MaterialIcons, FontAwesome  } from '@expo/vector-icons';
@@ -31,31 +31,24 @@ import CorrectChangedPasswordScreen from '../screens/CorrectChangedPasswordScree
 import VerifiedScreen from '../screens/VerifiedScreen';
 import MyEvents from "../screens/myEvents";
 
-export default function Nav() {
-  const [isLoading, setIsLoading] = useState(true);
+export default function Nav({ navigation }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoading, setisLoading] = useState(true);
 
   useEffect(() => {
     const checkTokenValidity = async () => {
-      try {
-        const token = await AsyncStorage.getItem("token");
-        if (token) {
-          const response = await GetCountPeople(token);
+        const userId = await AsyncStorage.getItem("userId");
+        const response = await getUser(userId);
 
-          if (response.status === '200') {
+        if (response.status === 200) {
             setIsLoggedIn(true);
-          }
+            //console.log(isLoggedIn); 
         }
-        setIsLoading(false);
-        const response = await AsyncStorage.getItem("token");
-      } catch (error) {
-        console.error("Error while verifying token:", error);
-        setIsLoading(false);
-      }
+        setisLoading(false)
     };
 
     checkTokenValidity();
-  }, [AsyncStorage.getItem("token")]);
+  }, []);
 
   const MapStack = createStackNavigator();
   function MapStackScreen() {
@@ -246,11 +239,9 @@ export default function Nav() {
 
   const Stack = createStackNavigator();
 
-  /*
   if (isLoading) {
     return <LoadingScreen />;
   }
-  */
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName={isLoggedIn ? "MainNavigator" : "LoginStackScreen"}>

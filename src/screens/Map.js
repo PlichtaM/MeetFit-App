@@ -72,7 +72,7 @@ function Map({navigation}) {
         Keyboard.dismiss();
       }
     } catch (e) {
-      console.error(e);
+      //console.error(e);
     }
   };
 
@@ -82,7 +82,7 @@ function Map({navigation}) {
         const response = await getEvent();
         setMarkers(response.data);
       } catch (error) {
-        console.error('Error fetching map points:', error);
+        //console.error('Error fetching map points:', error);
       }
     };
     fetchEvents();
@@ -110,7 +110,7 @@ function Map({navigation}) {
           });
         }
       } catch (error) {
-        console.error('Error fetching map point:', error);
+        //console.error('Error fetching map point:', error);
       }
     }
     setResults(newResults);

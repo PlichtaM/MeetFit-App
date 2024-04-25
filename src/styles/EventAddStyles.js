@@ -16,6 +16,11 @@ const EventAddStyles = {
     fontSize:20,
     color: colors.text
   },
+  warning: {
+    marginVertical:10,
+    fontSize:20,
+    color: '#980107'
+  },
   inputContainer: {
     padding: 10,
     backgroundColor: colors.disabled,
@@ -77,10 +82,11 @@ const EventAddStyles = {
   cancelEventButton:{
     marginTop: 15,
     backgroundColor: '#980107',
-    width:'90%',
+    width:'95%',
     height:35,
     borderRadius:10,
     justifyContent:'center',
+    marginBottom:20,
   },
 };
 

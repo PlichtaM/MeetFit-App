@@ -20,7 +20,7 @@ function User({ navigation }) {
         const response = await getUser(userId);
         setUser(response.data);
       } catch (error) {
-        console.error('Błąd odczytu danych:', error);
+        //console.error('Błąd odczytu danych:', error);
       }
     };
 
@@ -47,7 +47,7 @@ function User({ navigation }) {
       console.log("Wylogowano");
       return true;
     } catch (error) {
-      console.error('Error during logout:', error);
+      //console.error('Error during logout:', error);
       return false;
     }
   }

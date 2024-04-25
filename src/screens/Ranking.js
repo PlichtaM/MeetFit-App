@@ -23,7 +23,7 @@ const Ranking = ({navigation}) => {
         })));
         setLoading(false);
       } catch (error) {
-        console.error('Error fetching steps count:', error);
+        //console.error('Error fetching steps count:', error);
         setLoading(false);
       }
     };

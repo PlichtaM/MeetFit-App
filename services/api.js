@@ -8,14 +8,10 @@ const api = axios.create({
 
 //token z AsyncStorage
 const getToken = async () => {
-  try {
-    const token = await AsyncStorage.getItem('token');
-    return token;
-  } catch (error) {
-    console.error('Error getting token from AsyncStorage:', error);
-    return null;
-  }
+  const token = await AsyncStorage.getItem('token');
+  return token;
 };
+
 // nagłówek 'Authorization' z tokenem przed wysłaniem żądania
 api.interceptors.request.use(
   async (config) => {

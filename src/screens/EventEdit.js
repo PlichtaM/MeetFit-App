@@ -30,7 +30,7 @@ function EventEdit({ route }) {
         setTime(response.data.date && response.data.date.slice(11, 16));
         setDescription(response.data.description);
       } catch (error) {
-        console.error('Error fetching map points:', error);
+        //console.error('Error fetching map points:', error);
       }
     };
     fetchEvent();
@@ -65,8 +65,7 @@ function EventEdit({ route }) {
       const response = await updateEvent(eventId, eventData);
       navigation.navigate('Event', { eventId: eventId });
     } catch (error) {
-      console.error('Error creating event:', error.response);
-      console.error('Error creating event:', error);
+      //console.error('Error creating event:', error);
     }
   };
 
@@ -74,7 +73,7 @@ function EventEdit({ route }) {
     setIsPickerShow(true);
   };
   const onChange = (event, selectedTime) => {
-    if (event.type === 'set') { // Dodaj sprawdzenie, czy użytkownik wybrał czas
+    if (event.type === 'set') { // sprawdzenie, czy użytkownik wybrał czas
       const hours = selectedTime.getHours();
       const minutes = selectedTime.getMinutes();
       const formattedTime = `${hours}:${minutes < 10 ? '0' : ''}${minutes}`;

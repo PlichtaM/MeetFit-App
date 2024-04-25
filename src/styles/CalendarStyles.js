@@ -29,9 +29,18 @@ const getCalendarStyles = (themeStyles) => ({
   evenEvent: {
     backgroundColor: themeStyles.secondary,
   },
+  evenEvent2: {
+    backgroundColor: '#323232',
+  },
   evenText: {
     fontSize: 16,
     color: themeStyles.text2,
+  },
+  sectionTitle:{
+    marginBottom:10,
+    marginTop: 30,
+    fontSize:20,    
+    color: themeStyles.text,
   },
 });
 
