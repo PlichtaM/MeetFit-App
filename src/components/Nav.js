@@ -31,7 +31,7 @@ import CorrectChangedPasswordScreen from '../screens/CorrectChangedPasswordScree
 import VerifiedScreen from '../screens/VerifiedScreen';
 import MyEvents from "../screens/myEvents";
 
-export default function Nav({ navigation }) {
+export default function Nav() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setisLoading] = useState(true);
 
@@ -42,9 +42,9 @@ export default function Nav({ navigation }) {
 
         if (response.status === 200) {
             setIsLoggedIn(true);
-            //console.log(isLoggedIn); 
+            //console.log(isLoggedIn);
         }
-        setisLoading(false)
+        setisLoading(false);
     };
 
     checkTokenValidity();

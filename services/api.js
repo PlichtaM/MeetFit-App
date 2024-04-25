@@ -64,7 +64,7 @@ const updateStepsCount = (id, data) => api.put(`/user/${id}/UpdateStepsCount`, d
 const changeStepsGoal = (id, data) => api.put(`/user/${id}/ChangeStepsGoal`, data);
 
 // Funkcje dodatkowe dla User
-const changeAvatar = (id, data) => api.put(`/user/ChangeAvatar/${id}`, data);
+const changeAvatar = (id, data) => api.post(`/user/ChangeAvatar/${id}`, data);
 const getAllStepsCount = () => api.get('/user/GetAllStepsCount');
 
 // Funkcje dla FunFact

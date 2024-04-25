@@ -25,7 +25,7 @@ function User({ navigation }) {
     };
 
     fetchData();
-  }, [navigation]);
+  }, []);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -64,18 +64,22 @@ function User({ navigation }) {
       aspect: [1, 1],
       quality: 1,
     });
-
+    
     if (!pickerResult.cancelled) {
-      const data = new FormData();
-      data.append('file', {
-        uri: pickerResult.uri,
-        name: `user_avatar_${user.id}.jpg`,
-        type: 'image/jpeg',
-      });
-
+      const fileUri = pickerResult.assets[0].uri.replace('file://', ''); // Usunięcie 'file://'
+      const fileName = `user_avatar_${user.id}.jpg`;
+      const fileType = 'image/jpeg';
+      
       try {
+        const fileResponse = await fetch(fileUri);
+        const fileBlob = await fileResponse.blob();
+        
+        const data = new FormData();
+        data.append('file', fileBlob, fileName);
+        console.log("data",data);
         await changeAvatar(user.id, data);
-        // Jeśli zmiana awatara powiodła się, odświeżamy dane użytkownika
+        
+        // Odświeżenie danych użytkownika
         const response = await getUser(user.id);
         setUser(response.data);
       } catch (error) {
@@ -83,6 +87,7 @@ function User({ navigation }) {
       }
     }
   };
+  
 
   if (!user) {
     return (
