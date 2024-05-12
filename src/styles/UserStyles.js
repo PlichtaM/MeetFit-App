@@ -4,7 +4,7 @@ import { colors } from '../components/Colors';
 const UserStyles = StyleSheet.create({
   container: {
     backgroundColor: colors.Background,
-    width:'100%',
+    width: '100%',
     height: '100%',
   },
   top: {
@@ -14,60 +14,88 @@ const UserStyles = StyleSheet.create({
   UserIcon: {
     width: 200,
     height: 200,
-    position: 'absolute', 
+    position: 'absolute',
     top: 25,
     left: '50%',
     marginLeft: -100,
   },
-  UserNameContainer:{
+  UserNameContainer: {
     position: 'absolute',
     top: 275,
     alignSelf: 'center',
     alignItems: 'center'
   },
-  UserName:{
+  UserName: {
     fontWeight: 'bold',
-    fontSize: 24,    
+    fontSize: 24,
     color: colors.text
   },
-  stepIcon:{
+  stepIcon: {
     position: 'absolute',
-    top:35,
+    top: 35,
     left: -50,
   },
-  StepsNumber:{
+  StepsNumber: {
     fontWeight: 'bold',
-    fontSize: 16,    
+    fontSize: 16,
     color: colors.text
   },
-  MenuContainer:{
+  MenuContainer: {
     position: 'absolute',
     top: 375,
-    marginLeft:50,
-    height:250,
-    width:250,
-    display:'flex',
-    flexDirection:'column',
+    marginLeft: 50,
+    height: 250,
+    width: 250,
+    display: 'flex',
+    flexDirection: 'column',
     justifyContent: "space-evenly",
-    alignItems:"flex-start"
+    alignItems: "flex-start"
   },
-  UserButton:{
-    backgroundColor:'transparent',
-    display:'flex',
-    flexDirection:"row"
+  UserButton: {
+    backgroundColor: 'transparent',
+    display: 'flex',
+    flexDirection: "row"
   },
-  buttonText:{
-    fontSize:20,
+  buttonText: {
+    fontSize: 20,
     color: colors.text
   },
-  ButtonImage:{
+  ButtonImage: {
     marginRight: 15,
-    height:26,
-    width:26,
+    height: 26,
+    width: 26,
   },
-  ButtonIcon:{
-    size:26,
-    color:colors.secondary,
+  ButtonIcon: {
+    size: 26,
+    color: colors.secondary,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    justifyContent: 'center',
+    alignSelf: 'center',
+    top: '50%',
+    marginTop: -150,
+    width: '80%' 
+  },
+  input: {
+    width: '100%', 
+    height: 40,
+    marginBottom: 20,
+    borderWidth: 1,
+    padding: 10,
+    borderColor: '#ccc',
+    borderRadius: 5,
   },
 });
 

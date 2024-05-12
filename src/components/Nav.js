@@ -41,8 +41,8 @@ export default function Nav() {
         const response = await getUser(userId);
 
         if (response.status === 200) {
-            setIsLoggedIn(true);
-            //console.log(isLoggedIn);
+           //setIsLoggedIn(true);
+           console.log(isLoggedIn);
         }
         setisLoading(false);
     };
@@ -91,7 +91,7 @@ export default function Nav() {
          <UserStack.Screen name='ChangePasswordScreen' component={ChangePasswordScreen}/>
 
         <UserStack.Screen name="OtherScreens" component={OtherScreens}  options={{ title: "Ekrany Logowania", ...headerOptions }}/>
-         <UserStack.Screen name='Loading' component={LoadingScreen}/>
+        <UserStack.Screen name='Loading' component={LoadingScreen}/>
          <UserStack.Screen name='RegisterScreen' component={RegisterScreen}/>
          <UserStack.Screen name='LoginScreen' component={LoginScreen}/>
          <UserStack.Screen name='ForgotPasswordScreen' component={ForgotPasswordScreen}/>
@@ -240,7 +240,7 @@ export default function Nav() {
   const Stack = createStackNavigator();
 
   if (isLoading) {
-    return <LoadingScreen />;
+    // return <LoadingScreen />;
   }
   return (
     <NavigationContainer>

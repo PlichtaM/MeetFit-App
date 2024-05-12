@@ -19,7 +19,7 @@ const colors = getColorScheme();
 
 function LoginScreen({ navigation }) {
   const [isChecked, setChecked] = useState(false);
-  const [email, setEmail] = useState(ADMIN_LOGIN); //USUNĄĆ PRZED PRODUKCJĄ !!!!!
+  const [email, setEmail] = useState(ADMIN_LOGIN);
   const [password, setPassword] = useState(ADMIN_PASSWORD); //temp
 
   useEffect(() => {

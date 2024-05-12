@@ -16,6 +16,7 @@ const getToken = async () => {
 api.interceptors.request.use(
   async (config) => {
     const token = await getToken();
+    //console.log("Token: ", token);  // Linia do debugowania
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -60,8 +61,20 @@ const forgotPassword = (data) => api.post('/user/ForgotPassword', data);
 const resetPassword = (data) => api.post('/user/resetPassword', data);
 const confirmEmail = (id) => api.get(`/user/ConfirmEmail/${id}`);
 const getUser = (id) => api.get(`/user/${id}`);
-const updateStepsCount = (id, data) => api.put(`/user/${id}/UpdateStepsCount`, data);
-const changeStepsGoal = (id, data) => api.put(`/user/${id}/ChangeStepsGoal`, data);
+const updateStepsCount = (id, data) => {
+  return api.put(`/user/UpdateStepsCount/${id}`, JSON.stringify(data), {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+};
+const changeStepsGoal = (id, data) => {
+  return api.put(`/user/ChangeStepsGoal/${id}`, data, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+};
 
 // Funkcje dodatkowe dla User
 const changeAvatar = (id, data) => api.post(`/user/ChangeAvatar/${id}`, data);
