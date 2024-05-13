@@ -6,22 +6,40 @@ import {
   TouchableOpacity,
   TextInput,
   Keyboard,
+  ScrollView
 } from "react-native";
 import Checkbox from "expo-checkbox";
 import LoginButton from "../components/LoginButton";
 import LoginStyles from "../styles/LoginStyles";
 import { loginUser } from "../../services/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { ADMIN_LOGIN1, ADMIN_PASSWORD1 } from "../../env.js";
-import { ADMIN_LOGIN2, ADMIN_PASSWORD2 } from "../../env.js";
 import { GetCountPeople } from "../../services/api";
 import { getColorScheme } from "../components/Colors";
 const colors = getColorScheme();
 
 function LoginScreen({ navigation }) {
   const [isChecked, setChecked] = useState(false);
-  const [email, setEmail] = useState(ADMIN_LOGIN2);
-  const [password, setPassword] = useState(ADMIN_PASSWORD2); //temp
+  const [isRemebered, setIsRemebered] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState(""); //temp
+  const [showMessage, setShowMessage] = useState(false);
+
+  useEffect(() => {
+    const isRemebered = async () => {
+      try {
+        const savedEmail = await AsyncStorage.getItem("email");
+        const savedPassword = await AsyncStorage.getItem("password");
+        if(savedEmail){
+          setEmail(savedEmail);
+          setPassword(savedPassword);
+          setIsRemebered(true)
+        }
+      } catch (error) {
+        console.log("nie zapisano hasla:", error);
+      }
+    };
+    isRemebered();
+  }, []);
 
   useEffect(() => {
     const checkTokenValidity = async () => {
@@ -50,6 +68,7 @@ function LoginScreen({ navigation }) {
 
     loginUser(userCredentials)
       .then((response) => {
+        setShowMessage(false);
         AsyncStorage.setItem("token", response.data.token);
         AsyncStorage.setItem("userName", response.data.userName);
         AsyncStorage.setItem("userId", response.data.userId);
@@ -59,22 +78,29 @@ function LoginScreen({ navigation }) {
         navigation.navigate("MainNavigator");
       })
       .catch((error) => {
+        setShowMessage(true);
         console.error("Status odpowiedzi:", error);
       });
   };
-
+  if (isChecked) {
+    AsyncStorage.setItem("email", email);
+    AsyncStorage.setItem("password", password);
+  }
   return (
-    <View style={LoginStyles.container}>
+    <ScrollView style={LoginStyles.container}>
       <View style={LoginStyles.LoginContainer}>
         <View style={LoginStyles.logoContainer}>
-          <Image source={require('../../assets/logo2.png')} style={LoginStyles.logo} />
+          <Image
+            source={require("../../assets/logo2.png")}
+            style={LoginStyles.logo}
+          />
         </View>
         <Text style={LoginStyles.LoginText}>LOGOWANIE</Text>
       </View>
       <View style={LoginStyles.bottomBox}>
         <View style={LoginStyles.inputContainer}>
           <TextInput
-            placeholder="Podaj adres email"
+            placeholder={isRemebered ? email : "Podaj adres email"}
             style={LoginStyles.textInput}
             onChangeText={setEmail}
             cursorColor={colors.primary}
@@ -82,13 +108,18 @@ function LoginScreen({ navigation }) {
         </View>
         <View style={LoginStyles.inputContainer}>
           <TextInput
-            placeholder="Podaj hasło"
+            placeholder={isRemebered ? "************" :"Podaj hasło"}
             secureTextEntry={true}
             style={LoginStyles.textInput}
             onChangeText={setPassword}
             cursorColor={colors.primary}
           />
         </View>
+        {showMessage && (
+          <Text style={LoginStyles.errorMessage}>
+            nieprawidłowy email lub hasło
+          </Text>
+        )}
         <View style={LoginStyles.CheckboxContainer}>
           <Checkbox
             value={isChecked}
@@ -110,7 +141,7 @@ function LoginScreen({ navigation }) {
           </Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 

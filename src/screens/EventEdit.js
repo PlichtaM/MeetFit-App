@@ -90,7 +90,7 @@ function EventEdit({ route }) {
   return (
     <ScrollView style={style.background}>
       <View style={style.container}>
-        <Text style={style.text}>Nazwa wydarzenia:</Text>
+        <Text style={style.text}>Nazwa wydarzenia: </Text>
         <View style={style.inputContainer}>
           <TextInput
             placeholder="Nazwa"
@@ -110,7 +110,7 @@ function EventEdit({ route }) {
             onChangeText={setDescription} 
           />
         </View>
-        <Text style={style.text}>Limit miejsc:</Text>
+        <Text style={style.text}>Limit miejsc: </Text>
         <View style={style.sliderContainer}>
           <Text style={style.odDo}>1</Text>
           <Slider
@@ -129,7 +129,7 @@ function EventEdit({ route }) {
           <Text style={style.odDo}>10</Text>
         </View>
         <Text>Limit miejsc: {limitMiejsc}</Text>
-        <Text style={style.text}>Podaj datę wydarzenia:</Text>
+        <Text style={style.text}>Podaj datę wydarzenia: </Text>
         <TouchableOpacity>
           <Calendar
             style={style.calendar}
