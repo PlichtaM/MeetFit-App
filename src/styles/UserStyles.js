@@ -33,7 +33,7 @@ const UserStyles = StyleSheet.create({
   stepIcon: {
     position: 'absolute',
     top: 35,
-    left: -50,
+    left: -5,
   },
   StepsNumber: {
     fontWeight: 'bold',
@@ -88,14 +88,24 @@ const UserStyles = StyleSheet.create({
     marginTop: -150,
     width: '80%' 
   },
-  input: {
-    width: '100%', 
-    height: 40,
-    marginBottom: 20,
-    borderWidth: 1,
+  InputButton: {
+    backgroundColor: colors.secondary,
+    borderRadius: 85,
+    padding: 12,
+    marginTop:21,
+    alignItems: 'center',
+    width: '90%',
+    alignSelf:"center"
+  },
+  InputButtonText: {
+    fontSize: 20,
+    color: 'white',
+  },
+  textInput: {    
+    fontSize: 30,
+    fontWeight:"bold",
+    textAlign:"center",
     padding: 10,
-    borderColor: '#ccc',
-    borderRadius: 5,
   },
 });
 

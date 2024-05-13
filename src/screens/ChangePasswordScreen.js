@@ -11,7 +11,7 @@ function ChangePasswordScreen(navigation) {
     <View style={LoginStyles.container}>
       <View style={LoginStyles.LoginContainer}>        
         <View style={LoginStyles.logoContainer}>
-          <Image source={require('../../assets/logo.png')} style={LoginStyles.logo} />
+          <Image source={require('../../assets/logo2.png')} style={LoginStyles.logo} />
         </View>
         <Text style={LoginStyles.LoginText}>ZMIANA HASŁA</Text>
       </View>

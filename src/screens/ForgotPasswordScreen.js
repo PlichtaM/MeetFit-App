@@ -6,7 +6,7 @@ import { forgotPassword } from "../../services/api";
 import { getColorScheme } from "../components/Colors";
 const colors = getColorScheme();
 
-function ForgotPasswordScreen() {
+function ForgotPasswordScreen(navigation) {
   const [email, setEmail] = useState("");
   const [isEmailValid, setIsEmailValid] = useState(true);
 
@@ -27,7 +27,8 @@ function ForgotPasswordScreen() {
 
     forgotPassword(userCredentials)
       .then((response) => {
-        console.log("Logowanie udane:", response.data);
+        console.log("operacja udana:", response.data);
+        navigation.navigate("LoginScreen")
       })
       .catch((error) => {
         console.log("Status odpowiedzi:", error.response.status);
@@ -42,9 +43,9 @@ function ForgotPasswordScreen() {
     <View style={LoginStyles.container}>
       <View style={LoginStyles.LoginContainer}>
         <View style={LoginStyles.logoContainer}>
-          <Image source={require('../../assets/logo.png')} style={LoginStyles.logo} />
+          <Image source={require('../../assets/logo2.png')} style={LoginStyles.logo} />
         </View>
-        <Text style={LoginStyles.LoginText}>PRZYWRACANIE{"\n"}HASŁA</Text>
+        <Text style={LoginStyles.LoginText}>ZAPOMNIAŁEŚ{"\n"}HASŁA?</Text>
       </View>
       <View style={LoginStyles.bottomBox}>
       {!isEmailValid && (
@@ -58,7 +59,7 @@ function ForgotPasswordScreen() {
             cursorColor={colors.primary}
           />          
         </View>
-        <LoginButton onPress={handleForgotPassword} title="Przywróć hasło" />
+        <LoginButton onPress={handleForgotPassword} title="Zresetuj hasło" />
       </View>
     </View>
   );

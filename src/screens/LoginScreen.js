@@ -59,7 +59,7 @@ function LoginScreen({ navigation }) {
         navigation.navigate("MainNavigator");
       })
       .catch((error) => {
-        //console.error("Status odpowiedzi:", error);
+        console.error("Status odpowiedzi:", error);
       });
   };
 

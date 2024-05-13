@@ -8,6 +8,7 @@ import {
   TextInput,
   Button,
   Alert,
+  Pressable,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { Pedometer } from "expo-sensors";
@@ -29,6 +30,7 @@ import {
 } from "../../services/api";
 import LoadingScreen from "./Loading";
 import * as Notifications from "expo-notifications";
+import LoginButton from "../components/LoginButton";
 
 async function registerForPushNotificationsAsync() {
   const { status: existingStatus } = await Notifications.getPermissionsAsync();
@@ -93,10 +95,6 @@ function User({ navigation }) {
       console.log("Updating step goal to:", parsedGoal); // Debug log
       const response = await changeStepsGoal(userId, parsedGoal);
       if (response.status === 200) {
-        Alert.alert(
-          "Goal Updated",
-          "Your step goal has been successfully updated."
-        );
         setUser((prevUser) => ({ ...prevUser, stepsGoal: parsedGoal }));
       } else {
         Alert.alert("Update Failed", "Failed to update step goal.");
@@ -251,7 +249,7 @@ function User({ navigation }) {
         <Text style={UserStyles.StepsNumber}>
           {`${initialStepCount + sessionSteps}/${
             user?.stepsGoal || "Nie ustawiono celu"
-          } steps`}
+          }`}
         </Text>
       </View>
       <View style={UserStyles.MenuContainer}>
@@ -330,17 +328,30 @@ function User({ navigation }) {
         transparent={true}
         visible={isGoalModalVisible}
         onRequestClose={handleCloseSetGoalModal}
+        style={{alignItems:"center"}}
       >
         <View style={UserStyles.modalView}>
           <TextInput
-            style={UserStyles.input}
+            style={UserStyles.textInput}
             onChangeText={setNewGoal}
             value={newGoal}
-            placeholder="Wprowadź nowy cel kroków"
+            placeholder="Cel kroków"
             keyboardType="numeric"
           />
-          <Button title="Zmień" onPress={handleGoalSubmit} />
-          <Button title="Anuluj" onPress={handleCloseSetGoalModal} />
+          <Pressable
+            title="Zmień"
+            onPress={handleGoalSubmit}
+            style={UserStyles.InputButton}
+          >
+            <Text style={UserStyles.InputButtonText}>Zmień</Text>
+          </Pressable>
+          <Pressable
+            title="Anuluj"
+            onPress={handleCloseSetGoalModal}
+            style={UserStyles.InputButton}
+          >
+            <Text style={UserStyles.InputButtonText}>Anuluj</Text>
+          </Pressable>
         </View>
       </Modal>
     </View>
