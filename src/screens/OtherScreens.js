@@ -14,6 +14,7 @@ const navigation = useNavigation()
         <Button title="Ekran Zmiany Hasła" onPress={() => navigation.navigate('ChangePasswordScreen')} />
         <Button title="Ekran Pomyślnej Zmiany Hasła" onPress={() => navigation.navigate('CorrectChangedPasswordScreen')} />
         <Button title="Ekran Zweryfikowanego Konta" onPress={() => navigation.navigate('VerifiedScreen')} />
+        <Button title="Ekran ConfirmMail" onPress={() => navigation.navigate('ConfirmMail')} />
       </View>
     );
   

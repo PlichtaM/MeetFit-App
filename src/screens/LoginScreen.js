@@ -11,17 +11,17 @@ import {
 import Checkbox from "expo-checkbox";
 import LoginButton from "../components/LoginButton";
 import LoginStyles from "../styles/LoginStyles";
-import { loginUser } from "../../services/api";
+import { loginUser, GetCountPeople } from "../../services/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { GetCountPeople } from "../../services/api";
 import { getColorScheme } from "../components/Colors";
+import { ADMIN_LOGIN, ADMIN_PASSWORD } from "../../env";
 const colors = getColorScheme();
 
 function LoginScreen({ navigation }) {
-  const [isChecked, setChecked] = useState(false);
+  const [isChecked, setChecked] = useState(true);
   const [isRemebered, setIsRemebered] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState(""); //temp
+  const [email, setEmail] = useState(ADMIN_LOGIN);
+  const [password, setPassword] = useState(ADMIN_PASSWORD);//temp
   const [showMessage, setShowMessage] = useState(false);
 
   useEffect(() => {
@@ -47,18 +47,21 @@ function LoginScreen({ navigation }) {
         const token = await AsyncStorage.getItem("token");
         if (token) {
           const response = await GetCountPeople(token);
-          //console.log("response", response);
+          setTimeout(() => {
           if (response.status === "200") {
-            navigation.navigate("MainNavigator");
-          }
+            // Odpowiedź otrzymana, czekaj 5 sekund przed nawigacją
+              console.log("zalogowany");
+              navigation.navigate("MainNavigator");
+            }
+          }, 5000); // 5000 ms = 5 s
         }
       } catch (error) {
-        //console.error("Error while verifying token:", error);
+        console.log("niezalogowany", error);//temp
       }
     };
-
+  
     checkTokenValidity();
-  }, [navigation]);
+  }, []);
 
   const handleLogin = () => {
     const userCredentials = {
@@ -75,6 +78,7 @@ function LoginScreen({ navigation }) {
         Keyboard.dismiss();
         //console.log("Logowanie udane:", response.data);
         console.log("token: ", response.data.token);
+        console.log("Id: ", response.data.userId);
         navigation.navigate("MainNavigator");
       })
       .catch((error) => {

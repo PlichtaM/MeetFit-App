@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useLayoutEffect } from "react";
 import { Image, View, useColorScheme, ActivityIndicator } from "react-native";
 import { NavigationContainer, DefaultTheme, useNavigation } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -30,19 +30,19 @@ import ChangePasswordScreen from '../screens/ChangePasswordScreen';
 import CorrectChangedPasswordScreen from '../screens/CorrectChangedPasswordScreen ';
 import VerifiedScreen from '../screens/VerifiedScreen';
 import MyEvents from "../screens/myEvents";
+import ConfirmMail from "../screens/ConfirmMail";
 
 export default function Nav() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setisLoading] = useState(true);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const checkTokenValidity = async () => {
         const userId = await AsyncStorage.getItem("userId");
         const response = await getUser(userId);
 
         if (response.status === 200) {
-           //setIsLoggedIn(true);
-           console.log(isLoggedIn);
+           setIsLoggedIn(true);
         }
         setisLoading(false);
     };
@@ -97,6 +97,8 @@ export default function Nav() {
          <UserStack.Screen name='ForgotPasswordScreen' component={ForgotPasswordScreen}/>
          <UserStack.Screen name='CorrectChangedPasswordScreen' component={CorrectChangedPasswordScreen}/>
          <UserStack.Screen name='VerifiedScreen' component={VerifiedScreen}/>
+         <UserStack.Screen name='ConfirmMail' component={ConfirmMail}/>
+         
       </UserStack.Navigator>
     );
   }
@@ -240,7 +242,7 @@ export default function Nav() {
   const Stack = createStackNavigator();
 
   if (isLoading) {
-    // return <LoadingScreen />;
+     return <LoadingScreen />;
   }
   return (
     <NavigationContainer>

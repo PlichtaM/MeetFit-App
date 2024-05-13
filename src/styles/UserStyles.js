@@ -32,8 +32,9 @@ const UserStyles = StyleSheet.create({
   },
   stepIcon: {
     position: 'absolute',
-    top: 35,
     left: -5,
+    marginTop:35,
+    marginLeft: -35,
   },
   StepsNumber: {
     fontWeight: 'bold',

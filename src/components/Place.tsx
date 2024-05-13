@@ -77,6 +77,8 @@ const Place = ({ isVisible, onClose, selectedMarkerId }) => {
   const address = addressParts.slice(0, -1).join(", "); 
   
   const today = new Date().toLocaleDateString('en-US', { weekday: 'long' });
+  const dzis = new Date().toLocaleDateString('pl-PL', { weekday: 'long' });
+
   let todayOpeningTime = 'Closed';
   let todayClosingTime = 'Closed';
 
@@ -87,8 +89,6 @@ const Place = ({ isVisible, onClose, selectedMarkerId }) => {
       [todayOpeningTime, todayClosingTime] = todayHours.split(' – ');
     }
   }
-  
-  //const tempPhoto ="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.how-to-design.org%2Fweb-design%2Fdemos%2Fdemo-05-advanced-css3-transitions-photo-gallery%2Fimg%2Fel-capitan-color.jpg&f=1&nofb=1&ipt=f62b8f231bde0fc3b86eb7895d26927b528def27eaa832bcc4cb29a69e4634d2&ipo=images"
 
   return (
     <Modal transparent animationType="slide" visible={isVisible}>
@@ -105,7 +105,7 @@ const Place = ({ isVisible, onClose, selectedMarkerId }) => {
             <Text style={styles.AdressText}>{address}</Text>
             <Text style={styles.AdressTextBold}>Godziny otwarcia</Text>
             <Text style={styles.AdressText}>
-              {today}, {todayOpeningTime} - {todayClosingTime}
+              {dzis}, {todayOpeningTime} - {todayClosingTime}
             </Text>
           </View>
 
