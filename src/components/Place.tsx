@@ -79,14 +79,21 @@ const Place = ({ isVisible, onClose, selectedMarkerId }) => {
   const today = new Date().toLocaleDateString('en-US', { weekday: 'long' });
   const dzis = new Date().toLocaleDateString('pl-PL', { weekday: 'long' });
 
-  let todayOpeningTime = 'Closed';
-  let todayClosingTime = 'Closed';
+  let todayOpeningTime = 'Zamknięte';
+  let todayClosingTime = 'Zamknięte';
 
   if (opening_hours && opening_hours.weekday_text) {
     const todaySchedule = opening_hours.weekday_text.find(schedule => schedule.includes(today));
     if (todaySchedule) {
-      const todayHours = todaySchedule.split(': ')[1];
-      [todayOpeningTime, todayClosingTime] = todayHours.split(' – ');
+      console.log(todaySchedule);
+      
+      if (todaySchedule.includes("Closed")) {
+        todayOpeningTime = 'Zamknięte';
+        todayClosingTime = 'Zamknięte';
+      } else {
+        const todayHours = todaySchedule.split(': ')[1];
+        [todayOpeningTime, todayClosingTime] = todayHours.split(' – ');
+      }
     }
   }
 
