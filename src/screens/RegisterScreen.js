@@ -47,7 +47,7 @@ function RegisterScreen({navigation}) {
       <View style={LoginStyles.LoginContainer}>
         <View style={LoginStyles.logoContainer}>
           <Image
-            source={require("../../assets/logo.png")}
+            source={require("../../assets/logo2.png")}
             style={LoginStyles.logo}
           />
         </View>

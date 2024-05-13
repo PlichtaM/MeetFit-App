@@ -12,15 +12,16 @@ import LoginButton from "../components/LoginButton";
 import LoginStyles from "../styles/LoginStyles";
 import { loginUser } from "../../services/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { ADMIN_LOGIN, ADMIN_PASSWORD } from "../../env.js";
+import { ADMIN_LOGIN1, ADMIN_PASSWORD1 } from "../../env.js";
+import { ADMIN_LOGIN2, ADMIN_PASSWORD2 } from "../../env.js";
 import { GetCountPeople } from "../../services/api";
 import { getColorScheme } from "../components/Colors";
 const colors = getColorScheme();
 
 function LoginScreen({ navigation }) {
   const [isChecked, setChecked] = useState(false);
-  const [email, setEmail] = useState(ADMIN_LOGIN);
-  const [password, setPassword] = useState(ADMIN_PASSWORD); //temp
+  const [email, setEmail] = useState(ADMIN_LOGIN2);
+  const [password, setPassword] = useState(ADMIN_PASSWORD2); //temp
 
   useEffect(() => {
     const checkTokenValidity = async () => {
