@@ -38,18 +38,25 @@ export default function Nav() {
 
   useLayoutEffect(() => {
     const checkTokenValidity = async () => {
-      const userId = await AsyncStorage.getItem("userId");
-      const response = await getUser(userId);
-      setTimeout(() => {
-        if (response.status === 200) {
-          setIsLoggedIn(true);
-        } else {
-          console.log("Nieważny Token, lub brak Tokenu:", response);
-        }
+      try {
+        const userId = await AsyncStorage.getItem("userId");
+        const response = await getUser(userId);
+        console.log(response.status);
+
+        setTimeout(() => {
+          if (response.status === 200) {
+            setIsLoggedIn(true);
+          } else {
+            console.log("Nieważny Token, lub brak Tokenu:", response);
+          }
+          setIsLoading(false);
+        }, 500);
+      } catch (error) {
+        console.log("Błąd podczas sprawdzania tokena:", error);
         setIsLoading(false);
-      }, 200);
+      }
     };
-  
+
     checkTokenValidity();
   }, []);
 
