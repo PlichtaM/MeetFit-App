@@ -14,14 +14,14 @@ import LoginStyles from "../styles/LoginStyles";
 import { loginUser, GetCountPeople } from "../../services/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getColorScheme } from "../components/Colors";
-import { ADMIN_LOGIN, ADMIN_PASSWORD } from "../../env";
+import { ADMIN_LOGIN, ADMIN_PASSWORD, ADMIN_LOGIN2,ADMIN_PASSWORD2 } from "../../env";
 const colors = getColorScheme();
 
 function LoginScreen({ navigation }) {
   const [isChecked, setChecked] = useState(true);
   const [isRemebered, setIsRemebered] = useState(false);
-  const [email, setEmail] = useState(ADMIN_LOGIN);
-  const [password, setPassword] = useState(ADMIN_PASSWORD);//temp
+  const [email, setEmail] = useState(ADMIN_LOGIN2);
+  const [password, setPassword] = useState(ADMIN_PASSWORD2);//temp
   const [showMessage, setShowMessage] = useState(false);
 
   useEffect(() => {
@@ -49,11 +49,10 @@ function LoginScreen({ navigation }) {
           const response = await GetCountPeople(token);
           setTimeout(() => {
           if (response.status === "200") {
-            // Odpowiedź otrzymana, czekaj 5 sekund przed nawigacją
               console.log("zalogowany");
               navigation.navigate("MainNavigator");
             }
-          }, 5000); // 5000 ms = 5 s
+          }, 1000); // 5000 ms = 5 s
         }
       } catch (error) {
         console.log("niezalogowany", error);//temp

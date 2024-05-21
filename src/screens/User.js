@@ -6,7 +6,6 @@ import {
   Image,
   Modal,
   TextInput,
-  Button,
   Alert,
   Pressable,
 } from "react-native";
@@ -30,7 +29,6 @@ import {
 } from "../../services/api";
 import LoadingScreen from "./Loading";
 import * as Notifications from "expo-notifications";
-import LoginButton from "../components/LoginButton";
 
 async function registerForPushNotificationsAsync() {
   const { status: existingStatus } = await Notifications.getPermissionsAsync();
@@ -71,20 +69,21 @@ function User({ navigation }) {
   const [newGoal, setNewGoal] = useState("");
   const isMounted = useRef(true);
 
+  const fetchData = async () => {
+    const userId = await AsyncStorage.getItem("userId");
+    if (userId && isMounted.current) {
+      const response = await getUser(userId);
+      if (response && response.data) {
+        setUser(response.data);
+        setInitialStepCount(response.data.stepsCount || 0);
+      }
+    }
+  };
+
   useEffect(() => {
     // Rejestruj dla powiadomień
     registerForPushNotificationsAsync();
 
-    const fetchData = async () => {
-      const userId = await AsyncStorage.getItem("userId");
-      if (userId && isMounted.current) {
-        const response = await getUser(userId);
-        if (response && response.data) {
-          setUser(response.data);
-          setInitialStepCount(response.data.stepsCount || 0);
-        }
-      }
-    };
     fetchData();
   }, []);
 
@@ -193,17 +192,18 @@ function User({ navigation }) {
     });
 
     if (!pickerResult.cancelled) {
-      const fileUri = pickerResult.assets[0].uri.replace("file://", "");
+      const fileUri = pickerResult.assets[0].uri;
       const fileName = `user_avatar_${user.id}.jpg`;
 
-      const fileResponse = await fetch(fileUri);
-      const fileBlob = await fileResponse.blob();
-
       const data = new FormData();
-      data.append("file", fileBlob, fileName);
+      data.append("file", {
+        uri: fileUri,
+        name: fileName,
+        type: "image/jpeg",
+      });
 
       await changeAvatar(user.id, data);
-      refreshUserData();
+      fetchData();
     }
   };
 
@@ -301,18 +301,6 @@ function User({ navigation }) {
           />
           <Text style={UserStyles.buttonText}>Ciekawostki</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("OtherScreens")}
-          style={UserStyles.UserButton}
-        >
-          <MaterialCommunityIcons
-            name="account-alert"
-            size={26}
-            color={colors.secondary}
-            style={UserStyles.ButtonImage}
-          />
-          <Text style={UserStyles.buttonText}>OtherScreens</Text>
-        </TouchableOpacity>
         <TouchableOpacity onPress={handleLogOut} style={UserStyles.UserButton}>
           <MaterialCommunityIcons
             name="logout"
@@ -328,7 +316,7 @@ function User({ navigation }) {
         transparent={true}
         visible={isGoalModalVisible}
         onRequestClose={handleCloseSetGoalModal}
-        style={{alignItems:"center"}}
+        style={{ alignItems: "center" }}
       >
         <View style={UserStyles.modalView}>
           <TextInput

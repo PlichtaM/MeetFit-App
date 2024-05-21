@@ -77,7 +77,13 @@ const changeStepsGoal = (id, data) => {
 };
 
 // Funkcje dodatkowe dla User
-const changeAvatar = (id, data) => api.post(`/user/ChangeAvatar/${id}`, data);
+const changeAvatar = (id, data) => api.post(`/user/ChangeAvatar/${id}`, data, {
+  headers: {
+    'Content-Type': 'multipart/form-data',
+    'Accept': '*/*',
+  }
+});
+
 const getAllStepsCount = () => api.get('/user/GetAllStepsCount');
 
 // Funkcje dla FunFact
