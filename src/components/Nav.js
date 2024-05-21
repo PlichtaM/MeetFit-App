@@ -3,7 +3,7 @@ import { Image } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { GetCountPeople, getUser } from "../../services/api";
+import { getUser } from "../../services/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { MaterialCommunityIcons, MaterialIcons, FontAwesome } from "@expo/vector-icons";
@@ -41,7 +41,7 @@ export default function Nav() {
       try {
         const userId = await AsyncStorage.getItem("userId");
         const response = await getUser(userId);
-        console.log(response.status);
+        //console.log(response.status);
 
         setTimeout(() => {
           if (response.status === 200) {

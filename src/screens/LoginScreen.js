@@ -79,7 +79,7 @@ function LoginScreen({ navigation }) {
         //console.log("Logowanie udane:", response.data);
         console.log("token: ", response.data.token);
         console.log("Id: ", response.data.userId);
-        navigation.navigate("MainNavigator");
+        navigation.replace("MainNavigator");
       })
       .catch((error) => {
         setShowMessage(true);
