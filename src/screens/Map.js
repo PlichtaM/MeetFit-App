@@ -171,6 +171,10 @@ function Map({navigation}) {
           autoCapitalize="sentences"
           placeholder="Wyszukaj miejsce po nazwie"
           cursorColor={colors.primary}
+          onSubmitEditing={() => {
+            searchPlaces();
+            Keyboard.dismiss();
+          }}
         />
       </View>
       <View style={Mapstyles.categoryBox}>

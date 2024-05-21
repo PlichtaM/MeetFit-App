@@ -14,14 +14,14 @@ import LoginStyles from "../styles/LoginStyles";
 import { loginUser, GetCountPeople } from "../../services/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getColorScheme } from "../components/Colors";
-import { ADMIN_LOGIN, ADMIN_PASSWORD, ADMIN_LOGIN2,ADMIN_PASSWORD2 } from "../../env";
+import { ADMIN_LOGIN, ADMIN_PASSWORD, ADMIN_LOGIN2,ADMIN_PASSWORD2, ADMIN_LOGIN1,ADMIN_PASSWORD1  } from "../../env";
 const colors = getColorScheme();
 
 function LoginScreen({ navigation }) {
   const [isChecked, setChecked] = useState(true);
   const [isRemebered, setIsRemebered] = useState(false);
-  const [email, setEmail] = useState(ADMIN_LOGIN2);
-  const [password, setPassword] = useState(ADMIN_PASSWORD2);//temp
+  const [email, setEmail] = useState(ADMIN_LOGIN); //temp
+  const [password, setPassword] = useState(ADMIN_PASSWORD);//temp
   const [showMessage, setShowMessage] = useState(false);
 
   useEffect(() => {
