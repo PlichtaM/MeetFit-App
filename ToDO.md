@@ -4,10 +4,10 @@
 - [ ] Powiadomienia (wydarzenia, cel krokow)
 - [ ] ustawienia
 - [ ] ikonka kroków do zmiany
-- [ ] Zmiana Profilówki
-- [ ] upload zdjecia
-- [ ] Edytowanie wydarzenia Jesli jestem włascicelem
-- [ ] Customowe pinezki
+- [X] Zmiana Profilówki
+- [X] upload zdjecia
+- [X] Edytowanie wydarzenia Jesli jestem włascicelem
+- [X] Customowe pinezki
 - [ ] odnosnik z ekranu Event do Place 
 - [X] kalendarz - style (kolory)
 - [X] zmiana hasla
