@@ -58,6 +58,7 @@ const deleteMapPoint = (id) => api.delete(`/mapPoint/${id}`);
 const user = () => api.get(`/user`);
 const registerUser = (data) => api.post("/user/Register", data);
 const loginUser = (data) => api.post("/user/Login", data);
+const changePassword = (data) => api.post("/user/ChangePassword", data);
 const forgotPassword = (data) => api.post("/user/ForgotPassword", data);
 const resetPassword = (data) => api.post("/user/resetPassword", data);
 const confirmEmail = (id) => api.get(`/user/ConfirmEmail/${id}`);
@@ -120,6 +121,7 @@ export {
   deleteMapPoint,
   registerUser,
   loginUser,
+  changePassword,
   forgotPassword,
   resetPassword,
   confirmEmail,

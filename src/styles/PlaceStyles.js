@@ -26,7 +26,8 @@ const MapPlace = {
   bottomBox: {
     flex: 1,
     backgroundColor: colors.Background,    
-    alignItems: "center",
+    alignItems: "center",    
+    maxHeight: '60%',
   },
   closeButton: {
     position: "absolute",

@@ -20,8 +20,8 @@ const colors = getColorScheme();
 function LoginScreen({ navigation }) {
   const [isChecked, setChecked] = useState(true);
   const [isRemebered, setIsRemebered] = useState(false);
-  const [email, setEmail] = useState(ADMIN_LOGIN); //temp
-  const [password, setPassword] = useState(ADMIN_PASSWORD);//temp
+  const [email, setEmail] = useState(ADMIN_LOGIN1); //temp
+  const [password, setPassword] = useState(ADMIN_PASSWORD1);//temp
   const [showMessage, setShowMessage] = useState(false);
 
   useEffect(() => {
