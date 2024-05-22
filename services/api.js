@@ -1,14 +1,14 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from 'axios';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 
-const API_BASE_URL = 'https://meetfitapp.pl/api';
+const API_BASE_URL = "https://meetfitapp.pl/api";
 const api = axios.create({
   baseURL: API_BASE_URL,
 });
 
 //token z AsyncStorage
 const getToken = async () => {
-  const token = await AsyncStorage.getItem('token');
+  const token = await AsyncStorage.getItem("token");
   return token;
 };
 
@@ -30,65 +30,67 @@ api.interceptors.request.use(
 // Funkcje dla Event
 const getEvent = () => api.get(`/event`);
 const getEventById = (id) => api.get(`/event/${id}`);
-const createEvent = (data) => api.post('/event', data);
+const createEvent = (data) => api.post("/event", data);
 const updateEvent = (id, data) => api.put(`/event/${id}`, data);
 const deleteEvent = (id) => api.delete(`/event/${id}`);
 const getEventsByMapPointId = (id) => api.get(`/event/ByMapPointId/${id}`);
-const getEventsByMapPointGoogleId = (id) => api.get(`/event/ByMapPointGoogleId/${id}`);
+const getEventsByMapPointGoogleId = (id) =>
+  api.get(`/event/ByMapPointGoogleId/${id}`);
 const getEventsByUserId = (id) => api.get(`/event/ByUserId/${id}`);
 const GetCountPeople = (id) => api.get(`/event/GetCountPeople/${id}`);
 
 // Funkcje dla UserEvent
 const getUserEvent = () => api.get(`/userEvent`);
 const getUserEventById = (id) => api.get(`/userEvent/${id}`);
-const createUserEvent = (data) => api.post('/userEvent', data);
+const createUserEvent = (data) => api.post("/userEvent", data);
 const updateUserEvent = (id, data) => api.put(`/userEvent/${id}`, data);
-const deleteUserEvent = (id) => api.delete(`/userEvent/${id}`);
+const deleteUserEvent = (userId, eventId) => api.delete(`/userEvent/${userId}/${eventId}`);
 const GetUserEventByUserId = (id) => api.get(`/userEvent/GetByUserId/${id}`);
 
 // Funkcje dla MapPoint
 const getMapPoint = () => api.get(`/mapPoint`);
 const getMapPointId = (id) => api.get(`/mapPoint/${id}`);
-const createMapPoint = (data) => api.post('/mapPoint', data);
+const createMapPoint = (data) => api.post("/mapPoint", data);
 const updateMapPoint = (id, data) => api.put(`/mapPoint/${id}`, data);
 const deleteMapPoint = (id) => api.delete(`/mapPoint/${id}`);
 
 // Funkcje dla User
 const user = () => api.get(`/user`);
-const registerUser = (data) => api.post('/user/Register', data);
-const loginUser = (data) => api.post('/user/Login', data);
-const forgotPassword = (data) => api.post('/user/ForgotPassword', data);
-const resetPassword = (data) => api.post('/user/resetPassword', data);
+const registerUser = (data) => api.post("/user/Register", data);
+const loginUser = (data) => api.post("/user/Login", data);
+const forgotPassword = (data) => api.post("/user/ForgotPassword", data);
+const resetPassword = (data) => api.post("/user/resetPassword", data);
 const confirmEmail = (id) => api.get(`/user/ConfirmEmail/${id}`);
 const getUser = (id) => api.get(`/user/${id}`);
 const updateStepsCount = (id, data) => {
   return api.put(`/user/UpdateStepsCount/${id}`, JSON.stringify(data), {
     headers: {
-      'Content-Type': 'application/json'
-    }
+      "Content-Type": "application/json",
+    },
   });
 };
 const changeStepsGoal = (id, data) => {
   return api.put(`/user/ChangeStepsGoal/${id}`, data, {
     headers: {
-      'Content-Type': 'application/json'
-    }
+      "Content-Type": "application/json",
+    },
   });
 };
 
 // Funkcje dodatkowe dla User
-const changeAvatar = (id, data) => api.post(`/user/ChangeAvatar/${id}`, data, {
-  headers: {
-    'Content-Type': 'multipart/form-data',
-    'Accept': '*/*',
-  }
-});
+const changeAvatar = (id, data) =>
+  api.post(`/user/ChangeAvatar/${id}`, data, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Accept: "*/*",
+    },
+  });
 
-const getAllStepsCount = () => api.get('/user/GetAllStepsCount');
+const getAllStepsCount = () => api.get("/user/GetAllStepsCount");
 
 // Funkcje dla FunFact
 const getFunFacts = () => api.get(`/funFact`);
-const createFunFact = (data) => api.post('/funFact', data);
+const createFunFact = (data) => api.post("/funFact", data);
 const getFunFactById = (id) => api.get(`/funFact/${id}`);
 const deleteFunFact = (id) => api.delete(`/funFact/${id}`);
 const updateFunFact = (id, data) => api.put(`/funFact/${id}`, data);
@@ -130,7 +132,7 @@ export {
   createFunFact,
   getFunFactById,
   deleteFunFact,
-  updateFunFact
+  updateFunFact,
 };
 
 export default api;

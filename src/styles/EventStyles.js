@@ -61,6 +61,13 @@ const EventStyles = {
     borderRadius: 10,
     alignItems: "center",
   },
+  SignOut:{
+    backgroundColor:colors.cancel,
+    marginTop: 15,
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
+  },
 };
 
 export default EventStyles;
