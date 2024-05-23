@@ -9,7 +9,7 @@ const ChatStyles = StyleSheet.create({
         backgroundColor: '#F0F0F0',
     },
     bubbleRight: {
-        backgroundColor: '#4D6EF6',
+        backgroundColor: '#0066FF',
     },
     textRight: {
         color: '#fff',
@@ -18,12 +18,17 @@ const ChatStyles = StyleSheet.create({
         color: '#000',
     },
     chatContainer: {
-        flex: 1,
+        flexGrow: 1,
         padding: 10,
     },
     messageInputContainer: {
         flexDirection: 'row',
         padding: 10,
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: '#fff',
     },
     messageInput: {
         flex: 1,
@@ -34,7 +39,7 @@ const ChatStyles = StyleSheet.create({
     },
     sendButton: {
         marginLeft: 10,
-        backgroundColor: '#4D6EF6',
+        backgroundColor: '#0066FF',
         padding: 10,
         borderRadius: 5,
         justifyContent: 'center',

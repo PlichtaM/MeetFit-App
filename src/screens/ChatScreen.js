@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { View, TextInput, TouchableOpacity, Text, FlatList, Alert, Image } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { View, TextInput, TouchableOpacity, Text, FlatList, Alert, Image, KeyboardAvoidingView, Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getChatMessages, sendChatMessage, getUser } from '../../services/api'; // Import getUser
+import * as SecureStore from 'expo-secure-store';
+import { getChatMessages, sendChatMessage, getUser } from '../../services/api';
 import ChatStyles from '../styles/ChatStyles';
 
 const ChatScreen = ({ route, navigation }) => {
@@ -10,6 +11,7 @@ const ChatScreen = ({ route, navigation }) => {
     const [message, setMessage] = useState('');
     const [userId, setUserId] = useState(null);
     const [avatars, setAvatars] = useState({});
+    const intervalRef = useRef(null);
 
     useEffect(() => {
         const fetchUserId = async () => {
@@ -31,14 +33,12 @@ const ChatScreen = ({ route, navigation }) => {
         };
 
         fetchMessages();
+        
+        intervalRef.current = setInterval(fetchMessages, 5000);
 
-        // Set interval to refresh messages every 5 seconds
-        const intervalId = setInterval(() => {
-            fetchMessages();
-        }, 5000);
-
-        // Clear the interval on component unmount
-        return () => clearInterval(intervalId);
+        return () => {
+            clearInterval(intervalRef.current);
+        };
     }, [eventId]);
 
     useEffect(() => {
@@ -79,15 +79,54 @@ const ChatScreen = ({ route, navigation }) => {
         }
 
         try {
-            await sendChatMessage({ eventId, message });
+            await sendChatMessage({ eventId, message, userId });
             setMessage('');
             const response = await getChatMessages(eventId);
             setMessages(response.data);
             fetchAvatars(response.data);
+            await sendNotificationToOtherUsers(response.data);
         } catch (error) {
             console.error("Error sending message:", error);
             Alert.alert("Error", "There was a problem sending your message.");
         }
+    };
+
+    const sendNotificationToOtherUsers = async (messages) => {
+        const otherUsers = messages
+            .filter(msg => msg.userId !== userId)
+            .map(msg => msg.userId);
+
+        const uniqueOtherUsers = [...new Set(otherUsers)];
+
+        for (const otherUserId of uniqueOtherUsers) {
+            try {
+                const pushToken = await SecureStore.getItemAsync(`expoPushToken-${otherUserId}`);
+                if (pushToken) {
+                    await sendPushNotification(pushToken, eventName, message);
+                }
+            } catch (error) {
+                console.error(`Error sending notification to user ${otherUserId}:`, error);
+            }
+        }
+    };
+
+    const sendPushNotification = async (expoPushToken, title, body) => {
+        const message = {
+            to: expoPushToken,
+            sound: 'default',
+            title: title,
+            body: body,
+            data: { eventId },
+        };
+
+        await fetch('https://exp.host/--/api/v2/push/send', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(message),
+        });
     };
 
     const renderItem = ({ item }) => (
@@ -109,12 +148,17 @@ const ChatScreen = ({ route, navigation }) => {
     );
 
     return (
-        <View style={ChatStyles.container}>
+        <KeyboardAvoidingView 
+            style={ChatStyles.container} 
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+            keyboardVerticalOffset={90}
+        >
             <FlatList
                 data={messages}
                 renderItem={renderItem}
                 keyExtractor={item => item.id.toString()}
                 contentContainerStyle={ChatStyles.chatContainer}
+                style={{ marginBottom: 60 }}
             />
             <View style={ChatStyles.messageInputContainer}>
                 <TextInput
@@ -126,7 +170,7 @@ const ChatScreen = ({ route, navigation }) => {
                     <Text style={ChatStyles.sendButtonText}>Wyślij</Text>
                 </TouchableOpacity>
             </View>
-        </View>
+        </KeyboardAvoidingView>
     );
 };
 

@@ -30,7 +30,8 @@ import CorrectChangedPasswordScreen from "../screens/CorrectChangedPasswordScree
 import VerifiedScreen from "../screens/VerifiedScreen";
 import MyEvents from "../screens/myEvents";
 import ConfirmMail from "../screens/ConfirmMail";
-import ChatScreen from "../screens/ChatScreen"; // Dodano import ChatScreen
+import ChatScreen from "../screens/ChatScreen"; 
+import { navigationRef } from './RootNavigation';
 
 export default function Nav() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -81,7 +82,7 @@ export default function Nav() {
           options={{ ...headerOptions }}
         />
         <MapStack.Screen
-          name="ChatScreen" // Dodano ekran czatu do MapStack
+          name="ChatScreen" 
           component={ChatScreen}
           options={{ title: "Czat", ...headerOptions }}
         />
@@ -150,7 +151,7 @@ export default function Nav() {
         <UserStack.Screen name="VerifiedScreen" component={VerifiedScreen} />
         <UserStack.Screen name="ConfirmMail" component={ConfirmMail} />
         <UserStack.Screen
-          name="ChatScreen" // Dodano ekran czatu do UserStack
+          name="ChatScreen" 
           component={ChatScreen}
           options={{ title: "Czat", ...headerOptions }}
         />
@@ -170,7 +171,7 @@ export default function Nav() {
         <CalendarStack.Screen name="Event" component={Event} />
         <CalendarStack.Screen name="EventEdit" component={EventEdit} />
         <CalendarStack.Screen
-          name="ChatScreen" // Dodano ekran czatu do CalendarStack
+          name="ChatScreen" 
           component={ChatScreen}
           options={{ title: "Czat", ...headerOptions }}
         />
@@ -318,7 +319,7 @@ export default function Nav() {
     return <LoadingScreen />;
   }
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={navigationRef}>
       <Stack.Navigator
         initialRouteName={isLoggedIn ? "MainNavigator" : "LoginStackScreen"}
       >
