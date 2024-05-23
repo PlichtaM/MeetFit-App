@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   TextInput,
   Keyboard,
-  ScrollView
+  ScrollView,
 } from "react-native";
 import Checkbox from "expo-checkbox";
 import LoginButton from "../components/LoginButton";
@@ -14,14 +14,21 @@ import LoginStyles from "../styles/LoginStyles";
 import { loginUser, GetCountPeople } from "../../services/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getColorScheme } from "../components/Colors";
-import { ADMIN_LOGIN, ADMIN_PASSWORD, ADMIN_LOGIN2,ADMIN_PASSWORD2, ADMIN_LOGIN1,ADMIN_PASSWORD1  } from "../../env";
+import {
+  ADMIN_LOGIN,
+  ADMIN_PASSWORD,
+  ADMIN_LOGIN2,
+  ADMIN_PASSWORD2,
+  ADMIN_LOGIN1,
+  ADMIN_PASSWORD1,
+} from "../../env";
 const colors = getColorScheme();
 
 function LoginScreen({ navigation }) {
   const [isChecked, setChecked] = useState(true);
   const [isRemebered, setIsRemebered] = useState(false);
-  const [email, setEmail] = useState(ADMIN_LOGIN1); //temp
-  const [password, setPassword] = useState(ADMIN_PASSWORD1);//temp
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showMessage, setShowMessage] = useState(false);
 
   useEffect(() => {
@@ -29,10 +36,10 @@ function LoginScreen({ navigation }) {
       try {
         const savedEmail = await AsyncStorage.getItem("email");
         const savedPassword = await AsyncStorage.getItem("password");
-        if(savedEmail){
+        if (savedEmail) {
           setEmail(savedEmail);
           setPassword(savedPassword);
-          setIsRemebered(true)
+          setIsRemebered(true);
         }
       } catch (error) {
         console.log("nie zapisano hasla:", error);
@@ -48,47 +55,44 @@ function LoginScreen({ navigation }) {
         if (token) {
           const response = await GetCountPeople(token);
           setTimeout(() => {
-          if (response.status === "200") {
+            if (response.status === "200") {
               console.log("zalogowany");
               navigation.navigate("MainNavigator");
             }
           }, 1000); // 5000 ms = 5 s
         }
       } catch (error) {
-        console.log("niezalogowany", error);//temp
+        console.log("niezalogowany", error); //temp
       }
     };
-  
+
     checkTokenValidity();
   }, []);
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     const userCredentials = {
       email: email,
       password: password,
     };
 
-    loginUser(userCredentials)
-      .then((response) => {
-        setShowMessage(false);
-        AsyncStorage.setItem("token", response.data.token);
-        AsyncStorage.setItem("userName", response.data.userName);
-        AsyncStorage.setItem("userId", response.data.userId);
-        Keyboard.dismiss();
-        //console.log("Logowanie udane:", response.data);
-        console.log("token: ", response.data.token);
-        console.log("Id: ", response.data.userId);
-        navigation.replace("MainNavigator");
-      })
-      .catch((error) => {
-        setShowMessage(true);
-        console.error("Status odpowiedzi:", error);
-      });
+    try {
+      const response = await loginUser(userCredentials);
+      setShowMessage(false);
+      await AsyncStorage.setItem("token", response.data.token);
+      await AsyncStorage.setItem("userName", response.data.userName);
+      await AsyncStorage.setItem("userId", response.data.userId);
+      if (isChecked) {
+        await AsyncStorage.setItem("email", email);
+        await AsyncStorage.setItem("password", password);
+      }
+      Keyboard.dismiss();
+      navigation.replace("MainNavigator");
+    } catch (error) {
+      setShowMessage(true);
+      console.error("Status odpowiedzi:", error);
+    }
   };
-  if (isChecked) {
-    AsyncStorage.setItem("email", email);
-    AsyncStorage.setItem("password", password);
-  }
+
   return (
     <ScrollView style={LoginStyles.container}>
       <View style={LoginStyles.LoginContainer}>
@@ -103,18 +107,20 @@ function LoginScreen({ navigation }) {
       <View style={LoginStyles.bottomBox}>
         <View style={LoginStyles.inputContainer}>
           <TextInput
-            placeholder={isRemebered ? email : "Podaj adres email"}
+            placeholder="Podaj adres email"
             style={LoginStyles.textInput}
             onChangeText={setEmail}
+            value={email}
             cursorColor={colors.primary}
           />
         </View>
         <View style={LoginStyles.inputContainer}>
           <TextInput
-            placeholder={isRemebered ? "************" :"Podaj hasło"}
+            placeholder="Podaj hasło"
             secureTextEntry={true}
             style={LoginStyles.textInput}
             onChangeText={setPassword}
+            value={password}
             cursorColor={colors.primary}
           />
         </View>

@@ -5,7 +5,6 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { getUser } from "../../services/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
 import { MaterialCommunityIcons, MaterialIcons, FontAwesome } from "@expo/vector-icons";
 import FooterStyles from "../styles/FooterStyles";
 import { getColorScheme } from "../components/Colors";
@@ -31,6 +30,7 @@ import CorrectChangedPasswordScreen from "../screens/CorrectChangedPasswordScree
 import VerifiedScreen from "../screens/VerifiedScreen";
 import MyEvents from "../screens/myEvents";
 import ConfirmMail from "../screens/ConfirmMail";
+import ChatScreen from "../screens/ChatScreen"; // Dodano import ChatScreen
 
 export default function Nav() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -41,7 +41,6 @@ export default function Nav() {
       try {
         const userId = await AsyncStorage.getItem("userId");
         const response = await getUser(userId);
-        //console.log(response.status);
 
         setTimeout(() => {
           if (response.status === 200) {
@@ -80,6 +79,11 @@ export default function Nav() {
           name="EventEdit"
           component={EventEdit}
           options={{ ...headerOptions }}
+        />
+        <MapStack.Screen
+          name="ChatScreen" // Dodano ekran czatu do MapStack
+          component={ChatScreen}
+          options={{ title: "Czat", ...headerOptions }}
         />
         <MapStack.Screen
           name="LoginScreen"
@@ -128,7 +132,6 @@ export default function Nav() {
           name="ChangePasswordScreen"
           component={ChangePasswordScreen}
         />
-
         <UserStack.Screen
           name="OtherScreens"
           component={OtherScreens}
@@ -141,12 +144,16 @@ export default function Nav() {
           name="ForgotPasswordScreen"
           component={ForgotPasswordScreen}
         />
-        <UserStack.Screen
-          name="CorrectChangedPasswordScreen"
+        <UserStack.Screen name="CorrectChangedPasswordScreen"
           component={CorrectChangedPasswordScreen}
         />
         <UserStack.Screen name="VerifiedScreen" component={VerifiedScreen} />
         <UserStack.Screen name="ConfirmMail" component={ConfirmMail} />
+        <UserStack.Screen
+          name="ChatScreen" // Dodano ekran czatu do UserStack
+          component={ChatScreen}
+          options={{ title: "Czat", ...headerOptions }}
+        />
       </UserStack.Navigator>
     );
   }
@@ -162,6 +169,11 @@ export default function Nav() {
         />
         <CalendarStack.Screen name="Event" component={Event} />
         <CalendarStack.Screen name="EventEdit" component={EventEdit} />
+        <CalendarStack.Screen
+          name="ChatScreen" // Dodano ekran czatu do CalendarStack
+          component={ChatScreen}
+          options={{ title: "Czat", ...headerOptions }}
+        />
       </CalendarStack.Navigator>
     );
   }

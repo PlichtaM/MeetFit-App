@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useState, useEffect, useRef } from "react";
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import { View, Text, TouchableOpacity, Image, ScrollView } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
@@ -30,7 +30,7 @@ const Event = ({ navigation }) => {
   const [mapPointData, setMapPointData] = useState(null);
   const fetchEventRef = useRef();
 
-  //get event info
+  // get event info
   useEffect(() => {
     fetchEventRef.current = async () => {
       try {
@@ -40,34 +40,44 @@ const Event = ({ navigation }) => {
         const ppl = await GetCountPeople(eventId);
         setCountPeople(ppl.data);
         setEvent(response.data);
-        fetchUserEvents();
+        fetchUserEvents(userId);
       } catch (error) {
-        //console.error("Error fetching map points:", error);
+        console.error("Error fetching event data:", error);
       }
     };
     fetchEventRef.current();
-  }, [user_Id, navigation, fetchEventRef]);
+  }, [eventId, navigation]);
 
-  //get google Place info
-  const googleApisUrl = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${Event.mapPointGoogleId}&key=${GOOGLE_API_KEY}`;
+  // get user events
+  const fetchUserEvents = async (userId) => {
+    try {
+      const response = await GetUserEventByUserId(userId);
+      setUserEvents(response.data);
+    } catch (error) {
+      console.error("Error fetching user events:", error);
+    }
+  };
+
+  // get google Place info
   useEffect(() => {
     const fetchPlaceInfo = async () => {
       try {
-        const response = await axios.get(googleApisUrl);
+        const response = await axios.get(
+          `https://maps.googleapis.com/maps/api/place/details/json?place_id=${Event.mapPointGoogleId}&key=${GOOGLE_API_KEY}`
+        );
         if (response.data.status === "OK") {
           setMapPointData(response.data.result);
         } else {
-          //console.error("Failed to fetch place info");
+          console.error("Failed to fetch place info");
         }
       } catch (error) {
-        //console.error("Error fetching place info:", error);
+        console.error("Error fetching place info:", error);
       }
     };
     fetchPlaceInfo();
-    return () => {};
   }, [Event.mapPointGoogleId]);
 
-  //formating Event Date
+  // formatting Event Date
   const eventDate = new Date(Event.date);
   const formattedDate = `${eventDate.getDate()}.${
     eventDate.getMonth() + 1
@@ -77,48 +87,42 @@ const Event = ({ navigation }) => {
     .toString()
     .padStart(2, "0")}`;
 
-  //Sign user for Event
+  // Sign user for Event
   const handleSignUp = async () => {
     try {
       await createUserEvent({
         userId: user_Id,
         eventId: eventId,
       });
-      fetchUserEvents();
+      fetchUserEvents(user_Id);
       fetchEventRef.current();
     } catch (error) {
-      //console.error("Error signing up for event:", error);
+      console.error("Error signing up for event:", error);
     }
   };
+
   const handleSignOut = async () => {
     try {
       await deleteUserEvent(user_Id, eventId);
-      fetchUserEvents();
+      fetchUserEvents(user_Id);
       fetchEventRef.current();
     } catch (error) {
       console.error("Error signing out from event:", error);
     }
   };
 
-  //check if user is signed for event
-  const fetchUserEvents = async () => {
-    try {
-      const response = await GetUserEventByUserId(user_Id);
-      setUserEvents(response.data);
-    } catch (error) {
-      //console.error("Error fetching user events:", error);
-    }
-  };
+  // check if user is signed for event
   const isUserSignedUp = userEvents.some((event) => event.eventId === eventId);
   const isUserCreator = user_Id === Event.createdBy;
-  //set google Photo and place name
+
+  // set google Photo and place name
   const { photos, name } = mapPointData || {};
   let pictureUrl = "https://meetfitapp.pl/avatars/default-avatar.jpg";
   if (photos) {
     const PHOTO_REFERENCE = photos[0].photo_reference;
     pictureUrl = `https://maps.googleapis.com/maps/api/place/photo?photoreference=${PHOTO_REFERENCE}&sensor=false&maxheight=${MAX_HEIGHT}&maxwidth=${MAX_WIDTH}&key=${GOOGLE_API_KEY}`;
-    // pictureUrl is assigned here
   }
+
   useLayoutEffect(() => {
     navigation.setOptions({
       title: Event.name,
@@ -149,7 +153,7 @@ const Event = ({ navigation }) => {
   }, [navigation, Event]);
 
   return (
-    <View style={styles.screen}>
+    <ScrollView style={styles.screen}>
       <View style={styles.container}>
         {photos && (
           <Image style={styles.eventImage} source={{ uri: pictureUrl || "" }} />
@@ -186,12 +190,20 @@ const Event = ({ navigation }) => {
         {isUserSignedUp && (
           <TouchableOpacity style={styles.SignOut} onPress={handleSignOut}>
             <Text style={styles.createEventButtonText}>
-              "Wypisz mnie z wydarzenia"
+              Wypisz mnie z wydarzenia
             </Text>
           </TouchableOpacity>
         )}
+        {isUserSignedUp && (
+          <TouchableOpacity
+            style={[styles.chatButton, styles.marginBottom]}
+            onPress={() => navigation.navigate("ChatScreen", { eventId, eventName: Event.name })}
+          >
+            <Text style={styles.createEventButtonText}>Przejdź do czatu</Text>
+          </TouchableOpacity>
+        )}
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

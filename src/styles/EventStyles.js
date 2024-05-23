@@ -1,15 +1,15 @@
-import { getColorScheme  } from "../components/Colors";
-const colors = getColorScheme()
+import { getColorScheme } from "../components/Colors";
+const colors = getColorScheme();
 
 const EventStyles = {
-  screen:{   
+  screen: {
     backgroundColor: colors.Background,
-    width:'100%',
+    width: '100%',
     height: '100%',
   },
   container: {
     flex: 1,
-    backgroundColor: 'whtie',
+    backgroundColor: 'white',
     padding: 20,
   },
   header: {
@@ -39,7 +39,7 @@ const EventStyles = {
   },
   infoText: {
     fontSize: 16,
-    marginBottom: 10,    
+    marginBottom: 10,
     color: colors.text,
   },
   createEventButton: {
@@ -54,19 +54,29 @@ const EventStyles = {
     fontSize: 16,
     fontWeight: "bold",
   },
-  singUp:{
+  singUp: {
     backgroundColor: "#1b9b1b",
     marginTop: 15,
     padding: 15,
     borderRadius: 10,
     alignItems: "center",
   },
-  SignOut:{
-    backgroundColor:colors.cancel,
+  SignOut: {
+    backgroundColor: colors.cancel,
     marginTop: 15,
     padding: 15,
     borderRadius: 10,
     alignItems: "center",
+  },
+  chatButton: {
+    backgroundColor: colors.primary,
+    marginTop: 15,
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  marginBottom: {
+    marginBottom: 30,
   },
 };
 
