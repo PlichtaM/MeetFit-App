@@ -147,7 +147,7 @@ const ChatScreen = ({ route, navigation }) => {
         </View>
     );
 
-    return (
+    return (<>
         <KeyboardAvoidingView 
             style={ChatStyles.container} 
             behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -160,6 +160,8 @@ const ChatScreen = ({ route, navigation }) => {
                 contentContainerStyle={ChatStyles.chatContainer}
                 style={{ marginBottom: 60 }}
             />
+            
+        </KeyboardAvoidingView>
             <View style={ChatStyles.messageInputContainer}>
                 <TextInput
                     style={ChatStyles.messageInput}
@@ -170,7 +172,7 @@ const ChatScreen = ({ route, navigation }) => {
                     <Text style={ChatStyles.sendButtonText}>Wyślij</Text>
                 </TouchableOpacity>
             </View>
-        </KeyboardAvoidingView>
+            </>
     );
 };
 
