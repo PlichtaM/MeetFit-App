@@ -64,7 +64,7 @@ const resetPassword = (data) => api.post("/user/resetPassword", data);
 const confirmEmail = (id) => api.get(`/user/ConfirmEmail/${id}`);
 const getUser = (id) => api.get(`/user/${id}`);
 const updateStepsCount = (id, data) => {
-  return api.put(`/user/UpdateStepsCount/${id}`, JSON.stringify(data), {
+  return api.put(`/user/UpdateStepsCount/${id}`, data, {
     headers: {
       "Content-Type": "application/json",
     },

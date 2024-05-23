@@ -44,22 +44,45 @@ async function registerForPushNotificationsAsync() {
 }
 
 async function sendNotification() {
-  console.log("Preparing to send a notification..."); // Debug log
+  console.log("Preparing to send a notification...");
   try {
     const notification = await Notifications.scheduleNotificationAsync({
       content: {
         title: "Cel kroków osiągnięty!",
         body: "Gratulacje! Osiągnąłeś swój dzienny cel kroków!",
         data: { data: "goes here" },
-        sound: "default", // Użyj domyślnego dźwięku powiadomienia
+        sound: "default",
       },
-      trigger: null, // Wyślij natychmiast
+      trigger: null,
     });
-    console.log("Notification scheduled:", notification); // Debug log
+    console.log("Notification scheduled:", notification);
   } catch (error) {
     console.error("Error scheduling notification:", error);
   }
 }
+
+// Save session steps to AsyncStorage
+const saveSessionSteps = async (steps) => {
+  try {
+    await AsyncStorage.setItem('sessionSteps', steps.toString());
+  } catch (error) {
+    console.error("Error saving session steps:", error);
+  }
+};
+
+// Load session steps from AsyncStorage
+const loadSessionSteps = async () => {
+  try {
+    const steps = await AsyncStorage.getItem('sessionSteps');
+    if (steps !== null) {
+      return parseInt(steps, 10);
+    }
+    return 0;
+  } catch (error) {
+    console.error("Error loading session steps:", error);
+    return 0;
+  }
+};
 
 function User({ navigation }) {
   const [user, setUser] = useState(null);
@@ -68,32 +91,38 @@ function User({ navigation }) {
   const [isGoalModalVisible, setIsGoalModalVisible] = useState(false);
   const [newGoal, setNewGoal] = useState("");
   const isMounted = useRef(true);
+  const [lastStepTime, setLastStepTime] = useState(0);
+  const pedometerSubscription = useRef(null);
 
   const fetchData = async () => {
     const userId = await AsyncStorage.getItem("userId");
+    console.log("Fetched userId:", userId);
     if (userId && isMounted.current) {
       const response = await getUser(userId);
+      console.log("Fetched user data:", response.data);
       if (response && response.data) {
         setUser(response.data);
-        setInitialStepCount(response.data.stepsCount || 0);
+        // Załadowanie sessionSteps z AsyncStorage
+        const sessionStepsFromStorage = await loadSessionSteps();
+        setSessionSteps(sessionStepsFromStorage);
       }
     }
   };
 
   useEffect(() => {
-    // Rejestruj dla powiadomień
     registerForPushNotificationsAsync();
-
-    fetchData();
+    fetchData(); // Fetch data and set initialStepCount and sessionSteps
   }, []);
 
   const updateGoal = async (goal) => {
     const userId = await AsyncStorage.getItem("userId");
     if (userId) {
       const parsedGoal = parseInt(goal, 10);
-      console.log("Updating step goal to:", parsedGoal); // Debug log
+      console.log("Updating step goal to:", parsedGoal);
       const response = await changeStepsGoal(userId, parsedGoal);
+      console.log("Change step goal response:", response);
       if (response.status === 200) {
+        Alert.alert("Goal Updated", "Your step goal has been successfully updated.");
         setUser((prevUser) => ({ ...prevUser, stepsGoal: parsedGoal }));
       } else {
         Alert.alert("Update Failed", "Failed to update step goal.");
@@ -121,36 +150,90 @@ function User({ navigation }) {
     }
   };
 
-  useEffect(() => {
-    const subscription = Pedometer.watchStepCount((result) => {
-      setSessionSteps(result.steps);
+  const updateSessionSteps = (newSteps) => {
+    setSessionSteps((prevSteps) => {
+      const totalSteps = prevSteps + newSteps;
+      saveSessionSteps(totalSteps); // Save to AsyncStorage
+      return totalSteps;
     });
-    return () => subscription.remove();
-  }, []);
+  };
+  
+  useEffect(() => {
+    const setupPedometer = async () => {
+      console.log("Setting up Pedometer subscription");
+  
+      const isAvailable = await Pedometer.isAvailableAsync();
+      console.log("Pedometer availability:", isAvailable);
+      if (isAvailable) {
+        pedometerSubscription.current = Pedometer.watchStepCount((result) => {
+          const currentTime = new Date().getTime();
+          const timeDiff = currentTime - lastStepTime;
+  
+          if (timeDiff >= 1000) { // minimum interval of 1 second between steps
+            console.log("Pedometer step count result:", result.steps);
+            setInitialStepCount((prevCount) => prevCount + result.steps);
+            updateSessionSteps(result.steps);
+            setLastStepTime(currentTime);
+          }
+        });
+      } else {
+        console.log("Pedometer is not available on this device.");
+      }
+    };
+  
+    setupPedometer();
+  
+    return () => {
+      if (pedometerSubscription.current) {
+        pedometerSubscription.current.remove();
+        pedometerSubscription.current = null;
+      }
+    };
+  }, [lastStepTime]);
 
   useEffect(() => {
     const updateSteps = async () => {
+      console.log("updateSteps called with sessionSteps:", sessionSteps);
       const userId = await AsyncStorage.getItem("userId");
-      if (userId && sessionSteps > 0) {
+      if (userId) {
         const totalSteps = initialStepCount + sessionSteps;
-        const updateResponse = await updateStepsCount(userId, totalSteps);
-        console.log("Update response:", updateResponse.status); // Debug log
-        if (updateResponse.status === 200) {
-          setInitialStepCount(totalSteps);
-          setSessionSteps(0);
-          console.log("Total steps:", totalSteps, "Goal:", user?.stepsGoal); // Debug log
-          if (user && totalSteps >= user.stepsGoal && user.stepsGoal > 0) {
-            console.log("Sending notification..."); // Debug log
-            sendNotification();
+        console.log("Updating steps for userId:", userId, "Total steps:", totalSteps);
+        try {
+          const updateResponse = await updateStepsCount(userId, totalSteps);
+          console.log("Update response:", updateResponse.status, updateResponse.data);
+          if (updateResponse.status === 200) {
+            setInitialStepCount(totalSteps);
+            setSessionSteps(0);
+            await AsyncStorage.setItem('sessionSteps', '0'); // Reset AsyncStorage session steps
+            console.log("Total steps updated to:", totalSteps);
+            if (user && totalSteps >= user.stepsGoal && user.stepsGoal > 0) {
+              console.log("Sending notification...");
+              sendNotification();
+            }
+            // Fetch updated user data to update progress bar
+            fetchData();
+          } else {
+            console.error("Failed to update steps:", updateResponse);
           }
+        } catch (error) {
+          console.error("Error updating steps:", error);
         }
+      } else {
+        console.log("No steps to update or userId is missing");
       }
     };
-
+  
     if (sessionSteps > 0) {
-      const timeoutId = setTimeout(updateSteps, 5000);
-      return () => clearTimeout(timeoutId);
+      updateSteps();
     }
+  
+    const intervalId = setInterval(() => {
+      if (sessionSteps > 0) {
+        updateSteps();
+      }
+    }, 5000);
+  
+    return () => clearInterval(intervalId);
   }, [sessionSteps, initialStepCount, user?.stepsGoal]);
 
   useLayoutEffect(() => {
@@ -178,8 +261,7 @@ function User({ navigation }) {
   };
 
   const handleAvatarChange = async () => {
-    const permissionResult =
-      await ImagePicker.requestMediaLibraryPermissionsAsync();
+    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (!permissionResult.granted) {
       alert("Access to the gallery is required to change the avatar!");
       return;
@@ -215,6 +297,8 @@ function User({ navigation }) {
   const progress = user
     ? (initialStepCount + sessionSteps) / user.stepsGoal
     : 0;
+
+  console.log("Rendering User component with initialStepCount:", initialStepCount, "sessionSteps:", sessionSteps, "progress:", progress);
 
   return (
     <View style={UserStyles.container}>
