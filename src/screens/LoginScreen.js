@@ -71,27 +71,28 @@ function LoginScreen({ navigation }) {
 
   const handleLogin = async () => {
     const userCredentials = {
-      email: email,
-      password: password,
+        email: email,
+        password: password,
     };
 
     try {
-      const response = await loginUser(userCredentials);
-      setShowMessage(false);
-      await AsyncStorage.setItem("token", response.data.token);
-      await AsyncStorage.setItem("userName", response.data.userName);
-      await AsyncStorage.setItem("userId", response.data.userId);
-      if (isChecked) {
-        await AsyncStorage.setItem("email", email);
-        await AsyncStorage.setItem("password", password);
-      }
-      Keyboard.dismiss();
-      navigation.replace("MainNavigator");
+        const response = await loginUser(userCredentials);
+        setShowMessage(false);
+        await AsyncStorage.setItem("token", response.data.token);
+        await AsyncStorage.setItem("userName", response.data.userName);
+        await AsyncStorage.setItem("userId", response.data.userId);
+        console.log(`Saved userId to AsyncStorage: ${response.data.userId}`); // Dodano logowanie userId
+        if (isChecked) {
+            await AsyncStorage.setItem("email", email);
+            await AsyncStorage.setItem("password", password);
+        }
+        Keyboard.dismiss();
+        navigation.replace("MainNavigator");
     } catch (error) {
-      setShowMessage(true);
-      console.error("Status odpowiedzi:", error);
+        setShowMessage(true);
+        console.error("Status odpowiedzi:", error);
     }
-  };
+};
 
   return (
     <ScrollView style={LoginStyles.container}>

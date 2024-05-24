@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, TextInput, TouchableOpacity, Text, FlatList, Alert, Image, KeyboardAvoidingView, Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as SecureStore from 'expo-secure-store';
+import * as Notifications from 'expo-notifications';
 import { getChatMessages, sendChatMessage, getUser } from '../../services/api';
 import ChatStyles from '../styles/ChatStyles';
 
@@ -11,7 +11,7 @@ const ChatScreen = ({ route, navigation }) => {
     const [message, setMessage] = useState('');
     const [userId, setUserId] = useState(null);
     const [avatars, setAvatars] = useState({});
-    const intervalRef = useRef(null);
+    const flatListRef = useRef();
 
     useEffect(() => {
         const fetchUserId = async () => {
@@ -26,6 +26,7 @@ const ChatScreen = ({ route, navigation }) => {
                 const response = await getChatMessages(eventId);
                 setMessages(response.data);
                 fetchAvatars(response.data);
+                scrollToBottom();
             } catch (error) {
                 console.error("Error fetching messages:", error);
                 Alert.alert("Error", "There was a problem fetching chat messages.");
@@ -33,12 +34,14 @@ const ChatScreen = ({ route, navigation }) => {
         };
 
         fetchMessages();
-        
-        intervalRef.current = setInterval(fetchMessages, 5000);
 
-        return () => {
-            clearInterval(intervalRef.current);
-        };
+        // Set interval to refresh messages every 5 seconds
+        const intervalId = setInterval(() => {
+            fetchMessages();
+        }, 5000);
+
+        // Clear the interval on component unmount
+        return () => clearInterval(intervalId);
     }, [eventId]);
 
     useEffect(() => {
@@ -79,54 +82,32 @@ const ChatScreen = ({ route, navigation }) => {
         }
 
         try {
-            await sendChatMessage({ eventId, message, userId });
+            await sendChatMessage({ eventId, message });
             setMessage('');
             const response = await getChatMessages(eventId);
             setMessages(response.data);
             fetchAvatars(response.data);
-            await sendNotificationToOtherUsers(response.data);
+            schedulePushNotification();
+            scrollToBottom();
         } catch (error) {
             console.error("Error sending message:", error);
             Alert.alert("Error", "There was a problem sending your message.");
         }
     };
 
-    const sendNotificationToOtherUsers = async (messages) => {
-        const otherUsers = messages
-            .filter(msg => msg.userId !== userId)
-            .map(msg => msg.userId);
-
-        const uniqueOtherUsers = [...new Set(otherUsers)];
-
-        for (const otherUserId of uniqueOtherUsers) {
-            try {
-                const pushToken = await SecureStore.getItemAsync(`expoPushToken-${otherUserId}`);
-                if (pushToken) {
-                    await sendPushNotification(pushToken, eventName, message);
-                }
-            } catch (error) {
-                console.error(`Error sending notification to user ${otherUserId}:`, error);
-            }
-        }
+    const schedulePushNotification = async () => {
+        await Notifications.scheduleNotificationAsync({
+            content: {
+                title: "New message in chat!",
+                body: `Message in chat: ${eventName}`,
+                data: { eventId },
+            },
+            trigger: { seconds: 1 },
+        });
     };
 
-    const sendPushNotification = async (expoPushToken, title, body) => {
-        const message = {
-            to: expoPushToken,
-            sound: 'default',
-            title: title,
-            body: body,
-            data: { eventId },
-        };
-
-        await fetch('https://exp.host/--/api/v2/push/send', {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(message),
-        });
+    const scrollToBottom = () => {
+        flatListRef.current?.scrollToEnd({ animated: true });
     };
 
     const renderItem = ({ item }) => (
@@ -147,32 +128,32 @@ const ChatScreen = ({ route, navigation }) => {
         </View>
     );
 
-    return (<>
+    return (
         <KeyboardAvoidingView 
-            style={ChatStyles.container} 
-            behavior={Platform.OS === "ios" ? "padding" : "height"}
-            keyboardVerticalOffset={90}
+            style={{ flex: 1 }}
+            behavior={Platform.OS === "ios" ? "padding" : null}
+            keyboardVerticalOffset={Platform.select({ ios: 90, android: 80 })}
         >
             <FlatList
+                ref={flatListRef}
                 data={messages}
                 renderItem={renderItem}
                 keyExtractor={item => item.id.toString()}
-                contentContainerStyle={ChatStyles.chatContainer}
-                style={{ marginBottom: 60 }}
+                contentContainerStyle={[ChatStyles.chatContainer, { paddingBottom: 80 }]}
+                style={{ flex: 1 }}
             />
-            
-        </KeyboardAvoidingView>
             <View style={ChatStyles.messageInputContainer}>
                 <TextInput
                     style={ChatStyles.messageInput}
                     value={message}
                     onChangeText={setMessage}
+                    onFocus={scrollToBottom}
                 />
                 <TouchableOpacity style={ChatStyles.sendButton} onPress={handleSend}>
                     <Text style={ChatStyles.sendButtonText}>Wyślij</Text>
                 </TouchableOpacity>
             </View>
-            </>
+        </KeyboardAvoidingView>
     );
 };
 

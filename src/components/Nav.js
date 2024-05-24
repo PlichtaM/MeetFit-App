@@ -47,12 +47,12 @@ export default function Nav() {
           if (response.status === 200) {
             setIsLoggedIn(true);
           } else {
-            console.log("Nieważny Token, lub brak Tokenu:", response);
+            console.log("Invalid token or no token:", response);
           }
           setIsLoading(false);
         }, 500);
       } catch (error) {
-        console.log("Błąd podczas sprawdzania tokena:", error);
+        console.log("Error checking token:", error);
         setIsLoading(false);
       }
     };
@@ -74,7 +74,7 @@ export default function Nav() {
         <MapStack.Screen
           name="EventAdd"
           component={EventAdd}
-          options={{ title: "Utwórz wydarzenie", ...headerOptions }}
+          options={{ title: "Create Event", ...headerOptions }}
         />
         <MapStack.Screen
           name="EventEdit"
@@ -84,7 +84,7 @@ export default function Nav() {
         <MapStack.Screen
           name="ChatScreen" 
           component={ChatScreen}
-          options={{ title: "Czat", ...headerOptions }}
+          options={{ title: "Chat", ...headerOptions }}
         />
         <MapStack.Screen
           name="LoginScreen"
@@ -107,12 +107,12 @@ export default function Nav() {
         <UserStack.Screen
           name="Map"
           component={Map}
-          options={{ title: "Mapa", ...headerOptions }}
+          options={{ title: "Map", ...headerOptions }}
         />
         <UserStack.Screen
           name="Calendar"
           component={Calendar}
-          options={{ title: "Kalendarz", ...headerOptions }}
+          options={{ title: "Calendar", ...headerOptions }}
         />
         <UserStack.Screen
           name="Ranking"
@@ -122,12 +122,12 @@ export default function Nav() {
         <UserStack.Screen
           name="FunFacts"
           component={FunFacts}
-          options={{ title: "Ciekawostki", ...headerOptions }}
+          options={{ title: "Fun Facts", ...headerOptions }}
         />
         <UserStack.Screen
           name="Settings"
           component={Settings}
-          options={{ title: "Ustawienia", ...headerOptions }}
+          options={{ title: "Settings", ...headerOptions }}
         />
         <UserStack.Screen
           name="ChangePasswordScreen"
@@ -136,7 +136,7 @@ export default function Nav() {
         <UserStack.Screen
           name="OtherScreens"
           component={OtherScreens}
-          options={{ title: "Ekrany Logowania", ...headerOptions }}
+          options={{ title: "Login Screens", ...headerOptions }}
         />
         <UserStack.Screen name="Loading" component={LoadingScreen} />
         <UserStack.Screen name="RegisterScreen" component={RegisterScreen} />
@@ -153,7 +153,7 @@ export default function Nav() {
         <UserStack.Screen
           name="ChatScreen" 
           component={ChatScreen}
-          options={{ title: "Czat", ...headerOptions }}
+          options={{ title: "Chat", ...headerOptions }}
         />
       </UserStack.Navigator>
     );
@@ -164,7 +164,7 @@ export default function Nav() {
     return (
       <CalendarStack.Navigator>
         <CalendarStack.Screen
-          name="Kalendarz"
+          name="Calendar"
           component={Calendar}
           options={{ ...headerOptions }}
         />
@@ -173,7 +173,7 @@ export default function Nav() {
         <CalendarStack.Screen
           name="ChatScreen" 
           component={ChatScreen}
-          options={{ title: "Czat", ...headerOptions }}
+          options={{ title: "Chat", ...headerOptions }}
         />
       </CalendarStack.Navigator>
     );
@@ -264,7 +264,7 @@ export default function Nav() {
         <Tab.Screen
           name="Settings"
           component={MyEvents}
-          options={{ title: "Moje wydarzenia", ...headerOptions }}
+          options={{ title: "My Events", ...headerOptions }}
         />
         <Tab.Screen
           name="Ranking"
