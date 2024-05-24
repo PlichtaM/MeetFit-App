@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import { Image } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -7,8 +7,6 @@ import { getUser } from "../../services/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { MaterialCommunityIcons, MaterialIcons, FontAwesome } from "@expo/vector-icons";
 import FooterStyles from "../styles/FooterStyles";
-import { getColorScheme } from "../components/Colors";
-const colors = getColorScheme();
 
 import Map from "../screens/Map";
 import User from "../screens/User";
@@ -20,7 +18,6 @@ import Event from "../screens/Event";
 import EventAdd from "../screens/EventAdd";
 import EventEdit from "../screens/EventEdit";
 import Place from "../components/Place";
-import OtherScreens from "../screens/OtherScreens"; //temp
 import LoadingScreen from "../screens/Loading";
 import RegisterScreen from "../screens/RegisterScreen";
 import LoginScreen from "../screens/LoginScreen";
@@ -32,6 +29,9 @@ import MyEvents from "../screens/myEvents";
 import ConfirmMail from "../screens/ConfirmMail";
 import ChatScreen from "../screens/ChatScreen"; 
 import { navigationRef } from './RootNavigation';
+import { getColorScheme } from "../components/Colors";
+const colors = getColorScheme()
+
 
 export default function Nav() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -132,11 +132,6 @@ export default function Nav() {
         <UserStack.Screen
           name="ChangePasswordScreen"
           component={ChangePasswordScreen}
-        />
-        <UserStack.Screen
-          name="OtherScreens"
-          component={OtherScreens}
-          options={{ title: "Ekrany Logowania", ...headerOptions }}
         />
         <UserStack.Screen name="Loading" component={LoadingScreen} />
         <UserStack.Screen name="RegisterScreen" component={RegisterScreen} />

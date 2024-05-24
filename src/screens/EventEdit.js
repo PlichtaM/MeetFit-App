@@ -20,7 +20,6 @@ function EventEdit({ route }) {
 
   useEffect(() => {
     const fetchEvent = async () => {
-      try {
         const response = await getEventById(eventId);
         setEvent(response.data);
         setLimitMiejsc(response.data.limit);
@@ -29,9 +28,6 @@ function EventEdit({ route }) {
         setEventName(response.data.name);
         setTime(response.data.date && response.data.date.slice(11, 16));
         setDescription(response.data.description);
-      } catch (error) {
-        //console.error('Error fetching map points:', error);
-      }
     };
     fetchEvent();
   }, []);
@@ -41,7 +37,7 @@ function EventEdit({ route }) {
   const [selected, setSelected] = useState(Event.date && Event.date.slice(0, 10));
   const [selectedOption, setSelectedOption] = useState(Event.private  === "Prywatne");
   const [eventName, setEventName] = useState(Event.name);
-  const [time, setTime] = useState(Event.date && Event.date.slice(11, 16)); //"date": "2024-04-04T21:55:16.688Z",
+  const [time, setTime] = useState(Event.date && Event.date.slice(11, 16));
   const [description, setDescription] = useState(Event.description);
  
   
@@ -53,12 +49,12 @@ function EventEdit({ route }) {
   const handleEditEvent = async () => {
     try {
       const eventData = {
-        name: eventName,// Póżniej dodać,żeby było co najmniej kilka znaków
+        name: eventName,
         description: description,
         date: new Date(selected + ' ' + time).toISOString(),
         mapPointGoogleId: Event.mapPointId,
-        limit: limitMiejsc, //dodać możliwość "Bez limitu"
-        private: selectedOption === "Prywatne", // ztego chyba rezygnujemy
+        limit: limitMiejsc,
+        private: selectedOption === "Prywatne",
         active: true,
         mapPointGoogleId: Event.mapPointGoogleId
       };      
@@ -73,7 +69,7 @@ function EventEdit({ route }) {
     setIsPickerShow(true);
   };
   const onChange = (event, selectedTime) => {
-    if (event.type === 'set') { // sprawdzenie, czy użytkownik wybrał czas
+    if (event.type === 'set') {
       const hours = selectedTime.getHours();
       const minutes = selectedTime.getMinutes();
       const formattedTime = `${hours}:${minutes < 10 ? '0' : ''}${minutes}`;
@@ -177,7 +173,7 @@ function EventEdit({ route }) {
           <Text style={style.addEventButtonText}>Aktualizuj wydarzenie</Text>
         </TouchableOpacity>
          <TouchableOpacity style={style.cancelEventButton}>
-          <Text style={style.addEventButtonText} onPress={() => console.log('anuluj')/* navigation.popToTop()*/ }>Anuluj wydarzenie</Text>
+          <Text style={style.addEventButtonText} onPress={() => console.log('anuluj') }>Anuluj wydarzenie</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>

@@ -16,21 +16,16 @@ function MyEvents() {
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
         const userId = await AsyncStorage.getItem("userId");
         const { data: eventsData } = await getEventsByUserId(userId);
         eventsData.sort((a, b) => new Date(a.date) - new Date(b.date));
         setEvents(eventsData);
         setLoading(false);
-      } catch (error) {
-        //console.error('Error fetching events:', error);
-        setLoading(false);
-      }
     };
 
     fetchData();
     const interval = setInterval(() => {
-      fetchData(); // Wywołanie funkcji fetchData() co 10 sekund
+      fetchData();
     }, 10000);
   
     return () => clearInterval(interval); 

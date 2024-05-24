@@ -8,13 +8,9 @@ const FunFacts = () => {
 
   useEffect(() => {
     const fetchFunFacts = async () => {
-      try {
         const response = await getFunFacts();
         const sortedFunFacts = response.data.sort((a, b) => new Date(b.date) - new Date(a.date));
         setFunFacts(sortedFunFacts);
-      } catch (error) {
-        //console.error('Error fetching fun facts:', error);
-      }
     };
 
     fetchFunFacts();

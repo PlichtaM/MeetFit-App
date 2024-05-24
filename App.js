@@ -7,7 +7,6 @@ import * as Device from 'expo-device';
 import Constants from 'expo-constants';
 import * as SecureStore from 'expo-secure-store';
 import { navigationRef } from './src/components/RootNavigation';
-import { api } from './services/api'; // Dodaj import do api.js
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({

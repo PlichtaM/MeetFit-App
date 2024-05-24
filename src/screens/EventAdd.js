@@ -41,23 +41,21 @@ function EventAdd({ route }) {
     setWarning(false)
     try {
       const eventData = {
-        name: eventName,// dodać,żeby było co najmniej kilka znaków
+        name: eventName,
         description: description,
         date: new Date(selected + ' ' + time).toISOString(),
         mapPointGoogleId: selectedMarkerId,
-        limit: limitMiejsc, //dodać możliwość "Bez limitu"
-        private: selectedOption === "Prywatne", // ztego chyba rezygnujemy
+        limit: limitMiejsc,
+        private: selectedOption === "Prywatne",
         active: true
       };
       
-      const response = await createEvent(eventData);
-      //wzięcie ID wydarzenia od response API i użycie w przekierowaniu do ekranu wydarzenia
+      const response = await createEvent(eventData);      
       const locationHeader = response.headers.location;
       const eventIdFromLocation = locationHeader.split("/").pop();
       console.log("eventAdd",eventIdFromLocation);
       navigation.navigate('Event', { eventId: eventIdFromLocation });
     } catch (error) {
-      //console.error('Error creating event:', error);
       setWarning(true)
     }
   };
@@ -66,7 +64,7 @@ function EventAdd({ route }) {
     setIsPickerShow(true);
   };
   const onChange = (event, selectedTime) => {
-    if (event.type === 'set') { // Dodaj sprawdzenie, czy użytkownik wybrał czas
+    if (event.type === 'set') {
       const hours = selectedTime.getHours();
       const minutes = selectedTime.getMinutes();
       const formattedTime = `${hours}:${minutes < 10 ? '0' : ''}${minutes}`;
@@ -132,7 +130,7 @@ function EventAdd({ route }) {
               dayTextColor: "black",
               arrowColor: colors.secondary
             }}
-            hideArrows={false}//https://www.npmjs.com/package/react-native-calendars/v/1.1286.0
+            hideArrows={false}
             onDayPress={(day) => {
               setSelected(day.dateString);
             }}

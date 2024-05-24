@@ -1,20 +1,9 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  Modal,
-  TouchableOpacity,
-  Text,
-  Image,
-  FlatList,
-  ScrollView,
-} from "react-native";
+import { View, Modal, TouchableOpacity, Text, Image, FlatList,} from "react-native";
 import styles from "../styles/PlaceStyles";
 import { useNavigation } from "@react-navigation/native";
 import { MaterialCommunityIcons, Entypo } from "@expo/vector-icons";
-import {
-  getEventsByMapPointGoogleId,
-  GetCountPeople,
-} from "../../services/api";
+import { getEventsByMapPointGoogleId, GetCountPeople, } from "../../services/api";
 import { getColorScheme } from "../components/Colors";
 import { GOOGLE_API_KEY } from "../../env";
 import axios from "axios";
@@ -50,18 +39,17 @@ const Place = ({ isVisible, onClose, selectedMarkerId }) => {
           if (response.data.status === "OK") {
             setMapPointData(response.data.result);
           } else {
-            console.error("Failed to fetch place info");
-            //console.log("id",selectedMarkerId);
-            //console.log(response);
+            console.log("Failed to fetch place info");
           }
         } catch (error) {
-          //console.error('Error fetching place info:', error);
+          console.error('Error fetching place info:', error);
         }
       }
     };
     fetchPlaceInfo();
     return () => {};
   }, [selectedMarkerId, isVisible]);
+
 
   if (!isVisible || !mapPointData) {
     return null;
@@ -78,7 +66,6 @@ const Place = ({ isVisible, onClose, selectedMarkerId }) => {
 
   const today = new Date().toLocaleDateString("en-US", { weekday: "long" });
   const dzis = new Date().toLocaleDateString("pl-PL", { weekday: "long" });
-
   let todayHours = "Zamknięte";
 
   if (opening_hours && opening_hours.weekday_text) {

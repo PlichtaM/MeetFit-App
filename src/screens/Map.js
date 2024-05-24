@@ -18,10 +18,8 @@ const INITIAL_REGION = {
   longitudeDelta: 0.1,
 };
 const googleApisUrl ="https://maps.googleapis.com/maps/api/place/textsearch/json";
-//dostosowac do zmiany lokalizacji na mapie
-const location = `${INITIAL_REGION.latitude},${INITIAL_REGION.longitude}&radius=2000`;
 
-function Map({navigation}) {
+function Map() {
   const [markers, setMarkers] = useState([]);
   const [popupVisible, setPopupVisible] = useState(false);
   const [selectedMarkerId, setSelectedMarkerId] = useState(null);
@@ -55,7 +53,7 @@ function Map({navigation}) {
     const { latitude, longitude } = region;
     const url = `${googleApisUrl}?query=${input}&location=${latitude},${longitude}&radius=2000&key=${GOOGLE_API_KEY}`;
     const coords = [];
-    try {
+
       const resp = await fetch(url);
       const json = await resp.json();
       setResults(json.results);
@@ -71,19 +69,12 @@ function Map({navigation}) {
         });
         Keyboard.dismiss();
       }
-    } catch (e) {
-      //console.error(e);
-    }
   };
 
   useEffect(() => {
     const fetchEvents = async () => {
-      try {
         const response = await getEvent();
         setMarkers(response.data);
-      } catch (error) {
-        //console.error('Error fetching map points:', error);
-      }
     };
     fetchEvents();
   }, []);
@@ -93,7 +84,7 @@ function Map({navigation}) {
     const newResults = [];
 
     for (const event of eventsWithMapPoints) {
-      try {
+      
         const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${event.mapPointGoogleId}&fields=name,geometry&key=${GOOGLE_API_KEY}`;
         const response = await fetch(url);
         const json = await response.json();
@@ -109,9 +100,6 @@ function Map({navigation}) {
             name: json.result.name, 
           });
         }
-      } catch (error) {
-        //console.error('Error fetching map point:', error);
-      }
     }
     setResults(newResults);
   };

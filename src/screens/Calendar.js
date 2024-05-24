@@ -22,7 +22,7 @@ function Calendar() {
         setEvents(eventsData);
         setLoading(false);
       } catch (error) {
-        //console.error('Error fetching events:', error);
+        console.log('Error fetching events:', error);
         setLoading(false);
       }
     };
@@ -40,15 +40,16 @@ function Calendar() {
 
   const startDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - 3);
   const endDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 3, 23, 59, 59);
-
-  if (loading) {
-    return <LoadingScreen />;
-  }
-
+  
   const filteredEvents = events.length > 0 ? events.filter(event => {
     const eventDate = new Date(event.date);
     return eventDate >= startDate && eventDate <= endDate;
   }) : [];
+
+
+  if (loading) {
+    return <LoadingScreen />;
+  }
 
   return (
     <View style={[dynamicStyles.container, { backgroundColor: themeStyles.Background }]}>

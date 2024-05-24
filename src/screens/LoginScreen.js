@@ -14,14 +14,6 @@ import LoginStyles from "../styles/LoginStyles";
 import { loginUser, GetCountPeople } from "../../services/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getColorScheme } from "../components/Colors";
-import {
-  ADMIN_LOGIN,
-  ADMIN_PASSWORD,
-  ADMIN_LOGIN2,
-  ADMIN_PASSWORD2,
-  ADMIN_LOGIN1,
-  ADMIN_PASSWORD1,
-} from "../../env";
 const colors = getColorScheme();
 
 function LoginScreen({ navigation }) {
@@ -50,20 +42,15 @@ function LoginScreen({ navigation }) {
 
   useEffect(() => {
     const checkTokenValidity = async () => {
-      try {
         const token = await AsyncStorage.getItem("token");
         if (token) {
           const response = await GetCountPeople(token);
           setTimeout(() => {
             if (response.status === "200") {
-              console.log("zalogowany");
               navigation.navigate("MainNavigator");
             }
-          }, 1000); // 5000 ms = 5 s
+          }, 1000);
         }
-      } catch (error) {
-        console.log("niezalogowany", error); //temp
-      }
     };
 
     checkTokenValidity();

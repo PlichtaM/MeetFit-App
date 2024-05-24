@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useReducer } from "react";
+import React, { useState } from "react";
 import { View, Text, TouchableOpacity, Switch } from "react-native";
-import { Checkbox } from "expo-checkbox";
 import style from "../styles/SettingsStyles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getColorScheme } from "../components/Colors";

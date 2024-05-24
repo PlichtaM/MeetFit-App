@@ -14,7 +14,6 @@ const Ranking = ({navigation}) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
         const response = await getAllStepsCount();
         const sortedSteps = response.data.sort((a, b) => b.stepsCount - a.stepsCount);
         setSteps(sortedSteps.map((user, index) => ({
@@ -22,10 +21,6 @@ const Ranking = ({navigation}) => {
           miejsce: index + 1
         })));
         setLoading(false);
-      } catch (error) {
-        //console.error('Error fetching steps count:', error);
-        setLoading(false);
-      }
     };
 
     fetchData();

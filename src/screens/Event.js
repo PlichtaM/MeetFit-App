@@ -15,7 +15,6 @@ import styles from "../styles/EventStyles";
 const colors = getColorScheme();
 import { GOOGLE_API_KEY } from "../../env";
 import axios from "axios";
-import LoadingScreen from "./Loading";
 
 const MAX_WIDTH = 1425;
 const MAX_HEIGHT = 750;
@@ -27,6 +26,7 @@ const Event = ({ navigation }) => {
   const [CountPeople, setCountPeople] = useState([]);
   const [userEvents, setUserEvents] = useState([]);
   const [user_Id, setUser_Id] = useState([]);
+  const [isUserSignedUp, setIsUserSignedUp] = useState(false);
   const [mapPointData, setMapPointData] = useState(null);
   const fetchEventRef = useRef();
 
@@ -45,34 +45,33 @@ const Event = ({ navigation }) => {
         console.error("Error fetching event data:", error);
       }
     };
+
     fetchEventRef.current();
+
+    // Set interval to fetch every 10 seconds
+    const intervalId = setInterval(fetchEventRef.current, 10000);
+
+    return () => clearInterval(intervalId);
   }, [eventId, navigation]);
 
   // get user events
+  useEffect(() => {
+    fetchUserEvents(user_Id);
+  }, [user_Id, eventId]);
+  
   const fetchUserEvents = async (userId) => {
-    try {
-      const response = await GetUserEventByUserId(userId);
-      setUserEvents(response.data);
-    } catch (error) {
-      console.error("Error fetching user events:", error);
-    }
+    const response = await GetUserEventByUserId(userId);
+    setUserEvents(response.data);
+    setIsUserSignedUp(response.data.some((event) => event.eventId === eventId));
   };
 
   // get google Place info
   useEffect(() => {
     const fetchPlaceInfo = async () => {
-      try {
         const response = await axios.get(
           `https://maps.googleapis.com/maps/api/place/details/json?place_id=${Event.mapPointGoogleId}&key=${GOOGLE_API_KEY}`
         );
-        if (response.data.status === "OK") {
           setMapPointData(response.data.result);
-        } else {
-          console.error("Failed to fetch place info");
-        }
-      } catch (error) {
-        console.error("Error fetching place info:", error);
-      }
     };
     fetchPlaceInfo();
   }, [Event.mapPointGoogleId]);
@@ -100,19 +99,21 @@ const Event = ({ navigation }) => {
       console.error("Error signing up for event:", error);
     }
   };
-
+  
   const handleSignOut = async () => {
     try {
       await deleteUserEvent(user_Id, eventId);
+      const updatedUserEvents = await GetUserEventByUserId(user_Id);
+      setUserEvents(updatedUserEvents.data);
       fetchUserEvents(user_Id);
+      setIsUserSignedUp(false)
       fetchEventRef.current();
     } catch (error) {
       console.error("Error signing out from event:", error);
     }
   };
+  
 
-  // check if user is signed for event
-  const isUserSignedUp = userEvents.some((event) => event.eventId === eventId);
   const isUserCreator = user_Id === Event.createdBy;
 
   // set google Photo and place name
@@ -150,7 +151,7 @@ const Event = ({ navigation }) => {
       ),
       headerLeft: () => null,
     });
-  }, [navigation, Event]);
+  }, [navigation, Event, handleSignOut]);
 
   return (
     <ScrollView style={styles.screen}>
