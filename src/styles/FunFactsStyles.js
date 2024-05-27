@@ -8,7 +8,6 @@ const FunFactsStyles = {
   },
   factBox:{
     alignItems:'center',
-    marginBottom: 20,
   },
   factContainer: {
     marginBottom: 20,
@@ -26,7 +25,7 @@ const FunFactsStyles = {
     borderRadius:10,
     alignItems:'center',
     justifyContent: 'center',    
-    marginBottom:5,
+    marginBottom:20,
   },
   title: {
     fontSize: 18,
@@ -56,6 +55,7 @@ const FunFactsStyles = {
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
+    marginBottom: 20,
   },
   buttonText: {
     color: '#fff',
@@ -65,7 +65,6 @@ const FunFactsStyles = {
     backgroundColor: '#d9d9d9',
     height: 3,
     width: '80%',
-    marginTop: 20,
   },
 };
 

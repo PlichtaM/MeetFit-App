@@ -1,10 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
 import FunFactsStyles from '../styles/FunFactsStyles';
 import { getFunFacts } from '../../services/api';
 
-const FunFacts = () => {
+function FunFacts({ navigation }) {
   const [funFacts, setFunFacts] = useState([]);
+  
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      title: "ciekawostki",
+      headerTitleAlign: "center",
+      headerTintColor: "white",
+      headerShadowVisible: false,
+    });
+  }, []);
+
 
   useEffect(() => {
     const fetchFunFacts = async () => {
