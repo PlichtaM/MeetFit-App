@@ -62,9 +62,7 @@ function EventEdit({ route }) {
   };
 
   const handleDeleteEvent = async () => {
-    console.log(eventId);
-    const x = await deleteEvent(eventId);
-    console.log(x);
+    await deleteEvent(eventId);
     navigation.popToTop();
   }
 
