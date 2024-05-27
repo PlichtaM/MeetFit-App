@@ -39,7 +39,6 @@ export default function Nav() {
 
   useLayoutEffect(() => {
     const checkTokenValidity = async () => {
-      try {
         const userId = await AsyncStorage.getItem("userId");
         const response = await getUser(userId);
 
@@ -51,10 +50,6 @@ export default function Nav() {
           }
           setIsLoading(false);
         }, 500);
-      } catch (error) {
-        console.log("Error checking token:", error);
-        setIsLoading(false);
-      }
     };
 
     checkTokenValidity();
@@ -178,7 +173,7 @@ export default function Nav() {
     let iconComponent;
     let iconStyle = FooterStyles.Icon;
 
-    if (routeName === "Settings") {
+    if (routeName === "MyEvents") {
       iconComponent = (
         <MaterialIcons
           name="chat"
@@ -257,9 +252,9 @@ export default function Nav() {
         })}
       >
         <Tab.Screen
-          name="Settings"
+          name="MyEvents"
           component={MyEvents}
-          options={{ title: "My Events", ...headerOptions }}
+          options={{ title: "Moje wydarzenia", ...headerOptions }}
         />
         <Tab.Screen
           name="Ranking"

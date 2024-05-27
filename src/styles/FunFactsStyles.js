@@ -51,7 +51,7 @@ const FunFactsStyles = {
   button: {
     backgroundColor: colors.secondary,
     justifySelf: 'flex-end',    
-    width:350,
+    width: '80%',
     height:30,
     borderRadius: 10,
     alignItems: 'center',

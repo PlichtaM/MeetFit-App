@@ -76,6 +76,8 @@ const Place = ({ isVisible, onClose, selectedMarkerId }) => {
 
       if (todaySchedule.includes("Closed")) {
         todayHours = "Zamknięte";
+      }else if (todaySchedule.includes("Open 24")) {
+        todayHours = "czynne całą dobę";
       } else {
         todayHours = todaySchedule.split(": ")[1];
       }

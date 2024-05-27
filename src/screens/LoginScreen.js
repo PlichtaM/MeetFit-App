@@ -25,7 +25,6 @@ function LoginScreen({ navigation }) {
 
   useEffect(() => {
     const isRemebered = async () => {
-      try {
         const savedEmail = await AsyncStorage.getItem("email");
         const savedPassword = await AsyncStorage.getItem("password");
         if (savedEmail) {
@@ -33,9 +32,6 @@ function LoginScreen({ navigation }) {
           setPassword(savedPassword);
           setIsRemebered(true);
         }
-      } catch (error) {
-        console.log("nie zapisano hasla:", error);
-      }
     };
     isRemebered();
   }, []);
@@ -68,7 +64,6 @@ function LoginScreen({ navigation }) {
         await AsyncStorage.setItem("token", response.data.token);
         await AsyncStorage.setItem("userName", response.data.userName);
         await AsyncStorage.setItem("userId", response.data.userId);
-        console.log(`Saved userId to AsyncStorage: ${response.data.userId}`); // Dodano logowanie userId
         if (isChecked) {
             await AsyncStorage.setItem("email", email);
             await AsyncStorage.setItem("password", password);
