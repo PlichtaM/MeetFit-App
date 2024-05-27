@@ -45,11 +45,11 @@ export default function Nav() {
           if (response.status === 200) {
             setIsLoggedIn(true);
           }
-          setIsLoading(false);
         }, 500);
     };
 
     checkTokenValidity();
+    setIsLoading(false);
   }, []);
 
   const MapStack = createStackNavigator();
