@@ -18,7 +18,7 @@ function ForgotPasswordScreen(navigation) {
   };
 
   const handleForgotPassword = () => {
-    if (!isEmailValid) { console.log("Wprowadź prawidłowy adres e-mail");
+    if (!isEmailValid) {
       return;
     }
     const userCredentials = {
@@ -27,16 +27,8 @@ function ForgotPasswordScreen(navigation) {
 
     forgotPassword(userCredentials)
       .then((response) => {
-        console.log("operacja udana:", response.data);
         navigation.navigate("LoginScreen")
       })
-      .catch((error) => {
-        console.log("Status odpowiedzi:", error.response.status);
-        console.log("Nagłówki odpowiedzi:", error.response.headers);
-        console.log("odpowiedzi:", error.response.data);
-        console.log("dane:", userCredentials);
-        console.log(" ");
-      });
   };
 
   return (

@@ -18,15 +18,10 @@ function ChangePasswordScreen({ navigation }) {
 
   useEffect(() => {
     const isRemebered = async () => {
-      try {
         const savedEmail = await AsyncStorage.getItem("email");
-        console.log(savedEmail);
         if(savedEmail){
           setEmail(savedEmail);
         }
-      } catch (error) {
-        console.log("nie zapisano hasla:", error);
-      }
     };
     isRemebered();
   }, []);
@@ -59,14 +54,9 @@ function ChangePasswordScreen({ navigation }) {
     };
 
     changePassword(data)
-      .then((response) => {
-        console.log("Zmiana hasła udana:", response);
+      .then(() => {
         navigation.navigate("CorrectChangedPasswordScreen");
       })
-      .catch((error) => {
-        console.log("Status odpowiedzi:", error.response.status);
-        console.log("Nagłówki odpowiedzi:", error.response.headers);
-      });
   };
 
   return (

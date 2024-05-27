@@ -72,7 +72,6 @@ function LoginScreen({ navigation }) {
         navigation.replace("MainNavigator");
     } catch (error) {
         setShowMessage(true);
-        console.error("Status odpowiedzi:", error);
     }
 };
 

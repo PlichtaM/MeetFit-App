@@ -59,15 +59,9 @@ function RegisterScreen({ navigation }) {
 
     registerUser(userData)
       .then((response) => {
-        console.log("Rejestracja udana:", response.data);
-        console.log("Rejestracja udana status:", response.data.status);
         if (response.data.status === "Success")
           navigation.navigate("ConfirmMail");
       })
-      .catch((error) => {
-        console.log("Status odpowiedzi:", error.response.status);
-        console.log("Nagłówki odpowiedzi:", error.response.headers);
-      });
   };
 
   return (

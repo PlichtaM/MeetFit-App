@@ -30,10 +30,8 @@ const Event = ({ navigation }) => {
   const [mapPointData, setMapPointData] = useState(null);
   const fetchEventRef = useRef();
 
-  // get event info
   useEffect(() => {
     fetchEventRef.current = async () => {
-      try {
         const userId = await AsyncStorage.getItem("userId");
         setUser_Id(userId);
         const response = await getEventById(eventId);
@@ -41,20 +39,15 @@ const Event = ({ navigation }) => {
         setCountPeople(ppl.data);
         setEvent(response.data);
         fetchUserEvents(userId);
-      } catch (error) {
-        console.error("Error fetching event data:", error);
-      }
     };
 
     fetchEventRef.current();
 
-    // Set interval to fetch every 10 seconds
     const intervalId = setInterval(fetchEventRef.current, 10000);
 
     return () => clearInterval(intervalId);
   }, [eventId, navigation]);
 
-  // get user events
   useEffect(() => {
     fetchUserEvents(user_Id);
   }, [user_Id, eventId]);
@@ -65,7 +58,6 @@ const Event = ({ navigation }) => {
     setIsUserSignedUp(response.data.some((event) => event.eventId === eventId));
   };
 
-  // get google Place info
   useEffect(() => {
     const fetchPlaceInfo = async () => {
         const response = await axios.get(
@@ -76,7 +68,6 @@ const Event = ({ navigation }) => {
     fetchPlaceInfo();
   }, [Event.mapPointGoogleId]);
 
-  // formatting Event Date
   const eventDate = new Date(Event.date);
   const formattedDate = `${eventDate.getDate()}.${
     eventDate.getMonth() + 1
@@ -86,7 +77,6 @@ const Event = ({ navigation }) => {
     .toString()
     .padStart(2, "0")}`;
 
-  // Sign user for Event
   const handleSignUp = async () => {
     try {
       await createUserEvent({
@@ -116,7 +106,6 @@ const Event = ({ navigation }) => {
 
   const isUserCreator = user_Id === Event.createdBy;
 
-  // set google Photo and place name
   const { photos, name } = mapPointData || {};
   let pictureUrl = "https://meetfitapp.pl/avatars/default-avatar.jpg";
   if (photos) {

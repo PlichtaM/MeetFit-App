@@ -24,7 +24,6 @@ import LoginScreen from "../screens/LoginScreen";
 import ForgotPasswordScreen from "../screens/ForgotPasswordScreen";
 import ChangePasswordScreen from "../screens/ChangePasswordScreen";
 import CorrectChangedPasswordScreen from "../screens/CorrectChangedPasswordScreen ";
-import VerifiedScreen from "../screens/VerifiedScreen";
 import MyEvents from "../screens/myEvents";
 import ConfirmMail from "../screens/ConfirmMail";
 import ChatScreen from "../screens/ChatScreen"; 
@@ -45,8 +44,6 @@ export default function Nav() {
         setTimeout(() => {
           if (response.status === 200) {
             setIsLoggedIn(true);
-          } else {
-            console.log("Invalid token or no token:", response);
           }
           setIsLoading(false);
         }, 500);
@@ -138,7 +135,6 @@ export default function Nav() {
         <UserStack.Screen name="CorrectChangedPasswordScreen"
           component={CorrectChangedPasswordScreen}
         />
-        <UserStack.Screen name="VerifiedScreen" component={VerifiedScreen} />
         <UserStack.Screen name="ConfirmMail" component={ConfirmMail} />
         <UserStack.Screen
           name="ChatScreen" 
@@ -298,7 +294,6 @@ export default function Nav() {
           name="CorrectChangedPasswordScreen"
           component={CorrectChangedPasswordScreen}
         />
-        <LoginStack.Screen name="VerifiedScreen" component={VerifiedScreen} />
       </LoginStack.Navigator>
     );
   }

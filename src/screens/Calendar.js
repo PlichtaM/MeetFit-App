@@ -17,14 +17,9 @@ function Calendar() {
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
         const { data: eventsData } = await getEvent();
         setEvents(eventsData);
         setLoading(false);
-      } catch (error) {
-        console.log('Error fetching events:', error);
-        setLoading(false);
-      }
     };
 
     fetchData();

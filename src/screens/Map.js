@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import Place from '../components/Place';
-import { getMapPoint, updateEvent, getEvent } from '../../services/api';
+import { getEvent } from '../../services/api';
 import mapstyle from '../styles/mapstyle.json';
 import Mapstyles from '../styles/mapStyles';
 import { TextInput } from "react-native-gesture-handler";
@@ -142,7 +142,7 @@ function Map() {
                   key={`search-item-${i}`}
                   coordinate={coord}
                   onPress={() => {onMarkerSelected(item.place_id);}}
-                  image={selectedIcon} // Użyj wybranej ikony markera
+                  image={selectedIcon}
                 />
               );
             })

@@ -23,13 +23,12 @@ const Place = ({ isVisible, onClose, selectedMarkerId }) => {
   useEffect(() => {
     const fetchPlaceInfo = async () => {
       if (selectedMarkerId) {
-        try {
           const response = await axios.get(googleApisUrl);
           const eventResponse = await getEventsByMapPointGoogleId(
             selectedMarkerId
           );
           setEventsData(eventResponse.data);
-          // Pobierz CountPeople dla każdego wydarzenia i zaktualizuj stan
+          
           const countPromises = eventResponse.data.map(async (event) => {
             const countResponse = await GetCountPeople(event.id);
             return { eventId: event.id, count: countResponse.data };
@@ -38,12 +37,7 @@ const Place = ({ isVisible, onClose, selectedMarkerId }) => {
           setCountPeople(counts);
           if (response.data.status === "OK") {
             setMapPointData(response.data.result);
-          } else {
-            console.log("Failed to fetch place info");
           }
-        } catch (error) {
-          console.error('Error fetching place info:', error);
-        }
       }
     };
     fetchPlaceInfo();
@@ -60,7 +54,6 @@ const Place = ({ isVisible, onClose, selectedMarkerId }) => {
   const PHOTO_REFERENCE = photos[0].photo_reference;
   const pictureUrl = `https://maps.googleapis.com/maps/api/place/photo?photoreference=${PHOTO_REFERENCE}&sensor=false&maxheight=${MAX_HEIGHT}&maxwidth=${MAX_WIDTH}&key=${GOOGLE_API_KEY}`;
 
-  //usuwanie kraju z adresu Kraju
   const addressParts = formatted_address.split(", ");
   const address = addressParts.slice(0, -1).join(", ");
 

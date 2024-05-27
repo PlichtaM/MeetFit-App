@@ -47,7 +47,6 @@ function EventEdit({ route }) {
   };
 
   const handleEditEvent = async () => {
-    try {
       const eventData = {
         name: eventName,
         description: description,
@@ -60,9 +59,6 @@ function EventEdit({ route }) {
       };      
       const response = await updateEvent(eventId, eventData);
       navigation.navigate('Event', { eventId: eventId });
-    } catch (error) {
-      //console.error('Error creating event:', error);
-    }
   };
 
   const showPicker = () => {

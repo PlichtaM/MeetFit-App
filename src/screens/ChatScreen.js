@@ -22,25 +22,18 @@ const ChatScreen = ({ route, navigation }) => {
     fetchUserId();
 
         const fetchMessages = async () => {
-            try {
                 const response = await getChatMessages(eventId);
                 setMessages(response.data);
                 fetchAvatars(response.data);
                 scrollToBottom();
-            } catch (error) {
-                console.error("Error fetching messages:", error);
-                Alert.alert("Error", "There was a problem fetching chat messages.");
-            }
         };
 
         fetchMessages();
 
-        // Set interval to refresh messages every 5 seconds
         const intervalId = setInterval(() => {
             fetchMessages();
         }, 5000);
 
-        // Clear the interval on component unmount
         return () => clearInterval(intervalId);
     }, [eventId]);
 
@@ -65,12 +58,8 @@ const ChatScreen = ({ route, navigation }) => {
     const avatars = {};
 
     for (const userId of uniqueUserIds) {
-      try {
         const userResponse = await getUser(userId);
         avatars[userId] = userResponse.data.profilePictureUrl;
-      } catch (error) {
-        console.error(`Error fetching avatar for user ${userId}:`, error);
-      }
     }
     setAvatars(avatars);
   };

@@ -44,8 +44,6 @@ async function registerForPushNotificationsAsync() {
 }
 
 async function sendNotification() {
-  console.log("Preparing to send a notification...");
-  try {
     const notification = await Notifications.scheduleNotificationAsync({
       content: {
         title: "Cel kroków osiągnięty!",
@@ -55,33 +53,18 @@ async function sendNotification() {
       },
       trigger: null,
     });
-    console.log("Notification scheduled:", notification);
-  } catch (error) {
-    console.error("Error scheduling notification:", error);
-  }
 }
 
-// Save session steps to AsyncStorage
 const saveSessionSteps = async (steps) => {
-  try {
     await AsyncStorage.setItem('sessionSteps', steps.toString());
-  } catch (error) {
-    console.error("Error saving session steps:", error);
-  }
 };
 
-// Load session steps from AsyncStorage
 const loadSessionSteps = async () => {
-  try {
     const steps = await AsyncStorage.getItem('sessionSteps');
     if (steps !== null) {
       return parseInt(steps, 10);
     }
     return 0;
-  } catch (error) {
-    console.error("Error loading session steps:", error);
-    return 0;
-  }
 };
 
 function User({ navigation }) {
@@ -102,7 +85,6 @@ function User({ navigation }) {
       console.log("Fetched user data:", response.data);
       if (response && response.data) {
         setUser(response.data);
-        // Załadowanie sessionSteps z AsyncStorage
         const sessionStepsFromStorage = await loadSessionSteps();
         setSessionSteps(sessionStepsFromStorage);
       }
@@ -111,7 +93,7 @@ function User({ navigation }) {
 
   useEffect(() => {
     registerForPushNotificationsAsync();
-    fetchData(); // Fetch data and set initialStepCount and sessionSteps
+    fetchData();
   }, []);
 
   const updateGoal = async (goal) => {
@@ -153,7 +135,7 @@ function User({ navigation }) {
   const updateSessionSteps = (newSteps) => {
     setSessionSteps((prevSteps) => {
       const totalSteps = prevSteps + newSteps;
-      saveSessionSteps(totalSteps); // Save to AsyncStorage
+      saveSessionSteps(totalSteps); 
       return totalSteps;
     });
   };
@@ -210,7 +192,6 @@ function User({ navigation }) {
               console.log("Sending notification...");
               sendNotification();
             }
-            // Fetch updated user data to update progress bar
             fetchData();
           } else {
             console.error("Failed to update steps:", updateResponse);

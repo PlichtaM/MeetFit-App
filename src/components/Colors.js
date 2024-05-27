@@ -37,23 +37,17 @@ const getCurrentColorScheme = () => {
 
 let currentColorScheme = getCurrentColorScheme();
 
-// Create a new object to store colors based on the current scheme
 export const colors = { ...colorSchemes[currentColorScheme] };
 
 export const getColorScheme = () => colors;
 
 export const setColorScheme = async (scheme) => {
-  // Save value to AsyncStorage
-  try {
-    await AsyncStorage.setItem("appCurrentTheme", scheme); // Update key to match ThemeProvider
+  
+    await AsyncStorage.setItem("appCurrentTheme", scheme); 
     Appearance.setColorScheme(scheme);
     currentColorScheme = scheme;
 
-    // Update colors object with the new scheme
     colors.primary = colorSchemes[scheme].primary;
     colors.secondary = colorSchemes[scheme].secondary;
-    // Update other color properties as needed
-  } catch (error) {
-    console.error("Error saving color scheme:", error);
-  }
+    
 };
