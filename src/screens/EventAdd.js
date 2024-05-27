@@ -13,7 +13,7 @@ const colors = getColorScheme();
 LocaleConfig.defaultLocale = 'pl';
 const getCurrentTime = () => {
   const now = new Date();
-  const hours = now.getHours() + 2; // temp???
+  const hours = now.getHours() + 2;
   const minutes = now.getMinutes();
   return `${hours < 10 ? '0' : ''}${hours}:${minutes < 10 ? '0' : ''}${minutes}`;
 };
@@ -29,16 +29,31 @@ function EventAdd({ route }) {
   const [isPickerShow, setIsPickerShow] = useState(false);
   const [time, setTime] = useState(getCurrentTime());
   const [warning, setWarning] = useState(false);
-
- 
-  
+  const [dateWarning, setDateWarning] = useState(false);
 
   const handleCheckboxChange = (option) => {
     setSelectedOption(option === selectedOption ? "" : option);
   };
 
+  const isDateInFuture = (selectedDate) => {
+    const currentDate = new Date();
+    const selectedDateObj = new Date(selectedDate);
+  
+    return selectedDateObj.getTime() > currentDate.getTime();
+  };
+
   const handleCreateEvent = async () => {
     setWarning(false)
+    setDateWarning(false)
+    
+    if (!selected){
+      setWarning(true)
+      return
+    };
+
+    const selectedDateInFuture = isDateInFuture(new Date(selected + ' ' + time).toISOString());
+    
+    if (selectedDateInFuture) {
     try {
       const eventData = {
         name: eventName,
@@ -53,11 +68,10 @@ function EventAdd({ route }) {
       const response = await createEvent(eventData);      
       const locationHeader = response.headers.location;
       const eventIdFromLocation = locationHeader.split("/").pop();
-      console.log("eventAdd",eventIdFromLocation);
       navigation.navigate('Event', { eventId: eventIdFromLocation });
     } catch (error) {
       setWarning(true)
-    }
+    }}else setDateWarning(true);
   };
 
   const showPicker = () => {
@@ -71,9 +85,7 @@ function EventAdd({ route }) {
       setTime(formattedTime);
     }
     setIsPickerShow(false);    
-  };
-  
-  
+  };  
   
   return (
     <ScrollView style={style.background}>
@@ -143,6 +155,7 @@ function EventAdd({ route }) {
             }}
           />
         </TouchableOpacity>
+        {dateWarning && <Text style={style.warning}>Podaj prawidłową datę!</Text> }
         <Text style={style.text}> Godzina wydarzenia:</Text>
         <Text style={style.text}>{time}</Text>
         <TouchableOpacity style={style.addEventButton} onPress={showPicker}>

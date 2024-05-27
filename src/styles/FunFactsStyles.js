@@ -65,7 +65,7 @@ const FunFactsStyles = {
     backgroundColor: '#d9d9d9',
     height: 3,
     width: '80%',
-    margin: 20,
+    marginTop: 20,
   },
 };
 

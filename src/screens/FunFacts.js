@@ -28,7 +28,7 @@ const FunFacts = () => {
   return (
     <ScrollView style={FunFactsStyles.container}>
       {funFacts.map((fact, index) => (
-        <View key={index}>
+        <View key={index} style={{marginBottom: 20}}>
           <View style={FunFactsStyles.factBox}>
             <View style={FunFactsStyles.titleContainer}>
               <Text style={FunFactsStyles.title}>{fact.name}</Text>
