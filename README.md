@@ -10,7 +10,9 @@ Nasza aplikacja ma za zadanie ułatwić ludziom dostęp do informacji na temat p
 
 ## Zmienne środowiskowe
 
-w katalogu głównym projektu stworzyć plik env.js i wkleić klucz api google:
+w katalogu głównym projektu stworzyć plik env.js i wkleić adres [MeetFit API](https://github.com/rafalandrzejewski/MeetFitAPI) oraz klucz API GOOGLE:
+
+```API_BASE_URL="https://YOUR_API_URL.pl/api";```
 
 ```export const GOOGLE_API_KEY= "YOUR_GOOGLE_API_KEY";```
 

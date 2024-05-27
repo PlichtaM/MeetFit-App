@@ -6,7 +6,7 @@ import { Calendar, LocaleConfig } from "react-native-calendars";
 import { Checkbox } from "expo-checkbox";
 import style from "../styles/EventAddStyles";
 import { getColorScheme } from "../components/Colors";
-import { getEventById, updateEvent} from "../../services/api";
+import { getEventById, updateEvent, deleteEvent} from "../../services/api";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import LoadingScreen from "./Loading";
 
@@ -57,9 +57,16 @@ function EventEdit({ route }) {
         active: true,
         mapPointGoogleId: Event.mapPointGoogleId
       };      
-      const response = await updateEvent(eventId, eventData);
+      await updateEvent(eventId, eventData);
       navigation.navigate('Event', { eventId: eventId });
   };
+
+  const handleDeleteEvent = async () => {
+    console.log(eventId);
+    const x = await deleteEvent(eventId);
+    console.log(x);
+    navigation.popToTop();
+  }
 
   const showPicker = () => {
     setIsPickerShow(true);
@@ -169,7 +176,7 @@ function EventEdit({ route }) {
           <Text style={style.addEventButtonText}>Aktualizuj wydarzenie</Text>
         </TouchableOpacity>
          <TouchableOpacity style={style.cancelEventButton}>
-          <Text style={style.addEventButtonText} onPress={() => console.log('anuluj') }>Anuluj wydarzenie</Text>
+          <Text style={style.addEventButtonText} onPress={handleDeleteEvent}>Anuluj wydarzenie</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
