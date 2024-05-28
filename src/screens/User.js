@@ -225,7 +225,7 @@ function User({ navigation }) {
   const handleAvatarChange = async () => {
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (!permissionResult.granted) {
-      alert("Dostęp do galeri jest wymagany aby zmienić avatar!!");
+      alert("Dostęp do galerii jest wymagany aby zmienić avatar!!");
       return;
     }
     const pickerResult = await ImagePicker.launchImageLibraryAsync({
