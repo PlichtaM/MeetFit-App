@@ -55,12 +55,12 @@ async function registerForPushNotificationsAsync() {
       finalStatus = status;
     }
     if (finalStatus !== 'granted') {
-      alert('Failed to get push token for push notification!');
+      alert('Nie udało się uzyskać tokenu do powiadomień push!');
       return;
     }
     token = (await Notifications.getExpoPushTokenAsync()).data;
   } else {
-    alert('Must use physical device for Push Notifications');
+    alert('Należy użyć fizycznego urządzenia, aby otrzymywać powiadomienia push');
   }
 
   if (Platform.OS === 'android') {

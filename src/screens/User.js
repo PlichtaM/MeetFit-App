@@ -79,10 +79,8 @@ function User({ navigation }) {
 
   const fetchData = async () => {
     const userId = await AsyncStorage.getItem("userId");
-    console.log("Fetched userId:", userId);
     if (userId && isMounted.current) {
       const response = await getUser(userId);
-      console.log("Fetched user data:", response.data);
       if (response && response.data) {
         setUser(response.data);
         const sessionStepsFromStorage = await loadSessionSteps();
@@ -100,14 +98,12 @@ function User({ navigation }) {
     const userId = await AsyncStorage.getItem("userId");
     if (userId) {
       const parsedGoal = parseInt(goal, 10);
-      console.log("Updating step goal to:", parsedGoal);
       const response = await changeStepsGoal(userId, parsedGoal);
-      console.log("Change step goal response:", response);
       if (response.status === 200) {
-        Alert.alert("Goal Updated", "Your step goal has been successfully updated.");
+        Alert.alert("Cel zaktualizowany:", "Twój cel kroków został zmieniony");
         setUser((prevUser) => ({ ...prevUser, stepsGoal: parsedGoal }));
       } else {
-        Alert.alert("Update Failed", "Failed to update step goal.");
+        Alert.alert("Błąd:", "Twój cel kroków nie zmienił się");
       }
     }
   };
@@ -142,24 +138,18 @@ function User({ navigation }) {
   
   useEffect(() => {
     const setupPedometer = async () => {
-      console.log("Setting up Pedometer subscription");
-  
       const isAvailable = await Pedometer.isAvailableAsync();
-      console.log("Pedometer availability:", isAvailable);
       if (isAvailable) {
         pedometerSubscription.current = Pedometer.watchStepCount((result) => {
           const currentTime = new Date().getTime();
           const timeDiff = currentTime - lastStepTime;
   
-          if (timeDiff >= 1000) { // minimum interval of 1 second between steps
-            console.log("Pedometer step count result:", result.steps);
+          if (timeDiff >= 1000) {
             setInitialStepCount((prevCount) => prevCount + result.steps);
             updateSessionSteps(result.steps);
             setLastStepTime(currentTime);
           }
         });
-      } else {
-        console.log("Pedometer is not available on this device.");
       }
     };
   
@@ -175,32 +165,23 @@ function User({ navigation }) {
 
   useEffect(() => {
     const updateSteps = async () => {
-      console.log("updateSteps called with sessionSteps:", sessionSteps);
       const userId = await AsyncStorage.getItem("userId");
       if (userId) {
         const totalSteps = initialStepCount + sessionSteps;
-        console.log("Updating steps for userId:", userId, "Total steps:", totalSteps);
         try {
           const updateResponse = await updateStepsCount(userId, totalSteps);
-          console.log("Update response:", updateResponse.status, updateResponse.data);
           if (updateResponse.status === 200) {
             setInitialStepCount(totalSteps);
             setSessionSteps(0);
-            await AsyncStorage.setItem('sessionSteps', '0'); // Reset AsyncStorage session steps
-            console.log("Total steps updated to:", totalSteps);
+            await AsyncStorage.setItem('sessionSteps', '0');
             if (user && totalSteps >= user.stepsGoal && user.stepsGoal > 0) {
-              console.log("Sending notification...");
               sendNotification();
             }
             fetchData();
-          } else {
-            console.error("Failed to update steps:", updateResponse);
           }
         } catch (error) {
           console.error("Error updating steps:", error);
         }
-      } else {
-        console.log("No steps to update or userId is missing");
       }
     };
   
@@ -244,7 +225,7 @@ function User({ navigation }) {
   const handleAvatarChange = async () => {
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (!permissionResult.granted) {
-      alert("Access to the gallery is required to change the avatar!");
+      alert("Dostęp do galeri jest wymagany aby zmienić avatar!!");
       return;
     }
     const pickerResult = await ImagePicker.launchImageLibraryAsync({
@@ -278,8 +259,6 @@ function User({ navigation }) {
   const progress = user
     ? (initialStepCount + sessionSteps) / user.stepsGoal
     : 0;
-
-  console.log("Rendering User component with initialStepCount:", initialStepCount, "sessionSteps:", sessionSteps, "progress:", progress);
 
   return (
     <View style={UserStyles.container}>
