@@ -294,6 +294,7 @@ export default function Nav() {
           name="CorrectChangedPasswordScreen"
           component={CorrectChangedPasswordScreen}
         />
+        <LoginStack.Screen name="ConfirmMail" component={ConfirmMail} />
       </LoginStack.Navigator>
     );
   }

@@ -84,7 +84,7 @@ function Map() {
     const newResults = [];
 
     for (const event of eventsWithMapPoints) {
-      
+      try{
         const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${event.mapPointGoogleId}&fields=name,geometry&key=${GOOGLE_API_KEY}`;
         const response = await fetch(url);
         const json = await response.json();
@@ -99,7 +99,7 @@ function Map() {
             longitude: lng,
             name: json.result.name, 
           });
-        }
+        }}catch{}
     }
     setResults(newResults);
   };
