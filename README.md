@@ -1,4 +1,8 @@
-# MeetFit App
+<div style="display: flex; align-items: center;">
+  <h1>MeetFit App</h1>
+  <img src="./assets/logo2.png" height="100" style="margin: 30px;"/>
+</div>
+
 MeetFit jest aplikacją mobilną stworzoną przy wykorzystaniu React Native oraz Expo.
 
 Nasza aplikacja ma za zadanie ułatwić ludziom dostęp do informacji na temat punktów ze zdrową żywnością, jak i punktów aktywności fizycznej.  W celu większej socjalizacji użytkowników zaprojektowaliśmy funkcję tworzenia oraz dołączania do spotkań w wyznaczonych miejscach.
